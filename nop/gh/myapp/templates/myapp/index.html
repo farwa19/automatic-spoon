@@ -1,0 +1,57 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+{% block body %}
+
+    <div class="contai">
+        <h2>Contact Our Doctors</h2>
+        <div class="contact-form">
+            <form action="#" method="post">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone">Your Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="doctor">Select Doctor:</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="">Choose a Doctor</option>
+                    <option value="dr_smith">Dr. Smith (Cardiologist)</option>
+                    <option value="dr_jones">Dr. Jones (Neurologist)</option>
+                    <option value="dr_lee">Dr. Lee (Pediatrician)</option>
+                </select>
+
+                <p>Preferred Consultation Days:</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="day1" name="preferred_days" value="Monday">
+                    <label class="form-check-label" for="day1">Monday</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="day2" name="preferred_days" value="Tuesday">
+                    <label class="form-check-label" for="day2">Tuesday</label>
+                </div>
+
+                <p>Preferred Consultation Mode:</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="consultation_mode" id="mode_online" value="Online" required>
+                    <label class="form-check-label" for="mode_online">Online</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="consultation_mode" id="mode_offline" value="Offline" required>
+                    <label class="form-check-label" for="mode_offline">Offline</label>
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Hospital Name. All rights reserved.</p>
+    </footer>
+    {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+{% block body %}
+
+
+<div style="text-align: center; margin: 20px auto;">
+    <h1>Welcome, {{ user.username }}!</h1>
+    <h4>Your info</h4>
+</div>
+<div class="container">
+    <div class="row">
+        {% for test in tests %}
+            <div class="col-md-4 mb-3">
+                <div class="card" style="width: 18rem;">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Name:</strong> {{ test.full_name }} </h5>
+                        <p class="card-text"><strong>Special:</strong> {{test.specialization }}<br></p>
+                        <p class="card-text"<li class="list-group-item"><strong>Email:</strong> {{ test.email}}<br></p>
+                            
+
+                         
+                            <a href="{% url 'more_info' test.id %}" class="btn btn-outline-info">More Info</a>
+
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+
+    
+        
+    
+        
+   
+    {% endblock %}

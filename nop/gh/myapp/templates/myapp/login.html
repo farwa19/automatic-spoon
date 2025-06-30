@@ -1,0 +1,235 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="contact-form">
+    <form action="{% url 'new' %}" id="audioForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1>Login Form</h1>
+
+        <!-- Progress Steps -->
+        <div style="text-align:center; margin-bottom: 40px;">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            
+            
+            
+        </div>
+
+        <!-- Step 1: Disclaimer -->
+        <div class="tab">
+            <h2>Disclaimer</h2>
+            <p id="myParagraph" class="hidden">This paragraph will be visible.</p>
+            <button type="button" onclick="document.getElementById('myText').style.display = 'none';">Hide</button>
+            <button type="button" onclick="document.getElementById('myText').style.display = 'block';">Show</button>
+            <p id="myText">This text can be hidden or shown.</p>
+        </div>
+
+        <!-- Step 2: Create Account -->
+        <div class="tab">
+            <h2>Step 2: Create Account</h2>
+            <div class="field">
+                <div class="label">Name</div>
+                <input type="text" class="form-control" id="validationServer01" name="name" aria-describedby="emailHelp">
+                <div class="invalid-feedback">You must agree before submitting.</div>
+            </div>
+            <div class="field">
+                <div class="label">Password</div>
+                <input type="password" class="form-control" name="password" autocomplete="current-password" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+                <div class="label">Email</div>
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
+                <p class="error" id="errorMessage">This email already exists!</p>
+            </div>
+            <p>Already have an account? <a href="{% url 'have' %}">Log In here.</a></p>
+        </div>
+
+        <!-- Step 3: Personal Details -->
+        <div class="tab">
+            <h2>Step 3: Personal Details</h2>
+            <div class="field">
+                <div class="label">Name</div>
+                <input type="text" class="form-control" name="full_name" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+                <div class="label">Age</div>
+                <input type="number" class="form-control" name="age" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+                <div class="label">Sex</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sex" id="inlineRadio1" value="male">
+                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sex" id="inlineRadio2" value="female">
+                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="label">Profession</div>
+                <input type="text" class="form-control" name="profession" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+                <div class="label">Residential Address</div>
+                <input type="text" class="form-control" name="address" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+                <div class="label">Past History</div>
+                <select class="form-select" name="past_history" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="Diabetes Mellitus (DM)">Diabetes Mellitus (DM)</option>
+                    <option value="Hypertension (HTN)">Hypertension (HTN)</option>
+                    <option value="Heart problem">Heart problem</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Step 4: Area of Spine -->
+        <div class="tab">
+            <h2>Step 4: Area of Spine</h2>
+            <div class="field">
+                <div class="label">Area of Spine</div>
+                <select id="areaSelect" class="form-select" name="area_of_pain" aria-label="Default select example" onchange="handleAreaSelection(event)">
+                    <option selected disabled>Open this select menu</option>
+                    <option value="Neck">Neck</option>
+                    <option value="Upper back">Upper back</option>
+                    <option value="Lower back">Lower back</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Step 5: Pain Assessment -->
+        <div class="tab">
+            <h2>Step 5: Pain Assessment</h2>
+            <div class="field">
+                <div class="label">Cause of Pain</div>
+                <select class="form-select" name="cause_of_pain" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="Fever">Fever</option>
+                    <option value="Injury">Injury</option>
+                    <option value="Spontaneous">Spontaneous</option>
+                </select>
+            </div>
+            <div class="field">
+                <div class="label">Aggravation</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="aggravation" id="kj" value="Activity">
+                    <label class="form-check-label" for="kj">Activity</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="aggravation" id="jk" value="Rest">
+                    <label class="form-check-label" for="jk">Rest</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="label">Relief</div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="relief" id="inlineRadio3" value="Activity">
+                    <label class="form-check-label" for="inlineRadio3">Activity</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="relief" id="inlineRadio4" value="Rest">
+                    <label class="form-check-label" for="inlineRadio4">Rest</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Numbness -->
+        <div class="tab">
+            <h2>Step 6: Numbness</h2>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="numbness" id="inlineRadio5" value="At rest">
+                <label class="form-check-label" for="inlineRadio5">At rest</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="numbness" id="inlineRadio6" value="At work">
+                <label class="form-check-label" for="inlineRadio6">At work</label>
+            </div>
+        </div>
+
+        <!-- Step 7: Walking Tolerance -->
+        <div class="tab">
+            <h2>Step 7: Walking Tolerance</h2>
+            <div class="label">Walking Tolerance</div>
+            <select class="form-select" name="walking_tolerance" aria-label="Default select example" required>
+                <option selected>Open this select menu</option>
+                <option value="5">5 min</option>
+                <option value="10">10 min</option>
+                <option value="20">20 min</option>
+                <option value="30">30 min</option>
+            </select>
+            <div class="label">Support</div>
+            <select class="form-select" name="support" aria-label="Default select example" required>
+                <option selected>Open this select menu</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <!-- Step 8: Control of Urine/Bowel -->
+        <div class="tab">
+            <h2>Step 8: Control of Urine/Bowel</h2>
+            <select class="form-select" name="urine_control" aria-label="Default select example" required>
+                <option selected>Open this select menu</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <!-- Step 9: Neck -->
+        <div class="new" id="neckSection">
+            <h2>Neck</h2>
+            <div class="label">Grip of Hand</div>
+            <select class="form-select" name="grip" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="weak">Weak</option>
+                <option value="Good">Good</option>
+            </select>
+        </div>
+        <div class="tab">
+            <h2>Step 10: Audio</h2>
+            <button type="button" class="btn btn-danger round-btn" id="startBtn">🎤</button>
+               <button type="button" class="btn btn-success round-btn" id="stopBtn">⏹</button>
+               <audio id="audioPlayback" controls></audio>
+               <input type="file" id="audioFile" name="audioFile" accept="audio/wav" hidden />
+            
+        </div>
+
+        <div class="tab">
+            <h2>Step 11: Uploads</h2>
+            
+            <label for="document_file">Mri:</label>
+            <input type="file" id="Mri" name="Mri" accept=".jpeg,.jpg,.docx,.txt" required>
+            <label for="document_file">Xrays:</label>
+            <input type="file" id="Xrays" name="Xrays" accept=".jpeg,.jpg,.docx,.txt" required>
+            <label for="document_file">Blood Test:</label>
+            <input type="file" id="Blood" name="Blood" accept=".jpeg,.jpg,.docx,.txt" required>
+            <label for="document_file">Ct Scan:</label>
+            <input type="file" id="ct" name="ct" accept=".jpeg,.jpg,.docx,.txt" required>
+            
+        </div>
+        
+    </form>
+        <!-- Navigation Buttons -->
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            </div>
+        </div>
+    
+</div>
+    
+        
+
+    
+{% endblock %}

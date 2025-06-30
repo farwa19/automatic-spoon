@@ -1,0 +1,31 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+{% block body %}
+
+
+  
+
+    
+    <div class="contai">
+        <h2>Login</h2>
+        <div class="contact-form">
+    <form action="{% url 'have' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+        <button type="submit">Submit</button>
+            
+    </form>
+
+    Don't have an account? <a href="{% url 'login' %}">Register here.</a>
+</div>
+            
+</div>
+{% endblock %}
