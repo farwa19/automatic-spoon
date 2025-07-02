@@ -8,6 +8,7 @@
 
         <!-- Progress Steps -->
         <div style="text-align:center; margin-bottom: 40px;">
+            
             <span class="step"></span>
             <span class="step"></span>
             <span class="step"></span>
@@ -17,54 +18,62 @@
             <span class="step"></span>
             <span class="step"></span>
             <span class="step"></span>
-            <span class="step"></span>
+            
             
             
             
         </div>
 
         <!-- Step 1: Disclaimer -->
-        <div class="tab">
-            <h2>Disclaimer</h2>
-            <p id="myParagraph" class="hidden">This paragraph will be visible.</p>
-            <button type="button" onclick="document.getElementById('myText').style.display = 'none';">Hide</button>
-            <button type="button" onclick="document.getElementById('myText').style.display = 'block';">Show</button>
-            <p id="myText">This text can be hidden or shown.</p>
-        </div>
+      
 
         <!-- Step 2: Create Account -->
         <div class="tab">
-            <h2>Step 2: Create Account</h2>
+            <h2 style = "text-align: center;">Step 1</h2>
+            <h2> Create Account</h2>
+            <h2 style="text-align: right;" >اکاؤنٹ بنائیں</h2>
+
             <div class="field">
-                <div class="label">Name</div>
-                <input type="text" class="form-control" id="validationServer01" name="name" aria-describedby="emailHelp">
+                <div class="label">Username</div>
+                <div style="text-align: right;" class="label">نام</div>
+                 
+                <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp">
                 <div class="invalid-feedback">You must agree before submitting.</div>
             </div>
             <div class="field">
                 <div class="label">Password</div>
+                <div style="text-align: right;" class="label">پاس ورڈ</div>
                 <input type="password" class="form-control" name="password" autocomplete="current-password" aria-describedby="emailHelp">
             </div>
             <div class="field">
                 <div class="label">Email</div>
+                <div style="text-align: right;" class="label">ای میل</div>
                 <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
-                <p class="error" id="errorMessage">This email already exists!</p>
+                <p class="error" id="errorMessage">یہ ای میل پہلے سے موجود ہے   This email already exists!</p>
             </div>
             <p>Already have an account? <a href="{% url 'have' %}">Log In here.</a></p>
+            <p>پہلے سے اکاؤنٹ موجود ہے؟ <a href="{% url 'have' %}">یہاں لاگ ان کریں</a></p>
         </div>
 
         <!-- Step 3: Personal Details -->
         <div class="tab">
-            <h2>Step 3: Personal Details</h2>
+            <h2 style = "text-align: center;">Step 1</h2>
+            <h2>Personal Details</h2>
+            <h2 style="text-align: right;">ذاتی معلومات</h2>
             <div class="field">
                 <div class="label">Name</div>
+                <div style="text-align: right;" class="label">نام</div>
                 <input type="text" class="form-control" name="full_name" aria-describedby="emailHelp">
             </div>
             <div class="field">
                 <div class="label">Age</div>
+                <div style="text-align: right;" class="label">عمر</div>
                 <input type="number" class="form-control" name="age" aria-describedby="emailHelp">
             </div>
             <div class="field">
                 <div class="label">Sex</div>
+
+                <div style="text-align: right;" class="label">جنس</div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="sex" id="inlineRadio1" value="male">
                     <label class="form-check-label" for="inlineRadio1">Male</label>
@@ -76,89 +85,228 @@
             </div>
             <div class="field">
                 <div class="label">Profession</div>
+                <div style="text-align: right;" class="label">پیشہ</div>
                 <input type="text" class="form-control" name="profession" aria-describedby="emailHelp">
             </div>
             <div class="field">
                 <div class="label">Residential Address</div>
+                <div style="text-align: right;" class="label">رہائشی پتہ</div>
                 <input type="text" class="form-control" name="address" aria-describedby="emailHelp">
             </div>
             <div class="field">
                 <div class="label">Past History</div>
+                <div style="text-align: right;" class="label">پچھلی بیماریاں</div>
                 <select class="form-select" name="past_history" aria-label="Default select example">
                     <option selected>Open this select menu</option>
-                    <option value="Diabetes Mellitus (DM)">Diabetes Mellitus (DM)</option>
-                    <option value="Hypertension (HTN)">Hypertension (HTN)</option>
-                    <option value="Heart problem">Heart problem</option>
+                    <option value="Diabetes Mellitus (DM)">Diabetes Mellitus (DM) شوگر</option>
+                    <option value="Hypertension (HTN)">Hypertension (HTN)  ہائی بلڈ پریشر</option>
+                    <option value="Heart problem"> Heart problem دل کی بیماری</option>
+                    <option value="none">None کوئی نہیں</option>
                 </select>
             </div>
+            
+            <div class="field">
+                <label>Examination interval:</label>
+                <div style="text-align: right;" class="label">آخری دفعہ اپ نے اپنا معائنہ کب کرایا تھا</div>
+                    <select name="interval" class="form-control" required>
+                        <option selected>Open this select menu</option>
+                        <option value="before">Before treatment علاج سے پہلے</option>
+                        <option value="discharge">At discharge (end of therapy) ڈسچارج کرتے وقت</option>
+                        <option value="4weeks">4 weeks 4 ہفتہ</option>
+                        <option value="6weeks">6 weeks 6 ہفتہ</option>
+                        <option value="2months">2 months مہینے2   </option>
+                        <option value="3months">3 months 3 مہینے</option>
+                        <option value="6months">6 months 6 مہینے</option>
+                        <option value="9months">9 months 9 مہینے</option>
+                        <option value="1year">1 year 1 سال</option>
+                        <option value="2years">2 years 2 سال</option>
+                        <option value="3years">3 years 3 سال</option>
+                        <option value="4years">4 years 4 سال</option>
+                        <option value="5years">5 years 5 سال</option>
+                        <option value="other">Other </option>
+                    </select>
+                
+                </div>
         </div>
 
         <!-- Step 4: Area of Spine -->
         <div class="tab">
-            <h2>Step 4: Area of Spine</h2>
+            <h2>Step 3</h2>
+            <h2>Area of Spine</h2>
+            <h2 style="text-align: right;">ریڑھ کی ہڈی کی جگہ</h2>
             <div class="field">
                 <div class="label">Area of Spine</div>
                 <select id="areaSelect" class="form-select" name="area_of_pain" aria-label="Default select example" onchange="handleAreaSelection(event)">
                     <option selected disabled>Open this select menu</option>
-                    <option value="Neck">Neck</option>
-                    <option value="Upper back">Upper back</option>
-                    <option value="Lower back">Lower back</option>
+                    <option value="Neck">Neck گردن</option>
+                    <option value="Upper back">Upper back کمر کا اوپری حصہ</option>
+                    <option value="Lower back">Lower back کمر کے نیچے کا حصہ</option>
                 </select>
             </div>
         </div>
 
         <!-- Step 5: Pain Assessment -->
         <div class="tab">
-            <h2>Step 5: Pain Assessment</h2>
+            <h2>Step 3</h2>
+            <h2>Pain Assessment</h2>
+            <h2 style="text-align: right;">درد کی تشخیص</h2>
+            <div class="field">
+                <div class="label">Which problem troubles you the most? </div>
+                <div style="text-align: right;" class="label">مندرجہ ذیل مسائل میں سے اپ کو کون سا مسئلہ سب سے زیادہ تنگ کر رہا ہے؟ </div>
+                <select class="form-select" name="trouble" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="neck_pain">Neck pain 	گردن کا درد</option>
+                    <option value="arm_pain">Arm/shoulder pain 	بازو یہ کندھے کا درد</option>
+                    <option value="sensory">Sensory disturbances (tingling, numbness)  	گردن /ہاتھ / کندھے میں حسی خلل (حرکت کرنے میں مشکل ہو) جیسے کہ سوئیاں چبنا یہ سن ہونا</option>
+                    <option value="none">None of the above  	ان میں سے کوئی بھی نہیں</option>
+
+                </select>
+            </div>
+            
             <div class="field">
                 <div class="label">Cause of Pain</div>
+                <div style="text-align: right;" class="label">درد کی وجہ</div>
                 <select class="form-select" name="cause_of_pain" aria-label="Default select example">
                     <option selected>Open this select menu</option>
-                    <option value="Fever">Fever</option>
-                    <option value="Injury">Injury</option>
-                    <option value="Spontaneous">Spontaneous</option>
+                    <option value="Fever">Fever بخار</option>
+                    <option value="Injury">Injury  چوٹ</option>
+                    <option value="Spontaneous">Spontaneous  بغیر کسی وجہ کے</option>
                 </select>
             </div>
             <div class="field">
                 <div class="label">Aggravation</div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="aggravation" id="kj" value="Activity">
-                    <label class="form-check-label" for="kj">Activity</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="aggravation" id="jk" value="Rest">
-                    <label class="form-check-label" for="jk">Rest</label>
-                </div>
+                <div style="text-align: right;" class="label">درد بڑھنے کی وجہ</div>
+                <select class="form-select" name="aggravation" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="activity">activity کام کرتے ہوئے</option>
+                    <option value="rest">rest ارام کرتے ہوئے</option>
+
+                </select>
+               
             </div>
             <div class="field">
                 <div class="label">Relief</div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="relief" id="inlineRadio3" value="Activity">
-                    <label class="form-check-label" for="inlineRadio3">Activity</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="relief" id="inlineRadio4" value="Rest">
-                    <label class="form-check-label" for="inlineRadio4">Rest</label>
-                </div>
+                <div style="text-align: right;" class="label">درد کم کرنے کی وجہ</div>
+                <select class="form-select" name="relief" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="activity">activity کام کرتے ہوئے</option>
+                    <option value="rest">rest ارام کرتے ہوئے</option>
+
+                </select>
             </div>
-        </div>
+            <h8>For the following 2 questions (2a and 2b) we would like you to indicate the severity of
+ your pain, by ticking the appropriate box (where "0" = no pain, "10" = worst
+ pain you can imagine). </h8>
+
+
+
+ <h8>اس سوال میں اپ نے اپنے درد کی شدت بتانی ہے۔ 0 کا مطلب اپ کو درد نہیں ہو رہا اور 10 کا مطلب ہے درد نا قابل برداشت ہے۔
+اس کے مطابق آپ اگلے دو سوالوں کے جواب دیجے۔ 
+</h8>
+            
+ <div class="field">
+    <label for="neckPainRange" class="form-label" style="text-align: right;">پچھلے ہفتے اپ کو گردن کتنی شدت سے درد ہوا تھا</label>
+
+    <label for="neckPainRange" class="form-label">How severe was your neck pain in the last week?</label>
+    <input type="range" class="form-range" min="0" max="10" id="neckPainRange" name="neck_pain_severity" required oninput="neckPainValue.innerText = this.value">
+    <span id="neckPainValue">5</span>
+</div>
+
+<div class="field">
+    <label for="armPainRange" class="form-label" style="text-align: right;">پچھلے ہفتے اپ کو بازوں اور کندھوں  میں  کتنی شدت سے درد ہوا تھا</label>
+    <label for="armPainRange" class="form-label">How severe was your arm/shoulder pain in the last week?</label>
+    <input type="range" class="form-range" min="0" max="10" id="armPainRange" name="arm_pain_severity" required oninput="armPainValue.innerText = this.value">
+    <span id="armPainValue">5</span>
+</div>
+
+<div class="field">
+    <div class="label">How much did neck problem interfere with work?</div>
+    <div style="text-align: right;" class="label">پچھلے ہفتے اپ کی گردن کے درد کی وجہ سے اپ کے روز مرہ کے کاموں (گھر اور باہر کے کاموں)میں کتنا  تنگ کیا؟</div>
+    <select class="form-select" name="interfere" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="not_at_all">Not at all 	بالکل بھی نہیں </option>
+        <option value="little">A little bit تھوڑا سا </option>
+        <option value="moderate">Moderately 	نہ بہت کم نہ بہت زیادہ </option>
+        <option value="quite_bit">Quite a bit  زیادہ</option>
+        <option value="extremely">Extremely 	 کافی زیادہ</option>
+    </select>
+</div>
+
+<div class="field">
+    <div class="label"> How would you feel living with current symptoms?</div>
+    <div style="text-align: right;" class="label">اگر اپ کو پوری زندگی اس درد اور مسئلہ کے ساتھ رہنا پڑے تو اپ کو کیسا لگے گا؟</div>
+    <select class="form-select" name="feeling" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="very_satisfied">Very satisfied  بہت مطمئن </option>
+        <option value="somewhat_satisfied">Somewhat satisfied  تھوڑا مطمئن </option>
+        <option value="neutral">Neither satisfied nor dissatisfied مطمئن بھی نہیں ہوں اور غیر مطمئن </option>
+        <option value="somewhat_dissatisfied">Somewhat dissatisfied تھوڑا سا غیر مطمئن </option>
+        <option value="very_dissatisfied">Very dissatisfied غیر مطمئن</option>
+    </select>
+</div>
+
+<div class="field">
+    <div class="label">How would you rate your quality of life?</div>
+    <div style="text-align: right;" class="label">پچھلے ہفتے اپ کا وقت کیسا گزرا تھا</div>
+    <select class="form-select" name="quality" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="very_good">Very good بہت اچھا</option>
+        <option value="good">Good  اچھا</option>
+        <option value="moderate">Moderate  ٹھیک </option>
+        <option value="bad">Bad برا  </option>
+        <option value="very_bad">Very bad  بہت برا</option>
+    </select>
+</div>
+
+<div class="field">
+    <div class="label">In past 4 weeks, how many days did you cut down activities?</div>
+    <div style="text-align: right;" class="label">پچھلے چار ہفتوں میں اپ کو کتنے دن درد کی وجہ سے اپنے روز مرہ کے کاموں کو چھوڑنا پڑا۔</div>
+    <select class="form-select" name="cut_down" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="none">None کوئی بھی نہیں </option>
+        <option value="1-7">1-7 days 1 سے 7 دن</option>
+        <option value="8-14">8-14 days  8 سے 14 دن</option>
+        <option value="15-21">15-21 days 15 سے 21 دن</option>
+        <option value="21+">More than 21 days 21 دن سے زیادہ</option>
+    </select>
+</div>
+
+<div class="field">
+    <div class="label">In past 4 weeks, how many days did neck problem keep you from work?</div>
+    <div style="text-align: right;" class="label">پچھلے چار ہفتوں میں اپ کو کتنے دن  گردن کی وجہ سے اپنے روز مرہ کے کاموں کو چھوڑنا پڑا۔</div>
+    <select class="form-select" name="neckinterfearnce" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="none">None کوئی بھی نہیں </option>
+        <option value="1-7">1-7 days 1 سے 7 دن</option>
+        <option value="8-14">8-14 days  8 سے 14 دن</option>
+        <option value="15-21">15-21 days 15 سے 21 دن</option>
+        <option value="21+">More than 21 days 21 دن سے زیادہ</option>
+    </select>
+</div>
+
+<!-- ...existing code... -->
+</div>
 
         <!-- Step 6: Numbness -->
         <div class="tab">
-            <h2>Step 6: Numbness</h2>
+            <h2>Step 6</h2>
+            <h2>Numbness</h2>
+            <h2 style="text-align: right;">سن ہونا</h2>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="numbness" id="inlineRadio5" value="At rest">
-                <label class="form-check-label" for="inlineRadio5">At rest</label>
+                <label class="form-check-label" for="inlineRadio5">At rest  آرام کرتے وقت</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="numbness" id="inlineRadio6" value="At work">
-                <label class="form-check-label" for="inlineRadio6">At work</label>
+                <label class="form-check-label" for="inlineRadio6">At work کام کرتے وقت</label>
             </div>
         </div>
 
         <!-- Step 7: Walking Tolerance -->
         <div class="tab">
-            <h2>Step 7: Walking Tolerance</h2>
+            <h2>Step 7</h2>
+            <h2>Walking Tolerance</h2>
+            <h2 style="text-align: right;">چلنے کی صلاحيت </h2>
             <div class="label">Walking Tolerance</div>
             <select class="form-select" name="walking_tolerance" aria-label="Default select example" required>
                 <option selected>Open this select menu</option>
@@ -166,54 +314,61 @@
                 <option value="10">10 min</option>
                 <option value="20">20 min</option>
                 <option value="30">30 min</option>
+                <option value="30+">more than 30 min</option>
             </select>
             <div class="label">Support</div>
+            <div style="text-align: right;" class="label">کیا اپ کو سهار کی ضرورت ہے؟</div>
             <select class="form-select" name="support" aria-label="Default select example" required>
                 <option selected>Open this select menu</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="yes">Yes جي</option>
+                <option value="no">No نہیں</option>
+
+
             </select>
         </div>
 
         <!-- Step 8: Control of Urine/Bowel -->
-        <div class="tab">
-            <h2>Step 8: Control of Urine/Bowel</h2>
-            <select class="form-select" name="urine_control" aria-label="Default select example" required>
-                <option selected>Open this select menu</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
-        </div>
+       
 
         <!-- Step 9: Neck -->
         <div class="new" id="neckSection">
             <h2>Neck</h2>
             <div class="label">Grip of Hand</div>
+            <div style="text-align: right;" class="label">ہاتھ کی گرفت</div>
+
             <select class="form-select" name="grip" aria-label="Default select example">
                 <option selected>Open this select menu</option>
-                <option value="weak">Weak</option>
-                <option value="Good">Good</option>
+                <option value="weak">Weak كمزور</option>
+                <option value="Good">Good </option>
             </select>
         </div>
         <div class="tab">
             <h2>Step 10: Audio</h2>
+            <h2 style="text-align: right;">آڈیو</h2>
+            <div class="label">Audio Recording</div>
+            <div style="text-align: right;" class="label">اپنی آواز ریکارڈ کریں</div>
+
             <button type="button" class="btn btn-danger round-btn" id="startBtn">🎤</button>
                <button type="button" class="btn btn-success round-btn" id="stopBtn">⏹</button>
                <audio id="audioPlayback" controls></audio>
-               <input type="file" id="audioFile" name="audioFile" accept="audio/wav" hidden />
+               <input type="file" id="audioFile" name="audio_file" accept="audio/wav" hidden />
             
         </div>
 
         <div class="tab">
             <h2>Step 11: Uploads</h2>
+            <h2 style="text-align: right;">اپ لوڈ کریں</h2>
             
             <label for="document_file">Mri:</label>
+            
+
             <input type="file" id="Mri" name="Mri" accept=".jpeg,.jpg,.docx,.txt" required>
             <label for="document_file">Xrays:</label>
             <input type="file" id="Xrays" name="Xrays" accept=".jpeg,.jpg,.docx,.txt" required>
             <label for="document_file">Blood Test:</label>
             <input type="file" id="Blood" name="Blood" accept=".jpeg,.jpg,.docx,.txt" required>
             <label for="document_file">Ct Scan:</label>
+
             <input type="file" id="ct" name="ct" accept=".jpeg,.jpg,.docx,.txt" required>
             
         </div>

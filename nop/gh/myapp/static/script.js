@@ -1,7 +1,7 @@
 var currentTab = 0; // Current tab index (starting at 0)
 var jk = false; // Flag for "Neck" selection
 var x = []; // Array to hold tab elements
-console.log("jjjkj");
+console.log("jj");
 
 console.log("farwa");
 function isValidEmail(email) {
@@ -237,10 +237,14 @@ async function nextPrev(n) {
 
     // Change current tab
     currentTab += n;
+    console.log("Current tab index:", currentTab);
+    console.log("Total tabs:", x.length);
 
     // Ensure tab index is within range
     if (currentTab >= x.length) {
-        document.getElementById("form").submit();
+        
+
+        document.getElementById("audioForm").submit();
         return false;
     }
 

@@ -34,31 +34,26 @@ class Name(AbstractUser):  # Renamed to 'User' for better clarity
 
     def __str__(self):
         return self.email
-    def delete_expired_account(self):
-        """Delete account if expired and log the deletion"""
-        if self.is_expired():
-            # Log the deletion before actually deleting
-            AccountDeletionLog.objects.create(
-                email=self.email,
-                role=self.role
-            )
-            self.delete()
-            return True
-        return False
+    def is_expired(self):
+        """Check if patient account is inactive for 27 days"""
+        if self.role == self.PATIENT:
+            expiration_date = self.last_activity + timedelta(days=27)
+            return timezone.now() > expiration_date
+        return False  # Doctors don't expire
+    
+    def update_activity(self):
+        """Update last activity timestamp"""
+        self.last_activity = timezone.now()
+        self.save()
 
 class AccountDeletionLog(models.Model):
     """Track deleted accounts in admin"""
     email = models.EmailField()
     role = models.CharField(max_length=20)
     deletion_date = models.DateTimeField(auto_now_add=True)
-    reason = models.CharField(max_length=100, default="Automatic expiration")
-
+    reason = models.CharField(max_length=100, default="Inactivity")
     def __str__(self):
-        return f"Deleted {self.email} on {self.deletion_date}"
-
-    class Meta:
-        verbose_name = "Deletion Log"
-        verbose_name_plural = "Deletion Logs"
+        return f"Deleted {self.role} account: {self.email}"
 
 class Tests(models.Model):
 
@@ -77,11 +72,13 @@ class Tests(models.Model):
         ('Upper back', 'Upper back'),
         ('Lower back', 'Lower back')
     ])
+    examination = models.CharField(max_length=50,blank=True)
     cause_of_pain = models.CharField(max_length=50,blank=True, choices=[
         ('Fever', 'Fever'),
         ('Injury', 'Injury'),
         ('Spontaneous', 'Spontaneous')
     ])
+    pain_trouble = models.CharField(max_length=50, blank=True)
     aggravation = models.CharField(max_length=20,blank=True, choices=[
         ('Activity', 'Activity'),
         ('Rest', 'Rest')
@@ -94,13 +91,26 @@ class Tests(models.Model):
         ('At rest', 'At rest'),
         ('At work', 'At work')
     ])
+    neckPain = models.IntegerField(default=0, blank=True, null=True)
+    armPain = models.IntegerField(default=0, blank=True, null=True)
+    neckpain_inteference = models.CharField(max_length=50, blank=True)
+    living_with_pain = models.CharField(max_length=50, blank=True)
+    quality_of_life = models.CharField(max_length=50, blank=True)
+    cutdownactivities = models.CharField(max_length=50, blank=True)
+    neck_problems_work_leave = models.CharField(max_length=50, blank=True)
+    arm = models.IntegerField(default=0, blank=True, null=True)
     walking_tolerance = models.PositiveIntegerField()
     support = models.BooleanField()
-    urine_control = models.BooleanField()
-    grip = models.CharField(max_length=20,blank=True, choices=[
+    
+    GRIP_CHOICES = models.CharField(max_length=20,blank=True, choices=[
         ('Weak', 'Weak'),
         ('Good', 'Good')
     ])
+    
+    grip = models.CharField(max_length=10, choices=[
+        ('Weak', 'Weak'),
+        ('Good', 'Good')
+    ], blank=True)  # Allow blank values
     
     audio = models.FileField(upload_to="test_audios/", null=True, blank=True)
     report_file = models.FileField(upload_to="mri_reports/", null=True, blank=True)  # Make it optional

@@ -156,3 +156,12 @@ ALLOWED_HOSTS = [
 AUTHENTICATION_BACKENDS = [
     'myapp.authentication.CustomAuthBackend',  # Use our custom authentication
 ]
+# Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # or your broker URL
+CELERY_TIMEZONE = 'UTC'
+CELERY_BEAT_SCHEDULE = {
+    'delete-expired-accounts-daily': {
+        'task': 'your_app.tasks.delete_expired_accounts',
+        'schedule': 86400.0,  # 24 hours in seconds
+    },
+}

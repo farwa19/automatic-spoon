@@ -9,6 +9,7 @@
 
 
 <h2>Name: {{ kl.full_name }}</h2>
+
                 
     {% if test %}
         <ul>
@@ -25,12 +26,21 @@
                 <li><strong>Address:</strong> {{ user.address }}<br></li>
                 <li><strong>Past_History:</strong> {{ test.past_history }}<br></li>
                 <li><strong>Area of Pain:</strong> {{ test.area_of_pain }}<br></li>
+                <li><strong>Examination interval :</strong> {{ test.examination  }}<br></li>
+                <li><strong>Which problem troubles you the most?</strong> {{ test.pain_trouble }}<br></li>
+                <li><strong>Neck pain severity </strong> {{ test.neckPain }}<br></li>
+                <li><strong>Arm/shoulder severity </strong> {{ test.armPain }}<br></li>
+                <li><strong>. How much did neck problem interfere with work?</strong> {{ test.neckpain_inteference }}<br></li>
+                <li><strong>Living with current symptoms:</strong> {{ test.living_with_pain }}<br></li>
+                <li><strong> quality of life:</strong> {{ test.quality_of_life }}<br></li>
+                <li><strong>  In past 4 weeks, how many days did you cut down activities</strong> {{ test.cutdownactivities }}<br></li>
                 <li><strong>Cause of Pain:</strong> {{ test.cause_of_pain }}<br></li>
+                <li><strong>. In past 4 weeks, how many days did neck problem keep you from work?</strong> {{ test.neck_problems_work_leave }}<br></li>
                 <li><strong>Aggravation:</strong> {{ test.aggravation }}<br></li>
                 <li><strong>Relief:</strong> {{ test.relief }}<br></li>
                 <li><strong>Walking Tolerance:</strong> {{ test.walking_tolerance }}<br></li>
                 <li><strong>Support:</strong> {{ test.support}}<br></li>
-                <li><strong>Urine Control :</strong> {{test.urine_control }}<br></li>
+                
                 {% if ty %}
                 <li><strong>Grip :</strong> {{test.grip }}<br></li>
                 {% endif %}

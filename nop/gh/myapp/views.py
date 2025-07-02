@@ -132,7 +132,7 @@ def user_login(request):
         user = Name.objects.filter(username=username).first()
 
         print(f"🔹 Username: {username}, Password: {password}")
-        print(user.check_password(password))
+        
 
         # Authenticate user properly
         user = authenticate(request, username=username, password=password)
@@ -140,6 +140,7 @@ def user_login(request):
         print(f"🔹 Authenticated User: {user}")  # Debugging
 
         if user is not None:
+            print(user.check_password(password))
             login(request, user)  # Corrected login function
             return HttpResponseRedirect(reverse("home"))
         else:
@@ -224,6 +225,7 @@ def new(request):
     sex = request.POST["sex"]
     profession = request.POST["profession"]
     address = request.POST["address"]
+    interval = request.POST["interval"]
     user = Name.objects.create_user(username=name, 
     email=email, 
     password=password,
@@ -240,6 +242,7 @@ def new(request):
     relief = request.POST["relief"]
     numbness = request.POST["numbness"]
     walking_tolerance = request.POST["walking_tolerance"]
+    trouble = request.POST["trouble"]
     support = request.POST["support"]
     if support == "yes":
         support = True
@@ -247,11 +250,7 @@ def new(request):
         support = False
 
 
-    urine_control = request.POST["urine_control"]
-    if urine_control == "yes":
-        urine_control = True
-    else:
-        urine_control = False
+    
 
     grip = request.POST["grip"]
     if grip == "'Open this select menu'":
@@ -268,18 +267,32 @@ def new(request):
     Blood= save_file(Blood, f'{user.id}blood')
     ct = request.FILES.get("ct")
     ct= save_file(ct, f'{user.id}ct')
+    neck_pain_severity = request.POST.get("neck_pain_severity", 0)
+    arm_pain_severity = request.POST.get("arm_pain_severity", 0)
     new_test = Tests.objects.create(
         patient=user,
          past_history = past_history,
          cause_of_pain = cause_of_pain,
          area_of_pain= area_of_pain,
          aggravation= aggravation,
+         pain_trouble=trouble,
+         neckPain = neck_pain_severity,
+            armPain = arm_pain_severity,
+            neckpain_inteference = request.POST.get("interfere"),
+            living_with_pain = request.POST.get("feeling"),
+            quality_of_life = request.POST.get("quality"),
+            cutdownactivities = request.POST.get("cut_down"),
+            neck_problems_work_leave = request.POST.get("neckinterfearnce"),
+
+
+
          relief = relief,
          numbness = numbness,
          walking_tolerance= walking_tolerance,
          support = support,
-         urine_control = urine_control,
+         
          grip = grip,
+         examination= interval,
         audio=audio_file,
           # Handle uploaded audio file
         report_file=mri,
