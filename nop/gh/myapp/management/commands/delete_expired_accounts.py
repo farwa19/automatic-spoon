@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from your_app.models import Name, AccountDeletionLog
+from myapp.models import Name, AccountDeletionLog
 
 class Command(BaseCommand):
     help = 'Deletes patient accounts inactive for 27 days'

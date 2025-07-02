@@ -147,7 +147,7 @@
 
         <!-- Step 5: Pain Assessment -->
         <div class="tab">
-            <h2>Step 3</h2>
+            <h2>Step 4</h2>
             <h2>Pain Assessment</h2>
             <h2 style="text-align: right;">درد کی تشخیص</h2>
             <div class="field">
@@ -284,24 +284,22 @@
     </select>
 </div>
 
+<div class="field">
+                <div class="label">Numbness</div>
+                <div style="text-align: right;" class="label">سن ہونا</div>
+                <select class="form-select" name="numbness" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="activity">activity کام کرتے ہوئے</option>
+                    <option value="rest">rest ارام کرتے ہوئے</option>
+
+                </select>
+               
+            </div>
+
 <!-- ...existing code... -->
 </div>
 
-        <!-- Step 6: Numbness -->
-        <div class="tab">
-            <h2>Step 6</h2>
-            <h2>Numbness</h2>
-            <h2 style="text-align: right;">سن ہونا</h2>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="numbness" id="inlineRadio5" value="At rest">
-                <label class="form-check-label" for="inlineRadio5">At rest  آرام کرتے وقت</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="numbness" id="inlineRadio6" value="At work">
-                <label class="form-check-label" for="inlineRadio6">At work کام کرتے وقت</label>
-            </div>
-        </div>
-
+        
         <!-- Step 7: Walking Tolerance -->
         <div class="tab">
             <h2>Step 7</h2>
@@ -343,7 +341,9 @@
             </select>
         </div>
         <div class="tab">
-            <h2>Step 10: Audio</h2>
+            <h2>Step 8</h2>
+            <h2>Step Audio</h2>
+
             <h2 style="text-align: right;">آڈیو</h2>
             <div class="label">Audio Recording</div>
             <div style="text-align: right;" class="label">اپنی آواز ریکارڈ کریں</div>
@@ -352,6 +352,9 @@
                <button type="button" class="btn btn-success round-btn" id="stopBtn">⏹</button>
                <audio id="audioPlayback" controls></audio>
                <input type="file" id="audioFile" name="audio_file" accept="audio/wav" hidden />
+               <p class="error" id="errorrecord">Kindly record the Audio </p>
+               <p style="text-align: right;"     class="error" id="errorrecordurdu"><p class="error" >برائے مہربانی آڈیو ریکارڈ کریں </p></p>
+
             
         </div>
 

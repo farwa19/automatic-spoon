@@ -19,6 +19,8 @@ class Name(AbstractUser):  # Renamed to 'User' for better clarity
         (MALE, 'Male'),
         (FEMALE, 'Female'),
     ]
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)  # Allow blank for existing users
+    last_activity = models.DateTimeField(auto_now=True, blank = True)  # Track last activity timestamp
 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default=PATIENT)
     email = models.EmailField(unique=True)
@@ -37,7 +39,7 @@ class Name(AbstractUser):  # Renamed to 'User' for better clarity
     def is_expired(self):
         """Check if patient account is inactive for 27 days"""
         if self.role == self.PATIENT:
-            expiration_date = self.last_activity + timedelta(days=27)
+            expiration_date = self.created_at + timedelta(days=5)
             return timezone.now() > expiration_date
         return False  # Doctors don't expire
     

@@ -147,7 +147,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-AUTH_USER_MODEL = 'myapp.Name'  # Replace 'yourapp' with the actual app name
+AUTH_USER_MODEL = 'myapp.Name'
+  # Replace 'yourapp' with the actual app name
 ALLOWED_HOSTS = [
     'stunning-enigma-9767464p7wqwc79pg-8000.app.github.dev',
     'localhost',

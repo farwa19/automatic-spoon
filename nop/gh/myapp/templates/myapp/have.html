@@ -17,6 +17,8 @@
         <div class="form-group">
             <input class="form-control" type="password" name="password" placeholder="Password">
         </div>
+
+
         {% if message %}
         <div>{{ message }}</div>
     {% endif %}
@@ -25,6 +27,7 @@
     </form>
 
     Don't have an account? <a href="{% url 'login' %}">Register here.</a>
+   
 </div>
             
 </div>

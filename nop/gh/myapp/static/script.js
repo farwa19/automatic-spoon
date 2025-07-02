@@ -112,7 +112,7 @@ function handleAreaSelection(event) {
 }
 async function checkemail() {
     const errorMessage = document.getElementById("errorMessage");
-    if (currentTab === 1) {
+    if (currentTab === 0) {
         let gh = document.getElementsByName("email")[0];
         let emailValue = gh.value;
         let neo = isValidEmail(emailValue)
@@ -156,15 +156,31 @@ async function validateForm() {
         console.log( valid)
         if (y[i].value.trim() === "") {
             console.log("ji")
+            if(currentTab == 5 && y[i].type === "file" ) {
+                y[i].classList.add("invalid");
+                valid = false;
+                const errorrecord = document.getElementById("errorrecord");
+                const urdu = document.getElementById("errorrecordurdu");
+                errorrecord.style.display = "block";
+                urdu.style.display = "block";
+
+
+                console.log("record audio")}
+
             y[i].classList.add("invalid");
             valid = false;
         } else {
             y[i].classList.remove("invalid");
+            const errorrecord = document.getElementById("errorrecord");
+            const urdu = document.getElementById("errorrecordurdu");
+            errorrecord.style.display = "none";
+            urdu.style.display = "none";
 
             
             // Special email validation for tab 1
-            if (currentTab == 1 && y[i].type === "email") {
+            if (currentTab == 0 && y[i].type === "email") {
                 try {
+                    console.log("Checking email validity...");
                     const ck = await checkemail();
                     if (!ck) {
                         y[i].classList.add("invalid");
@@ -189,10 +205,21 @@ async function validateForm() {
                     
                 }
             }
+            
         }
 
         // Add event listener to remove "invalid" when user types
         y[i].addEventListener("input", function() {
+
+            if(currentTab == 5 && y[i].type === "file" ) {
+                y[i].classList.add("invalid");
+                valid = false;
+                errorrecord.style.display = "block";
+                urdu.style.display = "block";
+
+
+                console.log("record audio")}
+
             if (this.value.trim() !== "") {
                 this.classList.remove("invalid");
             }

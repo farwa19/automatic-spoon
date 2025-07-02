@@ -130,6 +130,7 @@ def user_login(request):
         password = request.POST.get("password", "").strip()
         
         user = Name.objects.filter(username=username).first()
+        print(f"🔹 User found: {user.password}")  # Debugging
 
         print(f"🔹 Username: {username}, Password: {password}")
         
@@ -226,6 +227,7 @@ def new(request):
     profession = request.POST["profession"]
     address = request.POST["address"]
     interval = request.POST["interval"]
+    print(name, password, email, full_name)
     user = Name.objects.create_user(username=name, 
     email=email, 
     password=password,
