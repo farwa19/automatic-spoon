@@ -2,18 +2,28 @@ import { useState } from 'react'
 import Filter from './filter'
 import PersonForm from './personform'
 import Persons from './person'
-
+import axios from 'axios'
+import { useEffect } from 'react'
 
 
 const App = () => {
+  const [persons, setPersons] = useState([])
   
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', phone: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', phone: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', phone: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', phone: '39-23-6423122', id: 4 }
-  ])
-  console.log('persons', persons)
+  
+  useEffect(() => {
+    console.log('effect')
+    
+    axios
+      .get('https://special-space-journey-pj7jq7qxjwrqc9w4v-3001.app.github.dev/persons')
+      .then(response => {
+        console.log(response)
+        setPersons(response.data)
+
+      })
+  }, [])
+  console.log('render', persons.length, 'persons')
+  
+
   const [gh, setGh] = useState('')
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
