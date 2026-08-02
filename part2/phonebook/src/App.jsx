@@ -1,10 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Filter from './filter'
 import PersonForm from './personform'
 import Persons from './person'
-import axios from 'axios'
-import { useEffect } from 'react'
-
+import { getAll, create, remove, update } from './backend'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -12,13 +10,14 @@ const App = () => {
   
   useEffect(() => {
     console.log('effect')
-    
-    axios
-      .get('https://special-space-journey-pj7jq7qxjwrqc9w4v-3001.app.github.dev/persons')
+
+    getAll()
       .then(response => {
         console.log(response)
         setPersons(response.data)
-
+      })
+      .catch(error => {
+        console.error('Error fetching persons:', error)
       })
   }, [])
   console.log('render', persons.length, 'persons')
@@ -42,9 +41,27 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    const exists = persons.some(person => person.name === newName)
-    if (exists) {
-      window.alert(`${newName} is already in the phonebook`)
+    const nameofperson = persons.find(person => person.name === newName)
+
+    if (nameofperson) {
+      if (window.confirm(`it already exists do you want change ${newName}?`)) {
+        const changednumperson = {
+          ...nameofperson,
+          phone: newNum,
+        }
+
+        update(nameofperson.id, changednumperson)
+          .then(response => {
+            setPersons(persons.map(person =>
+              person.id === nameofperson.id ? response.data : person
+            ))
+            setNewNum('')
+            setNewName('')
+          })
+          .catch(error => {
+            console.error('Error updating person:', error)
+          })
+      }
       return
     }
 
@@ -54,13 +71,33 @@ const App = () => {
       id: persons.length + 1
     }
 
-    setPersons(persons.concat(personObject))
-    setNewNum('')
-    setNewName('')
+    create(personObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewNum('')
+        setNewName('')
+      })
+      .catch(error => {
+        console.error('Error creating person:', error)
+      })
   }
-  console.log('render', persons.length, 'persons')
 
-  
+  const deletePerson = (id) => {
+    const person = persons.find(i => i.id === id)
+    if (window.confirm(`Delete ${person.name}?`)) {
+      remove(id)
+        .then(() => {
+          console.log(`Deleted person with id ${id}`)
+          setPersons(persons.filter(i => i.id !== id))
+        })
+        .catch(error => {
+          console.error('Error deleting person:', error)
+        })
+    }
+  }
+
+
+  console.log('render', persons.length, 'persons')
 
   return (
     <div>
@@ -75,12 +112,11 @@ const App = () => {
         numValue={newNum}
         numOnChange={handleNumChange}
       />
+      
 
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} />
-      
+      <Persons persons={filteredPersons} deletePerson={deletePerson} />
     </div>
   )
-}
-
+}   
 export default App
