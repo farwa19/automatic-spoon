@@ -1,9 +1,14 @@
 {
   "persons": [
     {
-      "name": "farwa",
-      "phone": "7886767678",
-      "id": "W6wXgL23-2Q"
+      "name": "farwau",
+      "phone": "9889",
+      "id": "3fUZL6JqFtQ"
+    },
+    {
+      "name": "fatrw",
+      "phone": "8787",
+      "id": "XMm_E6XgVUQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
