@@ -4,7 +4,7 @@ import PersonForm from './personform'
 import Persons from './person'
 import { Notification } from './notification'
 import { ErrorNotification } from './notification'
-import { getAll, create, remove, update } from './backend'
+import { getAll, create, remove } from './backend'
 import './App.css'
 
 const App = () => {
@@ -48,46 +48,16 @@ const App = () => {
     const existingPerson = persons.find(person => person.name === newName)
 
     if (existingPerson) {
-      
-      
-
-      if (window.confirm(`it already exists do you want change ${newName}?`)) {
-        const changedPerson = {
-          ...existingPerson,
-          number: newNum,
-        }
-      
-
-        update(existingPerson.id, changedPerson)
-        
-          .then(response => {
-            setPersons(persons.map(person =>
-              person.id === existingPerson.id ? response.data : person
-            ))
-            setNotificationMessage(`Updated ${newName}`)
-            setNewNum('')
-            setNewName('')
-          })
-          .catch(error => {
-            setErrorNotificationMessage(
-        `'${existingPerson.name}' was already deleted from server`
-      )
+      setErrorNotificationMessage(`'${newName}' is already added to the phonebook`)
       setTimeout(() => {
-  setErrorNotificationMessage(null)
-}, 5000)
- setPersons(
-    persons.filter(person => person.id !== existingPerson.id))
-      
-          })
-      }
-
+        setErrorNotificationMessage(null)
+      }, 5000)
       return
     }
 
     const personObject = {
       name: newName,
       number: newNum,
-      id: persons.length + 1
     }
 
     create(personObject)
@@ -95,13 +65,17 @@ const App = () => {
         setPersons(persons.concat(response.data))
         setNotificationMessage(`Added ${newName}`)
         setTimeout(() => {
-  setNotificationMessage(null)
-}, 5000)
+          setNotificationMessage(null)
+        }, 5000)
         setNewNum('')
         setNewName('')
       })
       .catch(error => {
         console.error('Error creating person:', error)
+        setErrorNotificationMessage('Failed to add person')
+        setTimeout(() => {
+          setErrorNotificationMessage(null)
+        }, 5000)
       })
   }
 

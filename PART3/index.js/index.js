@@ -36,8 +36,7 @@ const persons = [
     }
 ]
 
-app.get('/', (req, res) => { res.send('Phonebok backend is running!') }) 
-console.log('Server running on port 3001') 
+
 
 
 
