@@ -7,7 +7,7 @@ const app = express()
 morgan.token('body', (req) => {
   return JSON.stringify(req.body)
 })
-
+app.use(express.static('dist'))
 app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json())
