@@ -54,7 +54,7 @@ const App = () => {
       if (window.confirm(`it already exists do you want change ${newName}?`)) {
         const changedPerson = {
           ...existingPerson,
-          phone: newNum,
+          number: newNum,
         }
       
 
@@ -86,7 +86,7 @@ const App = () => {
 
     const personObject = {
       name: newName,
-      phone: newNum,
+      number: newNum,
       id: persons.length + 1
     }
 

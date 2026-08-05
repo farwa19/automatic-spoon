@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'https://special-space-journey-pj7jq7qxjwrqc9w4v-3001.app.github.dev/persons'
+const baseUrl = 'http://localhost:3001/api/persons'
 
 export const getAll = () => {
   return axios.get(baseUrl)
