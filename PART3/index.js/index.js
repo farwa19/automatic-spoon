@@ -1,15 +1,14 @@
 
 const express = require('express')
 const morgan = require('morgan')
-
+const cors = require('cors')
 
 const app = express()
 morgan.token('body', (req) => {
   return JSON.stringify(req.body)
 })
 
-
-
+app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json())
 app.use(morgan(':method :url :status :body'))
@@ -69,6 +68,8 @@ app.delete('/api/persons/:id', (req, res) => {
   }
 })
 app.post('/api/persons', (req, res) => {
+  console.log('POST /api/persons body:', req.body)
+
   const { name, number } = req.body
   if (!name || !number) {
     return res.status(400).json({ error: 'Name or number is missing' })
@@ -84,9 +85,7 @@ app.post('/api/persons', (req, res) => {
   }
   persons.push(newPerson)
   res.status(201).json(newPerson)
-  console.log(
-  JSON.stringify([newPerson]),
-);
+  console.log('Created person:', JSON.stringify(newPerson))
 })
 
 const PORT = 3001 
