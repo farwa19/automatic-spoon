@@ -4,7 +4,7 @@ import PersonForm from './personform'
 import Persons from './person'
 import { Notification } from './notification'
 import { ErrorNotification } from './notification'
-import { getAll, create, remove } from './backend'
+import { getAll, create, remove, update } from './backend'
 import './App.css'
 
 const App = () => {
@@ -41,22 +41,48 @@ const App = () => {
   const filteredPersons = persons.filter(person =>
     person.name.toLowerCase().includes(gh.toLowerCase())
   )
-
   const addPerson = (event) => {
+    console.log('addPerson called')
     event.preventDefault()
-
-    const existingPerson = persons.find(person => person.name === newName)
-
-    if (existingPerson) {
-      setErrorNotificationMessage(`'${newName}' is already added to the phonebook`)
+    const trimmedName = newName.trim()
+    if (!trimmedName || !newNum.trim()) {
+      console.log('Name or number is empty')
+      setErrorNotificationMessage('Name or number cannot be empty')
       setTimeout(() => {
         setErrorNotificationMessage(null)
       }, 5000)
       return
     }
 
+    const existingPerson = persons.find(person => person.name.toLowerCase() === trimmedName.toLowerCase())
+    if (existingPerson) {
+      if (window.confirm(`${trimmedName} is already added to phonebook, replace the old number with a new one?`)) {
+        const updatedPerson = { ...existingPerson, number: newNum }
+        update(existingPerson.id ?? existingPerson._id, updatedPerson)
+          .then(response => {
+            setPersons(persons.map(person => (person.id ?? person._id) === (existingPerson.id ?? existingPerson._id) ? response.data : person))
+            setNotificationMessage(`Updated ${trimmedName}'s number`)
+            setTimeout(() => {
+              setNotificationMessage(null)
+            }, 5000)
+            setNewNum('')
+            setNewName('')
+          })
+          .catch(error => {
+            console.error('Error updating person:', error)
+            setErrorNotificationMessage(`Failed to update ${trimmedName}'s number`)
+            setTimeout(() => {
+              setErrorNotificationMessage(null)
+            }, 5000)
+          })
+      }
+      return
+    }
+
+  
+
     const personObject = {
-      name: newName,
+      name: trimmedName,
       number: newNum,
     }
 
@@ -72,26 +98,31 @@ const App = () => {
       })
       .catch(error => {
         console.error('Error creating person:', error)
-        setErrorNotificationMessage('Failed to add person')
+        const message =
+  error.response?.data?.error || 'Failed to d person'
+
+  setErrorNotificationMessage(message)
         setTimeout(() => {
           setErrorNotificationMessage(null)
         }, 5000)
       })
   }
 
-  const deletePerson = (id) => {
-    const person = persons.find(i => i.id === id)
-    if (window.confirm(`Delete ${person.name}?`)) {
-      remove(id)
-        .then(() => {
-          console.log(`Deleted person with id ${id}`)
-          setPersons(persons.filter(i => i.id !== id))
-        })
-        .catch(error => {
-          console.error('Error deleting person:', error)
-        })
-    }
+const deletePerson = (id) => {
+  const person = persons.find(i => (i.id ?? i._id) === id)
+  console.log(`Attempting to delete person with id: ${id}`)
+
+  if (person && window.confirm(`Delete ${person.name}?`)) {
+    remove(id)
+      .then(() => {
+        console.log(`Deleted person with id ${id}`)
+        setPersons(persons.filter(i => (i.id ?? i._id) !== id))
+      })
+      .catch(error => {
+        console.error('Error deleting person:', error)
+      })
   }
+}
 
 
   console.log('render', persons.length, 'persons')
@@ -100,7 +131,10 @@ const App = () => {
     <div>
       <h1>phonebook</h1>
       <Notification message={notificationMessage} />
-      <ErrorNotification message={errorNotificationMessage} />
+
+<ErrorNotification message={errorNotificationMessage} />
+     
+     
       <Filter value={gh} onChange={(event) => setGh(event.target.value)} />
 
       <h2>add a new</h2>
