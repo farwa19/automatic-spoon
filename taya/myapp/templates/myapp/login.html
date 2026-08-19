@@ -1,0 +1,780 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+{% block title %}Patient Consultation | CareConnect{% endblock %}
+
+{% block body %}
+
+<style>
+/* Dropdown Styling */
+    .form-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        margin-bottom: 10px; /* Space between input and card */
+    }
+
+    /* The Info Card Container */
+    .doctor-card {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        animation: slideDown 0.3s ease-out;
+    }
+
+    /* Header Section */
+    .card-header-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .doc-thumb {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .doc-identity h4 {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+        font-weight: 700;
+    }
+
+    .badge-specialty {
+        background-color: #e3f2fd;
+        color: #0d47a1;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .rating-row {
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    .stars { color: #ffc107; font-weight: bold; }
+    .exp-text { color: #666; margin-left: 5px; }
+
+    .divider { margin: 10px 0; border-top: 1px solid #ddd; }
+
+    /* Details Section */
+    .card-body-row {
+        display: flex;
+        gap: 20px;
+        font-size: 13px;
+    }
+
+    .info-column { flex: 1; }
+
+    .info-label {
+        display: block;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 3px;
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .info-content {
+        margin: 0;
+        color: #333;
+        line-height: 1.4;
+    }
+
+    /* Small animation to make it look smooth */
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    /* --- COMPACT & BILINGUAL DESIGN --- */
+    body {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    .consultation-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+        padding: 25px 35px 150px 35px;
+        width: 100%;
+        max-width: 950px;
+        margin: auto;
+        position: relative;
+    }
+
+    .form-header h1 {
+        color: #0f172a;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Progress Steps (4 Tabs) */
+    .step-container { display: flex; justify-content: center; margin-bottom: 20px; }
+    .step {
+        height: 12px; width: 12px; margin: 0 8px;
+        background-color: #cbd5e1; border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+    .step.active { background-color: #10b981; transform: scale(1.4); }
+    .step.finish { background-color: #0f172a; }
+
+    /* Tabs */
+    .tab { display: none; animation: fadeIn 0.4s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Field Wrappers */
+    .field-wrapper {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 8px 12px;
+        height: 100%;
+        position: relative;
+    }
+
+    .field-wrapper.invalid-group {
+        border-color: #ef4444; background-color: #fef2f2;
+    }
+
+    /* Bilingual Labels */
+    .label-row {
+        display: flex; justify-content: space-between; align-items: baseline;
+        margin-bottom: 5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px;
+    }
+    .label-eng { font-weight: 700; color: #334155; font-size: 0.8rem; text-transform: uppercase; }
+    .label-urdu { font-family: 'Noto Nastaliq Urdu', serif; color: #10b981; font-size: 0.85rem; font-weight: normal; }
+
+    .form-control {
+        border-radius: 6px; padding: 6px 10px; font-size: 0.9rem; border: 1px solid #cbd5e1;
+    }
+    .form-control:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+    .form-control.invalid { border-color: #ef4444; background-color: #fff5f5; }
+
+    /* Bilingual Checklist/Radio */
+    .checklist-options { display: flex; flex-wrap: wrap; gap: 6px; }
+    .form-check {
+        margin: 0; background: #fff; border: 1px solid #cbd5e1;
+        padding: 4px 8px 4px 28px; border-radius: 20px;
+        cursor: pointer; transition: all 0.2s; position: relative;
+        display: flex; align-items: center; gap: 5px;
+    }
+    .form-check:hover { border-color: #10b981; }
+    .form-check-input { margin-left: -22px; cursor: pointer; }
+    .form-check-input:checked + .lbl-group { color: #10b981; font-weight: 600; }
+
+    .lbl-group { display: flex; gap: 4px; font-size: 0.75rem; align-items: baseline; }
+    .lbl-ur { font-family: 'Noto Nastaliq Urdu', serif; color: #10b981; direction: rtl; }
+
+    /* Divider */
+    .section-divider {
+        border-top: 1px dashed #cbd5e1; margin: 15px 0 10px 0; position: relative; text-align: center;
+    }
+    .section-label {
+        background: #fff; padding: 0 10px; color: #94a3b8; font-size: 0.7rem; font-weight: bold; position: relative; top: -10px;
+    }
+
+    /* Neck Section */
+    #neckSpecificsSection { display: none; background-color: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; margin-bottom: 10px; }
+
+    .error-text { color: #ef4444; font-size: 0.7rem; display: none; margin-top: 2px; }
+    .nav-buttons {
+        margin-top: 30px;
+        padding: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        border-top: 2px solid #e2e8f0;
+    }
+    .nav-buttons button {
+        min-width: 120px;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 10px 20px !important;
+    }
+
+    /* Audio */
+    .round-btn { width: 45px; height: 45px; border-radius: 50%; font-size: 18px; margin: 0 5px; }
+</style>
+
+<div class="container">
+    <div class="consultation-card">
+        <div class="form-header">
+            <h1>Patient Consultation <span class="fs-5 text-success">| مریض کا معائنہ</span></h1>
+        </div>
+
+        <form action="{% url 'new' %}" id="audioForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="step-container">
+                <span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span>
+            </div>
+
+            <div class="tab">
+                <div class="row g-2">
+                    <div class="col-12"><div class="section-divider"><span class="section-label">ACCOUNT / اکاؤنٹ</span></div></div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Username</span><span class="label-urdu">یوزر نام</span></div>
+                            <input type="text" class="form-control" name="name" id="usernameInput" required>
+                            <p class="error-text" id="usernameError">Taken / موجود ہے</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Email</span><span class="label-urdu">ای میل</span></div>
+                            <input type="email" class="form-control" name="email" id="emailInput" required>
+                            <p class="error-text" id="emailError">Exists / موجود ہے</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Password</span><span class="label-urdu">پاس ورڈ</span></div>
+                            <input type="password" class="form-control" name="password" id="passwordInput" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Confirm</span><span class="label-urdu">تصدیق</span></div>
+                            <input type="password" class="form-control" id="confirmPasswordInput" required>
+                            <p class="error-text" id="passwordError">Mismatch / مماثلت نہیں</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12"><div class="section-divider"><span class="section-label">PERSONAL / ذاتی تفصیلات</span></div></div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Full Name</span><span class="label-urdu">پورا نام</span></div>
+                            <input type="text" class="form-control" name="full_name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Age</span><span class="label-urdu">عمر</span></div>
+                            <input type="number" class="form-control" name="age" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Gender</span><span class="label-urdu">جنس</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sex" value="male" id="m">
+                                    <label class="lbl-group" for="m">Male<span class="lbl-ur">مرد</span></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sex" value="female" id="f">
+                                    <label class="lbl-group" for="f">Female<span class="lbl-ur">عورت</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Profession</span><span class="label-urdu">پیشہ</span></div>
+                            <input type="text" class="form-control" name="profession">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Address</span><span class="label-urdu">پتہ</span></div>
+                            <input type="text" class="form-control" name="address">
+                        </div>
+                    </div>
+                  <div class="col-md-12">
+    <div class="field-wrapper">
+        <div class="label-row">
+            <span class="label-eng">Select your doctor</span>
+            <span class="label-urdu">اپنا طبيب منتخب کریں</span>
+        </div>
+
+        <select class="form-select" name="doctor" id="doctorSelect" onchange="showDoctorDetails()">
+            <option value="" selected disabled>Choose a doctor... (ڈاکٹر منتخب کریں)</option>
+
+            {% for doctor in doctors %}
+            <option
+                value="{{ doctor.id }}"
+                data-name="Dr. {{ doctor.full_name }}"
+                data-specialty="{{ doctor.specialty }}"
+                data-years="{{ doctor.experience_years }}"
+                data-rating="{{ doctor.rating }}"
+                data-pic="{{ doctor.profile_pic.url }}"
+
+                {# Django Loops for Education & Experience inside data attributes #}
+                data-education="{% for edu in doctor.education.all %}• {{ edu.degree }} ({{ edu.institution }})<br>{% empty %}No education listed{% endfor %}"
+                data-history="{% for job in doctor.experience.all %}• {{ job.position }} at {{ job.hospital }}<br>{% empty %}No history listed{% endfor %}"
+            >
+                Dr. {{ doctor.full_name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <div id="doctorInfoCard" class="doctor-card" style="display: none;">
+            <div class="card-header-row">
+                <img id="cardPic" src="" alt="Doctor" class="doc-thumb">
+                <div class="doc-identity">
+                    <h4 id="cardName">Doctor Name</h4>
+                    <span id="cardSpecialty" class="badge-specialty">Specialty</span>
+                    <div class="rating-row">
+                        <span id="cardRating" class="stars"></span>
+                        <span class="exp-text">(<span id="cardYears"></span> Yrs Exp)</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="card-body-row">
+                <div class="info-column">
+                    <span class="info-label">Education</span>
+                    <p id="cardEducation" class="info-content"></p>
+                </div>
+                <div class="info-column">
+                    <span class="info-label">Experience</span>
+                    <p id="cardHistory" class="info-content"></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+                    <div class="col-12"><div class="section-divider"><span class="section-label">HISTORY / طبی تاریخ</span></div></div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Past History</span><span class="label-urdu">سابقہ تاریخ</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="past_history" value="DM" id="ph1"><label class="lbl-group" for="ph1">Diabetes<span class="lbl-ur">شوگر</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="past_history" value="HTN" id="ph2"><label class="lbl-group" for="ph2">BP<span class="lbl-ur">بی پی</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="past_history" value="Heart" id="ph3"><label class="lbl-group" for="ph3">Heart<span class="lbl-ur">دل</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="past_history" value="none" id="ph4"><label class="lbl-group" for="ph4">None<span class="lbl-ur">کوئی نہیں</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Last Exam</span><span class="label-urdu">آخری معائنہ</span></div>
+                             <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="interval" value="before" id="le1"><label class="lbl-group" for="le1">Before<span class="lbl-ur">پہلے</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="interval" value="6months" id="le2"><label class="lbl-group" for="le2">6 Mo<span class="lbl-ur">6 ماہ</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="interval" value="1year" id="le3"><label class="lbl-group" for="le3">1 Yr<span class="lbl-ur">1 سال</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt-1 small">Already have an account? <a href="{% url 'have' %}" class="text-success fw-bold">Log In</a></div>
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="row g-2">
+                    <div class="col-12"><div class="section-divider"><span class="section-label">PAIN ANALYSIS / درد کا تجزیہ</span></div></div>
+
+                    <div class="col-md-12">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Area of Pain</span><span class="label-urdu">درد کی جگہ</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="area_of_pain" value="Neck" id="ap1" onchange="toggleNeckSection()"><label class="lbl-group" for="ap1">Neck<span class="lbl-ur">گردن</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="area_of_pain" value="Upper back" id="ap2" onchange="toggleNeckSection()"><label class="lbl-group" for="ap2">Upper Back<span class="lbl-ur">اوپری کمر</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="area_of_pain" value="Lower back" id="ap3" onchange="toggleNeckSection()"><label class="lbl-group" for="ap3">Lower Back<span class="lbl-ur">نچلی کمر</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="field-wrapper">
+                        Aggravation<div class="label-row"><span class="label-eng">Aggravation</span><span class="label-urdu">تکلیف کا بڑھنا</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="aggravation" value="Activity" id="ag1"><label class="lbl-group" for="ag1">Activity<span class="lbl-ur">کام کرتے ہوئے</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="aggravation" value="Rest" id="ag2"><label class="lbl-group" for="ag2">Rest<span class="lbl-ur">آرام کرتے ہوئے</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" id="neckSpecificsSection">
+                        <div class="field-wrapper" style="background:transparent; border:none;">
+                            <div class="label-row"><span class="label-eng">Neck Specific: Hand Grip</span><span class="label-urdu">ہاتھ کی گرفت</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="grip" value="Good" id="gr1"><label class="lbl-group" for="gr1">Good<span class="lbl-ur">اچھی</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="grip" value="weak" id="gr2"><label class="lbl-group" for="gr2">Weak<span class="lbl-ur">کمزور</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Main Trouble</span><span class="label-urdu">بنیادی مسئلہ</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="trouble" value="neck_pain" id="tr1"><label class="lbl-group" for="tr1">Pain<span class="lbl-ur">درد</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="trouble" value="sensory" id="tr3"><label class="lbl-group" for="tr3">Numbness<span class="lbl-ur">سن ہونا</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="trouble" value="arm_pain" id="tr2"><label class="lbl-group" for="tr2">Shoulder<span class="lbl-ur">کندھا</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Better with</span><span class="label-urdu">آرام ملتا ہے</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="relief" value="Rest"><label class="lbl-group" for="cp1">Rest<span class="lbl-ur"> آرام کرتے ہوئے</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="relief" value="Activity"><label class="lbl-group" for="cp2">Activity<span class="lbl-ur">کام کرتے ہوئے</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12"><div class="section-divider"><span class="section-label">PAIN INTENSITY / شدت (0-10)</span></div></div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Neck Pain</span><span class="label-urdu">گردن کا درد</span></div>
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="range" class="form-range" min="0" max="10" value="5" name="neck_pain_severity" oninput="document.getElementById('nVal').innerText = this.value">
+                                <span id="nVal" class="badge bg-primary">5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Arm Pain</span><span class="label-urdu">بازو کا درد</span></div>
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="range" class="form-range" min="0" max="10" value="5" name="arm_pain_severity" oninput="document.getElementById('aVal').innerText = this.value">
+                                <span id="aVal" class="badge bg-primary">5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="row g-2">
+                    <div class="col-12"><div class="section-divider"><span class="section-label">QUALITY OF LIFE / زندگی کا معیار</span></div></div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Work Impact</span><span class="label-urdu">کام میں رکاوٹ</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="interfere" value="not_at_all" id="in1"><label class="lbl-group" for="in1">None<span class="lbl-ur">نہیں</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="interfere" value="moderate" id="in2"><label class="lbl-group" for="in2">Mod<span class="lbl-ur">درمیانی</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="interfere" value="extremely" id="in3"><label class="lbl-group" for="in3">Extreme<span class="lbl-ur">شدید</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Future Feeling</span><span class="label-urdu">مستقبل کا احساس</span></div>
+                             <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="feeling" value="very_satisfied" id="ff1"><label class="lbl-group" for="ff1">Satisfied<span class="lbl-ur">مطمئن</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="feeling" value="very_dissatisfied" id="ff2"><label class="lbl-group" for="ff2">Dissatisfied<span class="lbl-ur">غیرمطمئن</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12"><div class="section-divider"><span class="section-label">MOBILITY / نقل و حرکت</span></div></div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Walking</span><span class="label-urdu">چلنا</span></div>
+                             <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="walking_tolerance" value="1" id="wt1"><label class="lbl-group" for="wt1">1m<span class="lbl-ur">منٹ</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="walking_tolerance" value="5" id="wt2"><label class="lbl-group" for="wt2">5m<span class="lbl-ur">منٹ</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="walking_tolerance" value="10" id="wt3"><label class="lbl-group" for="wt3">10m<span class="lbl-ur">منٹ</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="walking_tolerance" value="30" id="wt5"><label class="lbl-group" for="wt5">30+<span class="lbl-ur">منٹ</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">How would you rate your quality of life? </span><span class="label-urdu">زندگی کا معیار</span></div>
+                             <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="quality_of_life" value="very_good" id="qol1"><label class="lbl-group" for="qol1">Very Good<span class="lbl-ur">بہت اچھا</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="quality_of_life" value="good" id="qol2"><label class="lbl-group" for="qol2">Good<span class="lbl-ur">اچھا</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="quality_of_life" value="fair" id="qol3"><label class="lbl-group" for="qol3">Fair<span class="lbl-ur">درمیانہ</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="quality_of_life" value="poor" id="qol4"><label class="lbl-group" for="qol4">Poor<span class="lbl-ur">خراب</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="quality_of_life" value="very_poor" id="qol5"><label class="lbl-group" for="qol5">Very Poor<span class="lbl-ur">بہت خراب</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Need Support?</span><span class="label-urdu">سہارا</span></div>
+                             <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="support" value="no" id="support1"><label class="lbl-group" for="support1">No<span class="lbl-ur">نہیں</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="support" value="yes" id="support2"><label class="lbl-group" for="support2">Yes<span class="lbl-ur">جی ہاں</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Activity Limit</span><span class="label-urdu">سرگرمی کی حد</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="cutdown" value="not_at_all" id="cd1"><label class="lbl-group" for="cd1">None<span class="lbl-ur">نہیں</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="cutdown" value="moderate" id="cd2"><label class="lbl-group" for="cd2">Mod<span class="lbl-ur">درمیانی</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="cutdown" value="extremely" id="cd3"><label class="lbl-group" for="cd3">Extr<span class="lbl-ur">شدید</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                         <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Cause</span><span class="label-urdu">وجہ</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="cause_of_pain" value="Fever" id="cp1"><label class="lbl-group" for="cp1">Fever<span class="lbl-ur">بخار</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="cause_of_pain" value="Injury" id="cp2"><label class="lbl-group" for="cp2">Injury<span class="lbl-ur">چوٹ</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="cause_of_pain" value="Spontaneous" id="cp3"><label class="lbl-group" for="cp3">Spon.<span class="lbl-ur">خودبخود</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                         <div class="field-wrapper">
+                            <div class="label-row"><span class="label-eng">Numbness</span><span class="label-urdu">سن ہونے کی وجہ</span></div>
+                            <div class="checklist-options">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="numbness" value="At rest"><label class="lbl-group" for="cp1">Rest<span class="lbl-ur"> آرام کرتے ہوئے</span></label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="numbness" value="At work"><label class="lbl-group" for="cp2">Activity<span class="lbl-ur">کام کرتے ہوئے</span></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12"><div class="section-divider"><span class="section-label">VOICE NOTE / آواز</span></div></div>
+                    <div class="col-12">
+                         <div class="d-flex justify-content-center align-items-center mb-1">
+                            <button type="button" class="btn btn-outline-danger round-btn" id="startBtn"><i class="fa-solid fa-microphone"></i></button>
+                            <button type="button" class="btn btn-outline-secondary round-btn" id="stopBtn" disabled><i class="fa-solid fa-stop"></i></button>
+                        </div>
+                        <div class="text-center">
+                            <small class="text-muted d-block">Describe your pain in your own words / اپنی بیماری بیان کریں</small>
+                            <audio id="audioPlayback" controls class="w-100 mt-2" style="display:none; height: 35px;"></audio>
+                            <input type="file" id="audioFile" name="audio_file" accept="audio/wav" hidden />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="col-12"><div class="section-divider"><span class="section-label">UPLOAD REPORTS / رپورٹ اپ لوڈ کریں</span></div></div>
+                <div class="row g-2">
+                    <div class="col-md-6"><div class="field-wrapper"><div class="label-row"><span class="label-eng">MRI</span><span class="label-urdu">ایم آر آئی</span></div><input type="file" class="form-control form-control-sm" name="Mri" required></div></div>
+                    <div class="col-md-6"><div class="field-wrapper"><div class="label-row"><span class="label-eng">X-Rays</span><span class="label-urdu">ایکس رے</span></div><input type="file" class="form-control form-control-sm" name="Xrays" required></div></div>
+                    <div class="col-md-6"><div class="field-wrapper"><div class="label-row"><span class="label-eng">Blood</span><span class="label-urdu">خون</span></div><input type="file" class="form-control form-control-sm" name="Blood" required></div></div>
+                    <div class="col-md-6"><div class="field-wrapper"><div class="label-row"><span class="label-eng">CT Scan</span><span class="label-urdu">سی ٹی اسکین</span></div><input type="file" class="form-control form-control-sm" name="ct" required></div></div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn btn-secondary btn-sm px-4" id="prevBtn" onclick="nextPrev(-1)">Back / پیچھے</button>
+                <button type="button" class="btn btn-primary btn-sm px-4" id="nextBtn" onclick="nextPrev(1)">Next / آگے</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function showDoctorDetails() {
+        const select = document.getElementById('doctorSelect');
+        const card = document.getElementById('doctorInfoCard');
+        const option = select.options[select.selectedIndex];
+
+        // If user selects "Choose a doctor...", hide the card
+        if (!option.value) {
+            card.style.display = 'none';
+            return;
+        }
+
+        // Get data
+        const name = option.getAttribute('data-name');
+        const specialty = option.getAttribute('data-specialty');
+        const years = option.getAttribute('data-years');
+        const rating = option.getAttribute('data-rating');
+        const pic = option.getAttribute('data-pic');
+        const edu = option.getAttribute('data-education');
+        const hist = option.getAttribute('data-history');
+
+        // Populate Card
+        document.getElementById('cardName').textContent = name;
+        document.getElementById('cardSpecialty').textContent = specialty;
+        document.getElementById('cardYears').textContent = years;
+        document.getElementById('cardRating').textContent = rating + " ★";
+
+        // Handle Image (check if pic exists, otherwise use a placeholder logic if needed)
+        if(pic) {
+            document.getElementById('cardPic').src = pic;
+        }
+
+        // Use innerHTML for lists (allows <br> tags)
+        document.getElementById('cardEducation').innerHTML = edu;
+        document.getElementById('cardHistory').innerHTML = hist;
+
+        // Show Card
+        card.style.display = 'block';
+    }
+
+    var currentTab = 0;
+    var x = [];
+
+    document.addEventListener("DOMContentLoaded", function () {
+        x = document.getElementsByClassName("tab");
+        if (x.length > 0) showTab(currentTab);
+        setupAudioRecorder();
+    });
+
+    function showTab(n) {
+        if (!x || x.length === 0) return;
+        for (let i = 0; i < x.length; i++) x[i].style.display = "none";
+        x[n].style.display = "block";
+        document.getElementById("prevBtn").style.visibility = (n === 0) ? "hidden" : "visible";
+        let nextBtn = document.getElementById("nextBtn");
+        if (n === x.length - 1) {
+            nextBtn.innerHTML = "Submit / جمع کروائیں"; nextBtn.type = "submit"; nextBtn.className = "btn btn-success btn-sm px-4";
+        } else {
+            nextBtn.innerHTML = "Next / آگے"; nextBtn.type = "button"; nextBtn.className = "btn btn-primary btn-sm px-4";
+        }
+        fixStepIndicator(n);
+    }
+
+    function fixStepIndicator(n) {
+        let steps = document.getElementsByClassName("step");
+        for (let i = 0; i < steps.length; i++) {
+            steps[i].classList.remove("active");
+            if(i < n) steps[i].classList.add("finish");
+            else steps[i].classList.remove("finish");
+        }
+        if(steps[n]) steps[n].classList.add("active");
+    }
+
+    function toggleNeckSection() {
+        const neckRadio = document.getElementById("ap1");
+        const section = document.getElementById("neckSpecificsSection");
+        if(neckRadio.checked) {
+            section.style.display = "block";
+            document.querySelectorAll('input[name="grip"]').forEach(el => el.setAttribute('required', 'true'));
+        } else {
+            section.style.display = "none";
+            document.querySelectorAll('input[name="grip"]').forEach(el => {
+                el.removeAttribute('required'); el.checked = false;
+            });
+        }
+    }
+
+    function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+    function getCSRFToken() {
+        const tokenInput = document.querySelector('[name=csrfmiddlewaretoken]');
+        if (tokenInput) return tokenInput.value;
+        const csrfCookie = document.cookie.split('; ').find(cookie => cookie.trim().startsWith('csrftoken='));
+        return csrfCookie ? csrfCookie.split('=')[1] : '';
+    }
+    async function checkUsername() {
+        const input = document.getElementById("usernameInput");
+        const error = document.getElementById("usernameError");
+        if(input.value.trim() === "") return true;
+        try {
+            const res = await fetch('/check-username/', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCSRFToken() }, body: JSON.stringify({ username: input.value.trim() }) });
+            const result = await res.json();
+            if (result.exists) { input.classList.add("invalid"); error.style.display = "block"; return false; }
+            input.classList.remove("invalid"); error.style.display = "none"; return true;
+        } catch(e) { return false; }
+    }
+    async function checkEmail() {
+        const input = document.getElementById("emailInput");
+        const error = document.getElementById("emailError");
+        if (!isValidEmail(input.value)) { input.classList.add("invalid"); error.innerText = "Invalid"; error.style.display = "block"; return false; }
+        try {
+            const res = await fetch('/submit-email/', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCSRFToken() }, body: JSON.stringify({ email: input.value.trim() }) });
+            const result = await res.json();
+            if (result.email === true) { input.classList.add("invalid"); error.innerText = "Exists"; error.style.display = "block"; return false; }
+            input.classList.remove("invalid"); error.style.display = "none"; return true;
+        } catch(e) { return false; }
+    }
+
+    async function validateForm() {
+        let valid = true;
+        const currentTabElem = x[currentTab];
+
+        // Text Input Validation
+        const inputs = currentTabElem.querySelectorAll("input:not([type='radio']):not([type='file'])");
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].hasAttribute('required') && inputs[i].value.trim() === "") {
+                inputs[i].classList.add("invalid"); valid = false;
+            } else { inputs[i].classList.remove("invalid"); }
+        }
+
+        // Radio Button Validation
+        const radioInputs = currentTabElem.querySelectorAll("input[type='radio']");
+        const radioGroups = new Set();
+        radioInputs.forEach(r => {
+             if(r.closest('div').style.display !== 'none' && r.offsetParent !== null) {
+                radioGroups.add(r.name);
+             }
+        });
+        radioGroups.forEach(name => {
+            const checked = currentTabElem.querySelector(`input[name="${name}"]:checked`);
+            const allInGroup = currentTabElem.querySelectorAll(`input[name="${name}"]`);
+            const wrapper = allInGroup[0].closest('.field-wrapper');
+            if (!checked) { valid = false; if(wrapper) wrapper.classList.add("invalid-group"); }
+            else { if(wrapper) wrapper.classList.remove("invalid-group"); }
+        });
+
+        if (currentTab === 0) {
+            if (document.getElementById("passwordInput").value !== document.getElementById("confirmPasswordInput").value) {
+                document.getElementById("confirmPasswordInput").classList.add("invalid");
+                document.getElementById("passwordError").style.display = "block"; valid = false;
+            }
+            if (valid) { if (!await checkUsername()) valid = false; if (!await checkEmail()) valid = false; }
+        }
+
+        if (valid) document.getElementsByClassName("step")[currentTab].classList.add("finish");
+        return valid;
+    }
+
+    async function nextPrev(n) {
+        if (n === 1 && !await validateForm()) {
+            alert("Please fill out all required fields before proceeding.");
+            return false;
+        }
+        x[currentTab].style.display = "none";
+        currentTab += n;
+        if (currentTab >= x.length) { document.getElementById("audioForm").submit(); return false; }
+        showTab(currentTab);
+    }
+
+    function setupAudioRecorder() {
+        let mediaRecorder; let audioChunks = [];
+        const startBtn = document.getElementById("startBtn"); const stopBtn = document.getElementById("stopBtn");
+        startBtn.addEventListener("click", async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+                    const audioPlayback = document.getElementById("audioPlayback");
+                    audioPlayback.src = URL.createObjectURL(audioBlob); audioPlayback.style.display = "block";
+                    const dataTransfer = new DataTransfer(); dataTransfer.items.add(new File([audioBlob], "recording.wav", { type: "audio/wav" }));
+                    document.getElementById("audioFile").files = dataTransfer.files;
+                };
+                audioChunks = []; mediaRecorder.start();
+                startBtn.disabled = true; stopBtn.disabled = false;
+                startBtn.classList.replace("btn-outline-danger", "btn-danger");
+                stopBtn.classList.replace("btn-outline-secondary", "btn-secondary");
+            } catch (e) { alert("Microphone access required"); }
+        });
+        stopBtn.addEventListener("click", () => {
+            if (mediaRecorder?.state === "recording") { mediaRecorder.stop(); startBtn.disabled = false; stopBtn.disabled = true; startBtn.classList.replace("btn-danger", "btn-outline-danger"); stopBtn.classList.replace("btn-secondary", "btn-outline-secondary"); }
+        });
+    }
+</script>
+
+{% endblock %}

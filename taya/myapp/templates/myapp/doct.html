@@ -1,0 +1,247 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ========================================
+       PAGE LAYOUT
+       ======================================== */
+    .page-container {
+        max-width: 1000px; /* Narrower container for list view */
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .page-header h2 {
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    /* ========================================
+       DOCTOR LIST CARD (Horizontal Layout)
+       ======================================== */
+    .doctors-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .doctor-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        display: flex; /* Horizontal Layout */
+        align-items: center;
+        padding: 20px;
+        border-left: 6px solid #007bff; /* Accent on left side */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .doctor-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* AVATAR SECTION (Left) */
+    .card-avatar {
+        flex-shrink: 0;
+        margin-right: 25px;
+    }
+
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        background-color: #e3f2fd;
+        color: #007bff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+    }
+
+    /* INFO SECTION (Middle) */
+    .card-info {
+        flex-grow: 1;
+    }
+
+    .doc-name {
+        font-size: 1.4rem;
+        color: #333;
+        margin: 0 0 5px 0;
+        font-weight: 700;
+    }
+
+    .doc-specialty {
+        display: inline-block;
+        background-color: #e8f4fd;
+        color: #007bff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .detail-row {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .detail-row i {
+        color: #adb5bd;
+        width: 16px;
+        text-align: center;
+    }
+
+    /* RATING & ACTION SECTION (Right) */
+    .card-action {
+        text-align: right;
+        min-width: 150px;
+        padding-left: 20px;
+        border-left: 1px solid #eee;
+    }
+
+    .rating-box {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+    }
+
+    .stars {
+        color: #ffc107; /* Gold color */
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        display: flex;
+        gap: 2px;
+    }
+
+    .rating-text {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 700;
+        text-align: right;
+    }
+
+    .btn-book {
+        display: inline-block;
+        background-color: #28a745;
+        color: #fff;
+        padding: 8px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: background 0.2s;
+    }
+
+    .btn-book:hover {
+        background-color: #218838;
+    }
+
+    /* RESPONSIVE (Stack vertically on mobile) */
+    @media (max-width: 768px) {
+        .doctor-card {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .card-avatar {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+
+        .card-action {
+            width: 100%;
+            border-left: none;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            padding-left: 0;
+            padding-top: 15px;
+            text-align: center;
+        }
+
+        .detail-row {
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="page-container">
+
+    <div class="page-header">
+        <h2>Find a Specialist</h2>
+        <p>Book appointments with top-rated doctors</p>
+    </div>
+
+    <div class="doctors-list">
+        {% for doctor in doctors %}
+            <div class="doctor-card">
+                <div class="card-avatar">
+                    <div class="avatar-circle">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                </div>
+
+                <div class="card-info">
+                    <h3 class="doc-name">Dr. {{ doctor.full_name }}</h3>
+
+                    <span class="doc-specialty">{{ doctor.profession }}</span>
+
+                    <div class="detail-row">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{ doctor.email }}</span>
+                    </div>
+                    {% if doctor.address %}
+                    <div class="detail-row">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ doctor.address }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="card-action">
+                    <div class="rating-box">
+                        <div class="stars">
+                            {% for i in "12345" %}
+                                {% if doctor.average_rating >= forloop.counter %}
+                                    <i class="fas fa-star"></i>
+                                {% elif doctor.average_rating >= forloop.counter|add:"-0.5" %}
+                                    <i class="fas fa-star-half-alt"></i>
+                                {% else %}
+                                    <i class="far fa-star" style="color: #ccc;"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="rating-text">{{ doctor.average_rating|floatformat:1 }} ⭐</div>
+                    </div>
+                    <a href="{% url 'doctor_profile' doctor.id %}" class="btn-book">View Profile</a>
+                </div>
+            </div>
+        {% empty %}
+            <div style="text-align: center; color: #999; padding: 40px;">
+                <h3>No Doctors Found</h3>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,552 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* --- ADD REVIEW FORM STYLES --- */
+    .add-review-container {
+        background-color: #fcfcfc;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+
+    .form-header { font-weight: 700; margin-bottom: 15px; display: block; }
+
+    /* Interactive Star Rating */
+    .star-rating-input {
+        display: flex;
+        flex-direction: row-reverse; /* Allows CSS to select previous stars */
+        justify-content: flex-end;
+        gap: 5px;
+        margin-bottom: 15px;
+    }
+
+    .star-rating-input input { display: none; }
+
+    .star-rating-input label {
+        font-size: 1.5rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    /* Hover and Checked states */
+    .star-rating-input label:hover,
+    .star-rating-input label:hover ~ label,
+    .star-rating-input input:checked ~ label {
+        color: var(--warning);
+    }
+
+    .custom-textarea {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 100px;
+        margin-bottom: 15px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .custom-textarea:focus { border-color: var(--primary); }
+    /* --- THEME CONFIGURATION --- */
+    :root {
+        --primary: #007bff;       /* Professional Blue */
+        --primary-dark: #0056b3;
+        --secondary: #6c757d;
+        --success: #28a745;
+        --warning: #f1c40f;       /* Star Gold */
+        --light-bg: #f4f7f6;
+        --card-bg: #ffffff;
+        --text-main: #2c3e50;
+        --text-muted: #6c757d;
+        --radius: 12px;
+        --shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    body {
+        background-color: var(--light-bg);
+        color: var(--text-main);
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    /* Helper Classes for Animation */
+    .animate-entry {
+        opacity: 0;
+        animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    /* --- LAYOUT GRID --- */
+    .profile-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 350px 1fr; /* Fixed Sidebar, Flexible Content */
+        gap: 30px;
+        align-items: start;
+    }
+
+    /* --- LEFT SIDEBAR (STICKY) --- */
+    .profile-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: sticky;
+        top: 20px;
+        text-align: center;
+        border-top: 5px solid var(--primary);
+        z-index: 10;
+    }
+
+    .profile-header {
+        background: linear-gradient(to bottom, #f8f9fa 50%, transparent 50%);
+        padding-top: 30px;
+    }
+
+    .profile-img-wrapper {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 15px;
+    }
+
+    .profile-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .verified-badge {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: var(--success);
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #fff;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .doc-name { font-size: 1.6rem; font-weight: 800; margin-bottom: 5px; color: var(--text-main); }
+    .doc-specialty { color: var(--primary); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; margin-bottom: 25px; }
+
+    .action-buttons { padding: 0 25px; }
+
+    .btn-action {
+        display: block; width: 100%; margin-bottom: 12px;
+        padding: 14px; border-radius: 8px; text-decoration: none;
+        font-weight: 600; transition: all 0.2s; text-align: center;
+    }
+    .btn-primary { background: var(--primary); color: white; border: none; box-shadow: 0 4px 6px rgba(0,123,255,0.2); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,123,255,0.3); }
+    .btn-outline { background: #eef6ff; color: var(--primary); border: 1px solid transparent; }
+    .btn-outline:hover { background: #dcebff; border-color: #b3d7ff; }
+
+    .info-list { text-align: left; padding: 25px; border-top: 1px solid #f1f1f1; margin-top: 20px; }
+    .info-row { display: flex; align-items: center; margin-bottom: 18px; }
+    .info-row:last-child { margin-bottom: 0; }
+
+    .info-icon {
+        width: 38px; height: 38px;
+        background: #f8f9fa; color: var(--primary);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        margin-right: 15px; flex-shrink: 0;
+    }
+    .info-text small { display: block; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; }
+    .info-text span { font-weight: 500; font-size: 0.95rem; color: #333; }
+
+    /* --- RIGHT CONTENT AREA --- */
+    .content-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 35px;
+        margin-bottom: 25px;
+        transition: transform 0.3s ease;
+    }
+
+    .section-title {
+        font-size: 1.3rem; font-weight: 700; color: var(--text-main);
+        margin-bottom: 25px; padding-bottom: 15px;
+        border-bottom: 2px solid #f0f2f5;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+
+    /* Stats Grid */
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .stat-box {
+        background: #f8f9fa; padding: 20px; border-radius: 10px;
+        text-align: center; border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+    .stat-box:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
+    .stat-label { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; margin-top: 5px; }
+
+    /* Professional Background Timeline */
+    .timeline-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .timeline-col-header { color: var(--primary); margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+
+    .timeline-item {
+        position: relative; padding-left: 25px; margin-bottom: 25px;
+        border-left: 2px solid #e9ecef;
+    }
+    .timeline-item::before {
+        content: ''; position: absolute; left: -6px; top: 6px;
+        width: 10px; height: 10px; background: var(--primary); border-radius: 50%;
+        box-shadow: 0 0 0 4px #fff;
+    }
+    .t-date { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; display: block; }
+    .t-title { font-weight: 700; color: #333; font-size: 1rem; }
+    .t-place { font-size: 0.9rem; color: #555; }
+
+    /* --- RATING & REVIEWS SYSTEM --- */
+    .rating-dashboard { display: flex; align-items: center; gap: 40px; margin-bottom: 40px; }
+
+    .rating-score { text-align: center; min-width: 140px; }
+    .score-big { font-size: 4rem; font-weight: 800; color: #333; line-height: 1; margin-bottom: 5px; }
+    .score-stars { color: var(--warning); font-size: 1.2rem; margin-bottom: 5px; }
+
+    .rating-bars-container { flex-grow: 1; }
+    .bar-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.85rem; color: #666; }
+    .bar-label { width: 45px; font-weight: 600; }
+    .progress-track {
+        flex-grow: 1; height: 8px; background: #e9ecef;
+        border-radius: 10px; margin: 0 15px; overflow: hidden;
+    }
+    .progress-fill { height: 100%; background: var(--warning); border-radius: 10px; width: 0; transition: width 1s ease-out; }
+    .bar-count { width: 35px; text-align: right; }
+
+    /* Review List */
+    .review-card {
+        padding: 25px 0; border-bottom: 1px solid #f1f1f1;
+    }
+    .review-card:last-child { border-bottom: none; }
+
+    .reviewer-meta { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; }
+    .reviewer-info { display: flex; align-items: center; gap: 12px; }
+
+    .reviewer-avatar {
+        width: 40px; height: 40px; background: #eef2f3; color: var(--primary);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 1.1rem;
+    }
+
+    .review-stars { font-size: 0.8rem; color: var(--warning); margin-top: 3px; }
+    .review-date { font-size: 0.8rem; color: #aaa; }
+    .review-text { color: #555; line-height: 1.6; font-size: 0.95rem; }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .profile-container { grid-template-columns: 1fr; }
+        .profile-card { position: static; margin-bottom: 20px; }
+        .rating-dashboard { flex-direction: column; text-align: center; gap: 20px; }
+        .timeline-container { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="profile-container">
+
+    <div class="profile-card animate-entry">
+        <div class="profile-header">
+            <div class="profile-img-wrapper">
+                {% if doctor.profile_pic %}
+                    <img src="{{ doctor.profile_pic.url }}" alt="{{ doctor.full_name }}" class="profile-img">
+                {% else %}
+                    <img src="https://ui-avatars.com/api/?name={{ doctor.full_name }}&background=007bff&color=fff&size=200" class="profile-img">
+                {% endif %}
+
+                {% if doctor.is_verified %}
+                    <div class="verified-badge" title="Verified Specialist"><i class="fas fa-check"></i></div>
+                {% endif %}
+            </div>
+
+            <h1 class="doc-name">{{ doctor.full_name }}</h1>
+            <div class="doc-specialty">{{ doctor.specialty }}</div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="#book-section" class="btn-action btn-primary">
+                <i class="far fa-calendar-check" style="margin-right: 8px;"></i> Book Appointment
+            </a>
+            <a href="mailto:{{ doctor.email }}" class="btn-action btn-outline">
+                <i class="far fa-envelope" style="margin-right: 8px;"></i> Contact Doctor
+            </a>
+        </div>
+
+        <div class="info-list">
+            <div class="info-row">
+                <div class="info-icon"><i class="fas fa-hospital-alt"></i></div>
+                <div class="info-text">
+                    <small>Hospital</small>
+                    <span>{{ doctor.hospital_name }}</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-icon"><i class="fas fa-money-bill-wave"></i></div>
+                <div class="info-text">
+                    <small>Consultation Fee</small>
+                    <span>Rs. {{ doctor.consultation_fee }}</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-icon"><i class="fas fa-language"></i></div>
+                <div class="info-text">
+                    <small>Languages</small>
+                    <span>{{ doctor.languages }}</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="info-text">
+                    <small>Location</small>
+                    <span>{{ doctor.address|default:"City Center" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <div class="content-card animate-entry delay-1">
+            <div class="section-title">Overview</div>
+            <p style="color: #555; line-height: 1.7; margin-bottom: 30px;">
+                {{ doctor.bio|default:"Dr. "|add:doctor.full_name|add:" is a highly experienced specialist dedicated to providing top-tier medical care. With a focus on patient well-being and advanced treatments, they have successfully treated numerous cases in their field." }}
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value">{{ doctor.experience_years }}+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">
+                        {% if patient_count > 0 %}
+                            {{ patient_count }}
+                        {% else %}
+                            {{ actual_patient_count}}
+                        {% endif %}
+                    </div>
+                    <div class="stat-label">Patients Treated</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">{{ doctor.success_rate }}</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card animate-entry delay-2">
+            <div class="section-title">Professional Journey</div>
+
+            <div class="timeline-container">
+                <div>
+                    <div class="timeline-col-header"><i class="fas fa-briefcase"></i> Experience</div>
+                    {% for exp in doctor.experience.all %}
+                    <div class="timeline-item">
+                        <span class="t-date">{{ exp.start_year }} - {{ exp.end_year }}</span>
+                        <div class="t-title">{{ exp.position }}</div>
+                        <div class="t-place">{{ exp.hospital }}</div>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted" style="font-style:italic;">No experience listed.</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <div class="timeline-col-header"><i class="fas fa-graduation-cap"></i> Education</div>
+                    {% for edu in doctor.education.all %}
+                    <div class="timeline-item">
+                        <span class="t-date">{{ edu.start_year }} - {{ edu.end_year }}</span>
+                        <div class="t-title">{{ edu.degree }}</div>
+                        <div class="t-place">{{ edu.institution }}</div>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted" style="font-style:italic;">No education listed.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card animate-entry delay-3">
+            <div class="section-title">Patient Feedback</div>
+            <div class="content-card animate-entry delay-3">
+            <div class="section-title">Patient Feedback</div>
+
+            <div class="rating-dashboard">
+                <div class="rating-score">
+                    <div class="score-big">{{ doctor.average_rating|floatformat:1 }}</div>
+                     </div>
+                <div class="rating-bars-container">
+                    </div>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="add-review-container">
+                <span class="form-header">Share your experience</span>
+
+                <form method="POST" action="{% url 'add_review' doctor.id %}">
+                    {% csrf_token %}
+
+                    <div class="star-rating-input">
+                        <input type="radio" id="star5" name="rating" value="5" required /><label for="star5" title="5 Stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 Stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 Stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 Stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 Star"><i class="fas fa-star"></i></label>
+                    </div>
+
+                    <textarea name="comment" class="custom-textarea" placeholder="Write your review here... How was your appointment?" required></textarea>
+
+                    <button type="submit" class="btn-action btn-primary" style="width: auto; padding: 10px 25px; margin-bottom: 0;">
+                        Post Review
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            <div class="add-review-container" style="text-align: center; background-color: #f1f3f5;">
+                <p style="margin-bottom: 15px; color: #666;">Please log in to write a review.</p>
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn-action btn-outline" style="width: auto; display: inline-block;">Login Here</a>
+            </div>
+            {% endif %}
+            <div class="review-list">
+                </div>
+        </div>
+
+            <div class="rating-dashboard">
+                <div class="rating-score">
+                    <div class="score-big">{{ doctor.average_rating|floatformat:1 }}</div>
+                    <div class="score-stars">
+                        {% for i in "12345" %}
+                             <i class="fas fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <small style="color: #999; display: block;">Based on {{ doctor.reviews.count }} reviews</small>
+                </div>
+
+                <div class="rating-bars-container">
+                    {% for item in star_breakdown %}
+                    <div class="bar-row">
+                        <span class="bar-label">{{ item.stars }} <i class="fas fa-star" style="font-size:0.7rem;"></i></span>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: {{ item.percentage }}%;"></div>
+                        </div>
+                        <span class="bar-count">{{ item.count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="review-list">
+                {% for review in reviews %}
+                <div class="review-card">
+                    <div class="reviewer-meta">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                {{ review.user.username|slice:":1"|upper }}
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.95rem;">{{ review.user.username }}</div>
+                                <div class="review-stars">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= review.rating %}
+                                            <i class="fas fa-star"></i>
+                                        {% else %}
+                                            <i class="far fa-star" style="color:#ddd;"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <span class="review-date">{{ review.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="review-text">
+                        {% if review.comment %}
+                            {{ review.comment }}
+                        {% else %}
+                            <em style="color:#999;">No written feedback provided.</em>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div style="text-align: center; padding: 40px; color: #999;">
+                    <i class="far fa-comment-dots fa-3x" style="margin-bottom: 15px; opacity: 0.5;"></i>
+                    <p>No reviews yet. Be the first to share your experience!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="content-card animate-entry delay-4" id="book-section">
+            <div class="section-title">
+                Available Slots
+                <button class="btn-action btn-outline" style="width: auto; padding: 5px 15px; font-size: 0.8rem; margin:0;">
+                    View Full Calendar
+                </button>
+            </div>
+
+            <div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px;">
+                <div style="background: var(--primary); color: white; padding: 15px 25px; border-radius: 10px; text-align: center; min-width: 90px; flex-shrink:0;">
+                    <small style="opacity:0.8;">Today</small><br><strong style="font-size:1.1rem;">Mon</strong>
+                </div>
+                <div style="background: #f8f9fa; border: 1px solid #ddd; padding: 15px 25px; border-radius: 10px; text-align: center; min-width: 90px; flex-shrink:0; color:#555;">
+                    <small>Tomorrow</small><br><strong style="font-size:1.1rem;">Tue</strong>
+                </div>
+                <div style="background: #f8f9fa; border: 1px solid #ddd; padding: 15px 25px; border-radius: 10px; text-align: center; min-width: 90px; flex-shrink:0; color:#555;">
+                    <small>Wed</small><br><strong style="font-size:1.1rem;">24</strong>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <p style="font-size: 0.9rem; font-weight: 600; color: #555; margin-bottom: 10px;">Morning</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <span style="padding: 8px 18px; background: #fff; border: 1px solid var(--success); color: var(--success); border-radius: 30px; cursor: pointer; font-size: 0.9rem; font-weight: 500;">10:00 AM</span>
+                    <span style="padding: 8px 18px; background: #fff; border: 1px solid var(--success); color: var(--success); border-radius: 30px; cursor: pointer; font-size: 0.9rem; font-weight: 500;">11:30 AM</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+{% block title %}Salama | Patient List{% endblock %}
+
+{% block body %}
+
+<style>
+    body {
+        background-color: #f4f7f6;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .page-header {
+        text-align: center;
+        margin: 40px 0;
+        color: #333;
+    }
+
+    .page-header h1 {
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .page-header h4 {
+        color: #6c757d;
+        font-weight: 300;
+    }
+
+    /* Card Styling */
+    .patient-card {
+        border: none;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        height: 100%; /* Makes all cards same height */
+        overflow: hidden;
+    }
+
+    .patient-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    }
+
+    /* Card Header with Color Accent */
+    .card-top-accent {
+        height: 5px;
+        background: #007bff;
+        width: 100%;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .patient-id {
+        font-size: 0.85rem;
+        color: #adb5bd;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .info-row {
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #007bff;
+        margin-right: 5px;
+    }
+
+    /* Button Styling */
+    .btn-view-profile {
+        width: 100%;
+        margin-top: 15px;
+        border: 1px solid #007bff;
+        color: #007bff;
+        background: transparent;
+        border-radius: 5px;
+        padding: 8px;
+        transition: all 0.3s;
+    }
+
+    .btn-view-profile:hover {
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <h4>Your Patient List</h4>
+    </div>
+
+    <div class="row">
+        {% for test in tests %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="patient-card">
+                    <div class="card-top-accent"></div>
+                    <div class="card-body">
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <span class="patient-id">Name:{{ test.full_name }}</span>
+                        </div>
+
+                        <h5 class="card-title">ID: #{{ test.id }}</h5>
+
+
+
+                        <div class="info-row">
+                            <span class="info-label">Email:</span>
+                            {{ test.email }}
+                        </div>
+
+                        <a href="{% url 'more_info' test.id %}" class="btn btn-view-profile">
+                            View More Info
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p>No patients found.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

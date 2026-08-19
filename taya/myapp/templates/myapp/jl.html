@@ -1,0 +1,232 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+   <header>Signup Form</header>
+   <div class="progress-bar">
+      <div class="step">
+         <p>
+            Disclaimer
+         </p>
+         <div class="bullet">
+            <span>1</span>
+         </div>
+         <div class="check fas fa-check"></div>
+      </div>
+      <div class="step">
+         <p>
+            Log in
+         </p>
+         <div class="bullet">
+            <span>2</span>
+         </div>
+         <div class="check fas fa-check"></div>
+      </div>
+      <div class="step">
+         <p>
+            Personal Details
+         </p>
+         <div class="bullet">
+            <span>3</span>
+         </div>
+         <div class="check fas fa-check"></div>
+      </div>
+      <div class="step">
+         <p>
+            Submit
+         </p>
+         <div class="bullet">
+            <span>4</span>
+         </div>
+         <div class="check fas fa-check"></div>
+      </div>
+   </div>
+   <div class="form-outer">
+      <form id="audioForm" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         <div class="page slide-page">
+
+            <div class="title">
+               Disclaimer
+            </div>
+            
+            <select class="form-select" name="Area of Pain" aria-label="Default select example">
+               <option selected>Open this select menu</option>
+               <option value="Neck">Neck</option>
+               <option value="Upper back">Upper back</option>
+               <option value="Lower back">Lower back</option>
+             </select>
+            
+               <div class="field">
+                  <button class="firstNext next">Next</button>
+   
+               </div>
+         </div>
+         <div class="page">
+            <div class="title">
+               Create Account:
+            </div>
+            <div class="field">
+               <div class="label">
+                  Name
+               </div>
+               <input type="name" class="form-control" name="name" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+               <div class="label">
+                  Password
+               </div>
+               <input type="password" class="form-control" name="password" autocomplete="current-password" aria-describedby="emailHelp">
+
+            </div>
+            <div class="field">
+               <div class="label">
+                  email
+               </div>
+               <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
+            </div>
+            
+            Already have an account? <a href="{% url 'have' %}">Log In here.</a>
+            
+               
+               <div class="field">
+                  <div class="label">
+                     Doctor
+                  </div>
+                  
+                  <select class="form-select" name="doct" aria-label="Default select example">
+                     <option selected>Open this select menu</option>
+                     <option value="Dentist">Dentist</option>
+                     <option value="Cardio">Cardio</option>
+                     <option value="3">Three</option>
+                   </select>
+                   
+               </div>
+               
+               <div class="field">
+                  <div class="label">
+                     Last Name
+                  </div>
+                  <div class="form-check form-check-inline">
+                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                     <label class="form-check-label" for="inlineRadio1">1</label>
+                   </div>
+                   <div class="form-check form-check-inline">
+                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                     <label class="form-check-label" for="inlineRadio2">2</label>
+                   </div>
+                   
+               
+               
+            
+            
+               <button type="button" class="btn btn-danger round-btn" id="startBtn">🎤</button>
+               <button type="button" class="btn btn-success round-btn" id="stopBtn">⏹</button>
+               <audio id="audioPlayback" controls></audio>
+               <input type="hidden" id="audioFile" name="audio_file">
+               <label for="document_file">Upload Document:</label>
+            <input type="file" id="document_file" name="document_file" accept=".pdf,.docx,.txt" required><br><br>
+               
+            
+               
+
+            </div>
+            <div class="field btns">
+               <button class="prev-1 prev">Previous</button>
+               <button class="next-1 next">Next</button>
+            </div>
+         </div>
+         <div class="page">
+            <div class="title">
+               Personal Details:
+            </div>
+            <div class="field">
+               <div class="label">
+                  Name
+               </div>
+               <input type="text" class="form-control" name="name" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+               <div class="label">
+                  Age
+               </div>
+               <input type="number" class="form-control" name="age" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+               <div class="label">
+                  Sex
+               </div>
+               <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="male" id="inlineRadio1" value="option1">
+                  <label class="form-check-label" for="inlineRadio1">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="Female" id="inlineRadio2" value="option2">
+                  <label class="form-check-label" for="inlineRadio2">Female</label>
+                </div>
+                
+            </div>
+            <div class="field">
+               <div class="label">
+                  Profession
+               </div>
+               <input type="text" class="form-control" name="Profession" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+               <div class="label">
+                  Residential Address
+               </div>
+               <input type="text" class="form-control" name="address" aria-describedby="emailHelp">
+            </div>
+            <div class="field">
+               <div class="label">
+                 Past History
+               </div>
+            <select class="form-select" name="Past History" aria-label="Default select example">
+               <option selected>Open this select menu</option>
+               <option value="Diabetes Mellitus (DM)">Diabetes Mellitus (DM)</option>
+               <option value="Hypertension (HTN)">Hypertension (HTN)</option>
+               <option value="Heart problem">Heart problem</option>
+             </select>
+            </div>
+           
+               
+            
+           
+            <div class="field btns">
+               <button class="prev-2 prev">Previous</button>
+               <button class="next-2 next">Next</button>
+            </div>
+         </div>
+         <div class="page">
+            <div class="title">
+               Pain:
+            </div>
+            <div class="field">
+               <div class="label">
+                  Area of Spine
+               </div>
+            <select class="form-select" name="Area of Pain" aria-label="Default select example">
+               <option selected>Open this select menu</option>
+               <option value="Neck">Neck</option>
+               <option value="Upper back">Upper back</option>
+               <option value="Lower back">Lower back</option>
+             </select>
+            </div>
+            <div class="field btns">
+               <button class="prev-3 prev">Previous</button>
+               <button class="submit">Submit</button>
+            </div>
+         </div>
+         <div class="page">
+            <div class="title">
+               Pain:
+            </div>
+            <button class="submit">Submit</button>
+         </div>
+      </form>
+   </div>
+</div>
+</div>
+
+{% endblock%}

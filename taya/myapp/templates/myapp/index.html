@@ -1,0 +1,152 @@
+{% extends "myapp/layout.html" %}
+{% load static %}
+
+{% block title %}CareConnect{% endblock %}
+
+{% block body %}
+
+<style>
+    /* Hero Section Specifics */
+    .hero-section {
+        background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #0284c7);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: white;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin-top: -80px; /* Counteract padding-top from layout if navbar is transparent */
+    }
+
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Floating Icons */
+    .floating-icon {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.1);
+        z-index: 0;
+        animation: float 6s ease-in-out infinite;
+    }
+    .i1 { top: 15%; left: 10%; font-size: 4rem; animation-delay: 0s; }
+    .i2 { bottom: 20%; right: 10%; font-size: 5rem; animation-delay: 1s; }
+    .i3 { top: 20%; right: 20%; font-size: 3rem; animation-delay: 2s; }
+    .i4 { bottom: 15%; left: 15%; font-size: 4rem; animation-delay: 3s; }
+
+    @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(10deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        transition: 0.3s;
+        border: 1px solid #eee;
+        height: 100%;
+    }
+    .glass-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+        border-color: #0ea5e9;
+    }
+    .icon-box {
+        font-size: 2.5rem;
+        color: #0ea5e9;
+        margin-bottom: 20px;
+    }
+</style>
+
+<header class="hero-section">
+    <i class="fa-solid fa-pills floating-icon i1"></i>
+    <i class="fa-solid fa-stethoscope floating-icon i2"></i>
+    <i class="fa-solid fa-user-doctor floating-icon i3"></i>
+    <i class="fa-solid fa-file-prescription floating-icon i4"></i>
+
+    <div class="container hero-content">
+        <div data-aos="fade-down" data-aos-duration="1000">
+            <h1 class="display-3 fw-bold mb-2">Healthcare on Your Schedule</h1>
+            <div class="urdu fs-2 text-white mb-4" style="color: #bfdbfe;">آپ کی صحت، آپ کی سہولت</div>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+            <p class="lead mb-4 opacity-75">
+                Connect with certified doctors instantly. No appointments, no waiting rooms.
+            </p>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'page' %}" class="btn btn-light rounded-pill px-5 py-3 fw-bold text-primary shadow">
+                    Go to Dashboard <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'log' %}" class="btn btn-light rounded-pill px-5 py-3 fw-bold text-primary shadow">
+                    Start Consultation <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<section id="process" class="py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5" data-aos="zoom-in">
+            <h2 class="fw-bold">How It Works</h2>
+            <div class="urdu fs-4 text-info">تین آسان مراحل</div>
+        </div>
+
+        <div class="row g-4 text-center">
+            <div class="col-md-4" data-aos="fade-right">
+                <div class="glass-card">
+                    <i class="fa-solid fa-id-card icon-box"></i>
+                    <h4>1. Register</h4>
+                    <p class="text-muted">Create a secure account.</p>
+                    <div class="urdu text-muted small">اپنا اکاؤنٹ بنائیں</div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="glass-card">
+                    <i class="fa-solid fa-comment-medical icon-box"></i>
+                    <h4>2. Consult</h4>
+                    <p class="text-muted">Share your symptoms online.</p>
+                    <div class="urdu text-muted small">اپنی علامات آن لائن بتائیں۔</div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-left">
+                <div class="glass-card">
+                    <i class="fa-solid fa-capsules icon-box"></i>
+                    <h4>3. Treat</h4>
+                    <p class="text-muted">Get your prescription.</p>
+                    <div class="urdu text-muted small">اپنا نسخہ حاصل کریں۔</div>
+                </div>
+            </div>
+        </div> </div> </section>
+<script>
+console.log("Hero section loaded.");
+function toggleMobileMenu() {
+    const menu = document.getElementById("mobileMenu");
+
+    if (!menu) return;
+
+    menu.classList.toggle("show");
+}
+</script>
+
+{% endblock %}
