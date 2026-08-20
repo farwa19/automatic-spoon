@@ -1,0 +1,54 @@
+GET http://localhost:3002/api/blogs
+
+###
+
+POST http://localhost:3002/api/blogs
+Content-Type: application/json
+
+{
+   "username": "facj",
+  "password": "sekretpassword"
+}
+###
+
+POST http://localhost:3002/api/users
+Content-Type: application/json
+
+{
+  "username": "fsjj",
+  "password": "sexs"
+}
+###
+###
+
+POST http://localhost:3002/api/login
+
+Content-Type: application/json
+
+
+{
+  "username": "fsjj",
+  "password": "sexs"
+}
+######
+### 1. Log in to get your token (Change password to your actual root password)
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "fsj",
+  "password": "sexs"
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX... 
+
+{
+  "title": "Understanding Node.js",
+  "author": "root",
+  "url": "https://nodejs.org",
+  "likes": 15
+}
