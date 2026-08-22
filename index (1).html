@@ -1,0 +1,3367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Health — Symptom Guidance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f7fbfa;color:#10343d;font-family:"DM Sans",sans-serif;overflow-x:hidden}a,button{font:inherit}.header{height:80px;position:fixed;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 5.2%;background:rgba(247,251,250,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(16,52,61,.08)}.brand{display:flex;gap:8px;align-items:center;text-decoration:none;color:#10343d;font-weight:800;font-size:18px}.brand b{width:30px;height:30px;border-radius:9px;background:#10343d;color:#9ce8e1;display:grid;place-items:center;font-size:22px}.brand span{color:#14958f}.header nav{display:flex;gap:42px}.header nav a{color:#61777e;text-decoration:none;font-size:14px;font-weight:700}.small-cta,.btn{background:#14958f;color:#fff;text-decoration:none;border:0;border-radius:13px;font-weight:800;box-shadow:0 12px 28px rgba(20,149,143,.2);padding:13px 18px;transition:.25s}.small-cta:hover,.btn:hover{transform:translateY(-3px);box-shadow:0 17px 35px rgba(20,149,143,.27)}.hero{min-height:100vh;padding:80px 5.2% 55px;display:grid;grid-template-columns:48% 52%;align-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 45%,#dff7f4 0,transparent 36%),#f7fbfa}.hero-grid-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}.grid-focus{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(20,149,143,.14) 1px,transparent 1px),linear-gradient(to bottom,rgba(20,149,143,.14) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(320px circle at var(--mx,75%) var(--my,45%),black,transparent);-webkit-mask-image:radial-gradient(320px circle at var(--mx,75%) var(--my,45%),black,transparent);opacity:.85;pointer-events:none}.ambient{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}.ambient-a{width:400px;height:400px;right:-90px;top:100px;background:rgba(72,203,194,.18);animation:float 7s infinite ease-in-out}.ambient-b{width:260px;height:260px;left:25%;bottom:-120px;background:rgba(78,210,200,.15);animation:float 9s infinite ease-in-out reverse}.ambient-c{width:200px;height:200px;left:-80px;top:45%;background:rgba(20,149,143,.09);animation:float 11s infinite ease-in-out}.copy{position:relative;z-index:4;max-width:690px}.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:800;color:#14958f;margin-bottom:20px}.eyebrow i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#14958f;margin-right:8px}.copy h1{font-family:Manrope,sans-serif;font-size:clamp(58px,6.2vw,92px);line-height:.9;letter-spacing:-.065em;margin:0 0 25px}.copy p{max-width:620px;color:#71878d;line-height:1.7;font-size:17px}.actions{display:flex;gap:24px;align-items:center;margin-top:26px}.text{color:#10343d;text-decoration:none;font-size:13px;font-weight:800}.note{display:block;margin-top:26px;color:#82979c;font-size:11px}.visual{position:relative;min-height:610px;display:grid;place-items:center;z-index:3}.orb{position:absolute;border-radius:50%;border:1px solid rgba(20,149,143,.12)}.orb.a{width:540px;height:540px;background:rgba(209,243,240,.55);border:0;animation:orb 8s infinite ease-in-out}.orb.b{width:360px;height:360px;border-style:dashed;animation:spin 18s linear infinite}.ring{position:absolute;border:1px solid rgba(20,149,143,.08);border-radius:50%}.r1{width:640px;height:640px}.r2{width:430px;height:430px;border-style:dashed;animation:spin 14s linear infinite reverse}.card{width:min(400px,78%);height:520px;border-radius:28px;background:rgba(255,255,255,.93);border:1px solid rgba(16,52,61,.08);box-shadow:0 35px 85px rgba(29,89,93,.13);padding:25px;position:relative;z-index:5;backdrop-filter:blur(12px);animation:cardFloat 6s ease-in-out infinite;overflow:hidden}.cardtop{display:flex;justify-content:space-between}.cardtop small,.question small,.float small{display:block;color:#9aacb0;font-size:9px;letter-spacing:.1em}.cardtop strong{display:block;margin-top:8px;font-size:15px}.cardtop em{font-style:normal;background:#e1f5f2;color:#14958f;padding:12px 13px;border-radius:20px;font-size:9px;font-weight:800}.question{display:flex;gap:12px;margin-top:40px}.question>span{font-size:9px;color:#14958f}.question strong{display:block;margin-top:7px;font-size:14px}.hero-body{height:320px;position:relative;display:grid;place-items:center;overflow:hidden}
+/* ── Header auth buttons ── */
+#home,#how{scroll-margin-top:90px}
+.header-right{display:flex;align-items:center;gap:10px}
+.auth-btn{text-decoration:none;font-size:13px;font-weight:700;color:#10343d;padding:9px 16px;border-radius:10px;transition:.2s;border:1.5px solid transparent}
+.auth-btn:hover{background:rgba(20,149,143,.08)}
+.auth-btn.signup{background:#14958f;color:#fff;border-color:#14958f}
+.auth-btn.signup:hover{background:#0d7a75;transform:translateY(-1px)}
+
+/* ── Auth modal ── */
+.auth-overlay{position:fixed;inset:0;background:rgba(10,30,35,.55);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.auth-overlay.open{display:flex}
+.auth-modal{width:100%;max-width:400px;background:#fff;border-radius:20px;padding:32px 30px 28px;position:relative;box-shadow:0 40px 90px rgba(16,52,61,.28);animation:authIn .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes authIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.auth-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border:0;border-radius:50%;background:rgba(16,52,61,.06);color:#61777e;font-size:16px;cursor:pointer;display:grid;place-items:center;transition:.2s}
+.auth-close:hover{background:rgba(16,52,61,.12);color:#10343d}
+.auth-tabs{display:flex;gap:4px;background:#f2f7f6;border-radius:12px;padding:4px;margin-bottom:22px}
+.auth-tab{flex:1;border:0;background:none;padding:10px 0;border-radius:9px;font-weight:700;font-size:13px;color:#61777e;cursor:pointer;transition:.2s}
+.auth-tab.active{background:#fff;color:#10343d;box-shadow:0 4px 12px rgba(16,52,61,.08)}
+.auth-title{font-family:Manrope,sans-serif;font-size:22px;font-weight:800;margin:0 0 6px;color:#10343d}
+.auth-sub{color:#71878d;font-size:13px;margin:0 0 22px;line-height:1.5}
+.auth-field{margin-bottom:14px}
+.auth-field label{display:block;font-size:12px;font-weight:700;color:#10343d;margin-bottom:6px}
+.auth-field input{width:100%;padding:12px 14px;border-radius:11px;border:1.5px solid rgba(16,52,61,.14);font:inherit;font-size:14px;color:#10343d;background:#f9fbfb;transition:.2s}
+.auth-field input:focus{outline:none;border-color:#14958f;background:#fff;box-shadow:0 0 0 3px rgba(20,149,143,.12)}
+.auth-error{color:#c0392b;font-size:12px;font-weight:600;margin:-6px 0 14px;display:none}
+.auth-error.show{display:block}
+.auth-submit{width:100%;background:#14958f;color:#fff;border:0;border-radius:11px;padding:13px 0;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 12px 28px rgba(20,149,143,.22);transition:.25s;margin-top:4px}
+.auth-submit:hover{transform:translateY(-2px);box-shadow:0 17px 35px rgba(20,149,143,.28)}
+.auth-switch{text-align:center;font-size:12.5px;color:#71878d;margin-top:16px}
+.auth-switch button{background:none;border:0;color:#14958f;font-weight:800;cursor:pointer;font:inherit;padding:0}
+.user-chip{display:flex;align-items:center;gap:9px;background:#eef7f6;border-radius:12px;padding:6px 14px 6px 8px;cursor:pointer;border:1.5px solid transparent;transition:.2s}
+.user-chip:hover{border-color:rgba(20,149,143,.3)}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:#14958f;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800;flex-shrink:0}
+.user-chip span{font-size:13px;font-weight:700;color:#10343d;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border-radius:13px;box-shadow:0 20px 45px rgba(16,52,61,.18);border:1px solid rgba(16,52,61,.08);padding:8px;min-width:170px;display:none;z-index:60}
+.user-menu.open{display:block}
+.user-menu button{width:100%;text-align:left;background:none;border:0;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:700;color:#c0392b;cursor:pointer;font-family:inherit}
+.user-menu button:hover{background:rgba(192,57,43,.08)}
+.header-right{position:relative}
+
+/* ── Find healthcare nearby button ── */
+.find-care-btn{background:#fff;border:1.5px solid rgba(20,149,143,.3);border-radius:13px;padding:13px 18px;font-weight:700;font-size:13px;color:#14958f;transition:.25s;box-shadow:0 4px 16px rgba(20,149,143,.1)}
+.find-care-btn:hover{background:#e9f7f5;border-color:#14958f;transform:translateY(-2px)}
+
+/* ── Animated canvas grid ── */
+.hero-grid-canvas{opacity:1}
+
+/* ── Ticker strip ── */
+.ticker-wrap{width:100%;overflow:hidden;background:#10343d;padding:13px 0;position:relative;z-index:5}
+.ticker-track{display:flex;gap:0;width:max-content;animation:ticker 32s linear infinite}
+.ticker-track span{white-space:nowrap;padding:0 36px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);border-right:1px solid rgba(255,255,255,.12)}
+.ticker-track span:last-child{border-right:none}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── Assessment skeleton realistic style ── */
+
+
+
+/* ── Region dots — exact anatomical positions ── */
+.region-head{top:6%;left:50%;transform:translateX(-50%)}
+.region-chest{top:28%;right:22%}
+.region-abdomen{top:43%;left:22%}
+.region-arm{top:50%;right:16%}
+.region-legs{top:72%;left:50%;transform:translateX(-50%)}
+
+/* ── Anatomy labels ── */
+.anatomy-labels{position:absolute;inset:0;pointer-events:none}
+.anat-label{position:absolute;font-size:9px;font-weight:700;color:#94b5b3;letter-spacing:.08em;text-transform:uppercase}
+
+/* ── Popover wobble on open ── */
+@keyframes popWobble{
+  0%{transform:translateY(7px) scale(.97)}
+  40%{transform:translateY(-4px) scale(1.015) rotate(.4deg)}
+  65%{transform:translateY(2px) scale(.998) rotate(-.2deg)}
+  80%{transform:translateY(-1px) scale(1.003)}
+  100%{transform:none}
+}
+.popover.wobble{animation:popWobble .55s cubic-bezier(.36,.07,.19,.97) both}
+
+
+
+/* ── Stethoscope cursor sensitivity ── */
+.cursor-stethoscope{transition:left .04s linear,top .04s linear}
+
+/* ── Assessment bg subtle pattern ── */
+.map-stage{background:radial-gradient(ellipse at 50% 50%,rgba(20,149,143,.03) 0,transparent 70%)}
+
+/* ── Card vibrate on cursor hover ── */
+@keyframes cardVibrate{
+  0%,100%{transform:translateY(-9px)}
+  15%{transform:translateY(-9px) translateX(-3px) rotate(-.4deg)}
+  30%{transform:translateY(-9px) translateX(3px) rotate(.4deg)}
+  45%{transform:translateY(-9px) translateX(-2px) rotate(-.2deg)}
+  60%{transform:translateY(-9px) translateX(2px) rotate(.2deg)}
+  75%{transform:translateY(-9px) translateX(-1px)}
+  90%{transform:translateY(-9px) translateX(1px)}
+}
+.card.vibrating{animation:cardVibrate .5s ease both}
+
+/* ── Border Beam — float boxes only, click-activated ── */
+@property --angle{ syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes beam-spin{ to{ --angle:360deg; } }
+
+.float{ overflow:hidden; }
+.float .beam{
+  --a:#14958f; --b:#9ce8e1; --speed:2.5s; --arc:65deg;
+  position:absolute; inset:0; border-radius:inherit; padding:1.5px; pointer-events:none;
+  background:conic-gradient(from var(--angle), var(--a), var(--b) var(--arc), transparent var(--arc));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  filter:drop-shadow(0 0 4px var(--b));
+  opacity:0;
+  animation:none;
+  transition:opacity .2s;
+}
+.float.beam-active .beam{
+  opacity:1;
+  animation:beam-spin var(--speed) linear infinite;
+}
+@media(prefers-reduced-motion:reduce){ .float .beam{ animation:none; } }
+
+/* ── Hero skeleton wrapper & dot-labels ── */
+.hero-sk-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.hero-sk{height:340px;width:auto;stroke:#6fb3b0;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:breath 4.5s ease-in-out infinite}
+.hero-dot-label{position:absolute;display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#10343d}
+.hero-dot-label.left{flex-direction:row-reverse}
+.hdot{width:12px;height:12px;border-radius:50%;background:#14958f;box-shadow:0 0 0 5px rgba(20,149,143,.15);flex-shrink:0;animation:pulse 2.4s infinite}
+.hlabel{color:#10343d;font-size:11px;font-weight:700}
+.hdl-head{top:8%;right:10%}
+.hdl-chest{top:32%;right:5%}
+.hdl-abdomen{top:50%;left:5%}
+.hdl-legs{top:72%;right:8%}
+
+/* ── SmartHealth pill navbar ── */
+.sh-pill-nav{
+  display:inline-flex;gap:4px;
+  background:#0f2f38;
+  border:1px solid rgba(156,232,225,.12);
+  border-radius:14px;padding:5px;
+  animation:sh-pill-in .35s ease-out;
+}
+.sh-pill-tab{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:none;
+  color:rgba(156,232,225,.55);
+  font-size:.8rem;font-weight:500;
+  padding:.45rem 1rem;border-radius:10px;
+  cursor:pointer;white-space:nowrap;
+  transition:color .2s,background .2s;
+  font-family:inherit;
+}
+.sh-pill-tab:hover{color:#9ce8e1;background:rgba(156,232,225,.07)}
+.sh-pill-tab--active{background:#14958f;color:#fff;font-weight:700}
+.sh-pill-tab--active:hover{background:#117f79;color:#fff}
+.sh-pill-dot{width:6px;height:6px;border-radius:50%;background:#9ce8e1;flex-shrink:0}
+@keyframes sh-pill-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.sh-pill-nav{animation:none}.sh-pill-tab{transition:none}}
+
+/* ── Hero card 3D tilt ── */
+.card-tilt-wrap{
+  perspective:900px;
+  transform-style:preserve-3d;
+  position:relative;
+  z-index:5;
+  width:min(400px,78%);
+}
+.card-tilt-wrap .card{
+  width:100%;
+  height:520px;
+  transform-style:preserve-3d;
+  transition:box-shadow .35s ease;
+  will-change:transform;
+  animation:cardFloat 6s ease-in-out infinite;
+}
+.card-shine{
+  position:absolute;inset:0;border-radius:inherit;
+  pointer-events:none;z-index:10;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.04) 45%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 55%,transparent 60%);
+  opacity:0;transition:opacity .35s ease;
+}
+
+/* ── Stacked step cards ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:55px}
+.step-stack-wrap{position:relative;padding-bottom:12px}
+.step-card-back,.step-card-mid{
+  position:absolute;inset:0;
+  border:1px solid #dce8e7;border-radius:20px;background:#fff;
+}
+.step-card-back{transform:rotate(-2.5deg) translateY(10px) scale(0.93);opacity:0.2;z-index:1}
+.step-card-mid{transform:rotate(-1.2deg) translateY(5px) scale(0.96);opacity:0.45;z-index:2}
+.step-card-front{
+  position:relative;z-index:3;
+  border:1px solid #dce8e7;border-radius:20px;
+  padding:28px;background:#fff;
+  transition:transform .3s ease,box-shadow .3s ease;
+  transform-style:preserve-3d;
+}
+.step-card-front b{color:#14958f;display:block;margin-bottom:8px}
+.step-card-front h3{font-size:17px;margin-bottom:8px;color:#10343d}
+.step-card-front p{color:#71878d;font-size:13px;line-height:1.6}
+
+
+/* ══════════════════════════════════════
+   PAGE 2 — ASSESSMENT  (reference match)
+══════════════════════════════════════ */
+.assessment-section{
+  padding:40px 5% 60px;
+  background:#f0f7f6;
+  scroll-margin-top:90px;
+}
+
+/* top bar */
+.assess-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:22px;gap:16px;flex-wrap:wrap;
+}
+.assess-top h2{font:800 clamp(22px,2.6vw,34px) Manrope;letter-spacing:-.035em;margin:6px 0 5px;color:#10343d}
+.assess-top p{color:#71878d;font-size:13px;margin:0}
+.step-badge{display:inline-block;background:#e1f5f2;color:#14958f;font-size:10px;font-weight:800;letter-spacing:.1em;padding:3px 10px;border-radius:20px}
+.reset-btn{background:#fff;border:1px solid #dce8e7;color:#647a80;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.reset-btn:hover{border-color:#14958f;color:#14958f}
+
+/* two-col layout */
+.assess-layout{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:16px;
+  align-items:start;
+}
+
+/* ── LEFT: body map ── */
+.body-map-panel{
+  background:#fff;border-radius:20px;border:1px solid #dce8e7;
+  box-shadow:0 4px 24px rgba(20,70,73,.06);
+  overflow:hidden;position:relative;
+  min-height:760px;
+}
+.body-map-inner{
+  position:relative;width:100%;height:100%;min-height:760px;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 38%,rgba(20,149,143,.07) 0,transparent 62%);
+}
+
+/* skeleton */
+.assessment-sk{
+  width:300px;height:620px;
+  stroke:#6fb3b0;fill:#6fb3b0;
+  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  animation:breath 5s ease-in-out infinite;
+  position:relative;z-index:1;
+}
+
+
+/* region dots */
+.rg-dot{
+  position:absolute;width:20px;height:20px;border-radius:50%;
+  border:2.5px solid #14958f;background:rgba(255,255,255,.9);
+  cursor:pointer;display:grid;place-items:center;
+  transition:.22s;z-index:6;padding:0;box-shadow:0 2px 8px rgba(20,149,143,.2);
+}
+.rg-dot:hover,.rg-dot.active{background:#14958f;border-color:#0d7a75;transform:scale(1.15)}
+.rg-pulse{
+  width:7px;height:7px;border-radius:50%;background:#14958f;
+  animation:rgPulse 2s infinite;
+}
+.rg-dot:hover .rg-pulse,.rg-dot.active .rg-pulse{background:#fff;animation:none}
+@keyframes rgPulse{0%,100%{box-shadow:0 0 0 0 rgba(20,149,143,.4)}50%{box-shadow:0 0 0 5px rgba(20,149,143,0)}}
+
+.rg-label{
+  position:absolute;font-size:12px;font-weight:700;color:#10343d;
+  z-index:5;white-space:nowrap;pointer-events:none;
+}
+
+/* popover */
+.popover{
+  position:absolute;top:50px;left:52%;
+  width:240px;padding:18px;
+  background:#fff;border:1px solid #dbe8e7;
+  border-radius:16px;box-shadow:0 12px 40px rgba(31,79,83,.14);
+  z-index:20;
+}
+.popover.hidden{display:none}
+.popover small{font-size:9px;letter-spacing:.12em;color:#8ea1a5;font-weight:800;text-transform:uppercase}
+.popover h3{font:700 18px Manrope;margin:5px 0 3px;color:#10343d}
+.popover>p{color:#71878d;font-size:11px;line-height:1.5;margin:0 0 10px}
+.popover .close{position:absolute;right:10px;top:10px;width:22px;height:22px;border:0;border-radius:50%;background:#f0f6f5;color:#7c9195;cursor:pointer;font-size:13px;display:grid;place-items:center}
+.pop-hint{font-size:10px !important;color:#9aacb0 !important;margin-top:8px !important}
+.option{
+  display:inline-block;padding:6px 12px;
+  border:1.5px solid #d6e7e5;border-radius:8px;
+  background:#fff;color:#3d5960;font-size:11px;
+  margin:3px;cursor:pointer;transition:.18s;font-family:inherit;
+}
+.option:hover,.option.active{border-color:#14958f;background:#e9f7f5;color:#0d6f70;font-weight:600}
+
+/* tip box */
+.map-tip{
+  position:absolute;bottom:18px;left:18px;
+  background:#fff;border:1px solid #dce8e7;border-radius:12px;
+  padding:10px 13px;display:flex;gap:9px;align-items:flex-start;
+  max-width:175px;box-shadow:0 3px 12px rgba(20,70,73,.07);z-index:5;font-size:11px;
+}
+.map-tip strong{font-size:11px;display:block;margin-bottom:2px;color:#10343d}
+.map-tip p{font-size:10px;color:#71878d;margin:0;line-height:1.4}
+
+/* click hint arrow */
+.map-hint-arrow{
+  position:absolute;bottom:80px;right:24px;
+  font-size:11px;color:#8ea1a5;
+  pointer-events:none;z-index:5;
+}
+
+/* ── RIGHT: selection panel ── */
+.selection-panel{
+  background:#fff;border:1px solid #dce8e7;border-radius:20px;
+  padding:22px;box-shadow:0 4px 24px rgba(20,70,73,.06);
+  display:flex;flex-direction:column;gap:0;
+  position:sticky;top:80px;
+  max-height:calc(100vh - 100px);overflow-y:auto;
+}
+.panel-eyebrow{font-size:9px;letter-spacing:.14em;color:#8ea1a5;font-weight:800;display:block;text-transform:uppercase;margin-bottom:12px}
+
+.panel-step{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f0f5f4}
+.panel-num{
+  width:22px;height:22px;border-radius:50%;background:#10343d;
+  color:#fff;font-size:10px;font-weight:800;
+  display:grid;place-items:center;flex-shrink:0;margin-top:1px;
+}
+.panel-step strong{font-size:9px;letter-spacing:.1em;color:#8ea1a5;font-weight:800;display:block;text-transform:uppercase}
+.panel-step p{font-size:13px;color:#10343d;margin:2px 0 0}
+
+/* symptom box that appears when region selected */
+.symptom-region-box{
+  border:1.5px solid #14958f;border-radius:14px;
+  padding:14px;margin:12px 0 4px;background:#f7fdfc;
+}
+.srb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.srb-head strong{font-size:14px;color:#10343d;font-family:Manrope,sans-serif}
+.srb-count{font-size:10px;background:#e1f5f2;color:#14958f;border-radius:10px;padding:2px 8px;font-weight:700}
+
+/* checkbox-style options in panel */
+.srb-options{display:flex;flex-direction:column;gap:2px;margin-bottom:10px}
+.panel-option{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:8px;cursor:pointer;
+  font-size:13px;color:#10343d;transition:.15s;
+  border:1px solid transparent;
+}
+.panel-option:hover{background:#f0f9f7}
+.panel-option.active{background:#e9f7f5;border-color:#c5e8e3}
+.panel-check{
+  width:18px;height:18px;border-radius:4px;
+  border:1.5px solid #c5d8d6;background:#fff;
+  display:grid;place-items:center;flex-shrink:0;transition:.15s;
+}
+.panel-option.active .panel-check{background:#14958f;border-color:#14958f}
+.panel-check-icon{display:none;color:#fff;font-size:11px;font-weight:800}
+.panel-option.active .panel-check-icon{display:block}
+.panel-option-info{flex:1}
+.panel-option-info small{display:block;font-size:10px;color:#8ea1a5;margin-top:1px}
+
+.srb-search{
+  display:flex;align-items:center;gap:8px;
+  border:1px solid #d5e6e4;border-radius:9px;
+  padding:8px 12px;font-size:12px;color:#82969b;background:#fff;
+}
+.srb-search input{border:0;outline:0;width:100%;font-size:12px;color:#10343d;background:transparent;font-family:inherit}
+.search-results{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+
+/* selected items */
+.panel-step-2-header{
+  display:flex;justify-content:space-between;align-items:center;width:100%;
+}
+.selected-list{display:flex;flex-direction:column;gap:7px;margin:10px 0;min-height:60px}
+.empty-state{color:#8ea1a5;font-size:12px;padding:12px 0;text-align:center;border:1.5px dashed #dce8e7;border-radius:10px}
+.sel-item{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#f7fbfa;border:1px solid #dce8e7;border-radius:10px;
+  padding:10px 13px;
+}
+.sel-item-info strong{font-size:13px;color:#10343d;display:block;font-family:Manrope,sans-serif}
+.sel-item-info span{font-size:11px;color:#8ea1a5}
+.sel-item-remove{border:0;background:none;color:#c0ced0;cursor:pointer;font-size:16px;padding:0 2px;line-height:1}
+.sel-item-remove:hover{color:#e05555}
+.clear-btn{background:none;border:0;color:#e05555;font-size:11px;font-weight:600;cursor:pointer;padding:0;display:flex;align-items:center;gap:4px}
+
+/* analyze button area */
+.panel-bottom{padding-top:14px;margin-top:8px}
+.analyze-btn{
+  width:100%;padding:14px;font-size:15px;font-weight:800;
+  border-radius:12px;background:#14958f;color:#fff;border:0;
+  cursor:pointer;transition:.2s;font-family:Manrope,sans-serif;letter-spacing:-.01em;
+}
+.analyze-btn:disabled{opacity:.4;cursor:not-allowed;transform:none !important}
+.analyze-btn:not(:disabled):hover{background:#0d7a75;transform:translateY(-1px);box-shadow:0 8px 24px rgba(20,149,143,.3)}
+.panel-sub{text-align:center;font-size:11px;color:#8ea1a5;margin:7px 0 0}
+.privacy-note{
+  font-size:11px;color:#8ea1a5;text-align:center;
+  margin-top:12px;padding-top:12px;border-top:1px solid #f0f5f4;
+}
+
+/* disclaimer bar */
+.disclaimer-bar{
+  display:flex;align-items:flex-start;gap:14px;
+  background:#e8f7f5;border:1px solid #c5e8e4;
+  border-radius:14px;padding:16px 20px;margin-top:20px;
+}
+.disclaimer-bar strong{font-size:13px;color:#0d6f70;display:block}
+.disclaimer-bar p{font-size:12px;color:#5a8a88;margin:2px 0 0}
+
+/* ══════════════════════════════════════
+   MOBILE RESPONSIVENESS
+══════════════════════════════════════ */
+@media(max-width:1100px){
+  .assess-layout{grid-template-columns:1fr 300px}
+  .assessment-sk{width:240px;height:500px}
+  .body-map-panel,.body-map-inner{min-height:640px}
+}
+
+@media(max-width:900px){
+  /* hero */
+  .hero{grid-template-columns:1fr;padding-top:90px;min-height:auto;gap:0}
+  .copy{max-width:100%;text-align:center}
+  .actions{justify-content:center;flex-wrap:wrap}
+  .visual{min-height:420px}
+  .card-tilt-wrap,.card-tilt-wrap .card{width:88% !important}
+  .card-tilt-wrap .card{height:460px !important}
+  .hero-body{height:260px}
+  .hero-sk{height:240px}
+  .f1{left:-5px;top:22%}
+  .f2{right:-5px;bottom:16%}
+  .float{transform:scale(.82);transform-origin:center center}
+  /* assessment */
+  .assess-layout{grid-template-columns:1fr}
+  .selection-panel{position:static;max-height:none;overflow-y:visible}
+  .body-map-panel,.body-map-inner{min-height:580px}
+  .assessment-sk{width:240px;height:500px}
+}
+
+@media(max-width:680px){
+  /* header */
+  .header{padding:0 16px;height:60px}
+  .sh-pill-nav{gap:2px;padding:3px}
+  .sh-pill-tab{padding:.3rem .6rem;font-size:.72rem}
+  .auth-btn{padding:6px 10px;font-size:12px}
+  /* hero */
+  .hero{padding:80px 16px 36px}
+  .copy h1{font-size:clamp(38px,10vw,52px);letter-spacing:-.055em}
+  .copy p{font-size:15px}
+  .actions{flex-direction:column;align-items:center;gap:10px;width:100%}
+  .btn.js-heartbeat,.find-care-btn{width:100%;text-align:center;justify-content:center;display:flex;align-items:center}
+  .note{text-align:center}
+  .card-tilt-wrap,.card-tilt-wrap .card{width:95% !important}
+  .card-tilt-wrap .card{height:440px !important}
+  .hero-body{height:240px}
+  .hero-sk{height:220px}
+  .float{display:none}
+  /* ticker */
+  .ticker-track span{padding:0 18px;font-size:11px}
+  /* assessment */
+  .assessment-section{padding:30px 16px 40px}
+  .assess-top h2{font-size:22px}
+  .body-map-panel,.body-map-inner{min-height:480px}
+  .assessment-sk{width:190px;height:400px}
+  .rg-label{font-size:10px}
+  .popover{left:8px;right:8px;top:8px;width:auto}
+  .map-tip{max-width:140px;bottom:12px;left:12px}
+  /* steps */
+  .twocol{grid-template-columns:1fr;gap:20px}
+  .steps{grid-template-columns:1fr;gap:24px}
+  .step-stack-wrap{padding-bottom:10px}
+  /* safety */
+  .safety{display:block;padding:36px 18px}
+}
+
+@media(max-width:400px){
+  .sh-pill-tab span:not(.sh-pill-dot){display:none}
+  .sh-pill-tab{padding:.3rem .55rem}
+  .copy h1{font-size:36px}
+  .assessment-sk{width:160px;height:340px}
+  .body-map-inner{min-height:400px}
+  .body-map-panel{min-height:400px}
+}
+
+/* ── Smart cursor ── */
+@media(hover:hover) and (pointer:fine){
+  html,body,body *{cursor:none !important}
+  #smart-cursor{
+    position:fixed;top:0;left:0;
+    width:24px;height:24px;
+    pointer-events:none;user-select:none;
+    z-index:2147483647;opacity:0;
+    will-change:transform;
+    transform:translate3d(-100px,-100px,0);
+    transition:opacity 120ms ease;
+  }
+  #smart-cursor svg{display:block;width:100%;height:100%}
+  #smart-cursor.cursor-active{opacity:1}
+}
+@media(hover:none),(pointer:coarse){
+  #smart-cursor{display:none !important}
+}
+
+/* ══════════════════════════════════════
+   STEP 2 — FOLLOW-UP QUESTIONS
+══════════════════════════════════════ */
+.followup-section{padding:60px 5% 80px;background:#f0f9f8;scroll-margin-top:70px}
+.followup-inner{max-width:720px;margin:0 auto}
+.followup-header{margin-bottom:32px}
+.followup-header h2{font:800 clamp(22px,3vw,32px) Manrope;letter-spacing:-.035em;margin:8px 0 6px;color:#10343d}
+.followup-header p{color:#71878d;font-size:14px}
+.fq-list{display:flex;flex-direction:column;gap:28px}
+.fq-card{background:#fff;border:1px solid #dce8e7;border-radius:18px;padding:24px;box-shadow:0 4px 16px rgba(20,70,73,.05)}
+.fq-card h4{font:700 15px Manrope;color:#10343d;margin:0 0 4px}
+.fq-card .fq-rationale{font-size:11px;color:#8ea1a5;margin:0 0 16px;line-height:1.5}
+.fq-options{display:flex;flex-direction:column;gap:8px}
+.fq-option{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border-radius:10px;border:1.5px solid #e0ebea;cursor:pointer;transition:.18s;font-size:13px;color:#10343d;background:#fff}
+.fq-option:hover{border-color:#14958f;background:#f7fdfc}
+.fq-option.selected{border-color:#14958f;background:#e9f7f5;font-weight:600}
+.fq-option input[type="radio"],.fq-option input[type="checkbox"]{accent-color:#14958f;width:16px;height:16px;flex-shrink:0;margin-top:1px}
+.followup-actions{display:flex;justify-content:space-between;align-items:center;margin-top:32px}
+.fq-back-btn{background:none;border:1.5px solid #dce8e7;color:#647a80;border-radius:10px;padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.fq-back-btn:hover{border-color:#14958f;color:#14958f}
+
+/* ══════════════════════════════════════
+   STEP 3 — ANALYZING
+══════════════════════════════════════ */
+.analyzing-section{padding:120px 5%;background:#f0f9f8;display:flex;align-items:center;justify-content:center;min-height:50vh}
+.analyzing-inner{text-align:center}
+.analyzing-spinner{width:56px;height:56px;border:4px solid rgba(20,149,143,.15);border-top-color:#14958f;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+.analyzing-inner h3{font:700 22px Manrope;color:#10343d;margin:0 0 8px}
+.analyzing-inner p{color:#71878d;font-size:14px}
+
+/* ══════════════════════════════════════
+   STEP 4 — RESULTS
+══════════════════════════════════════ */
+.results-section{padding:60px 5% 80px;background:#f0f9f8;scroll-margin-top:70px}
+.results-inner{max-width:780px;margin:0 auto}
+.results-header{margin-bottom:28px}
+.results-header h2{font:800 clamp(22px,3vw,34px) Manrope;letter-spacing:-.035em;margin:8px 0 6px;color:#10343d}
+.results-header p{color:#71878d;font-size:14px}
+
+/* severity badge */
+.severity-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:20px;font:700 15px Manrope;margin:12px 0;border:2px solid currentColor}
+.severity-mild{color:#1A7A4A;background:#eafaf2;border-color:#1A7A4A}
+.severity-moderate{color:#c47c00;background:#fef9ec;border-color:#c47c00}
+.severity-severe{color:#c0392b;background:#fdf0ef;border-color:#c0392b}
+.severity-urgent{color:#7b1b1b;background:#fce8e8;border-color:#7b1b1b;animation:pulse 1.5s infinite}
+
+/* care pathway */
+.care-pathway-box{border-radius:14px;padding:18px 22px;margin-bottom:24px;display:flex;align-items:flex-start;gap:14px;border:1.5px solid}
+.care-pathway-box .cp-emoji{font-size:24px;flex-shrink:0}
+.care-pathway-box .cp-label{font:700 14px Manrope;margin:0 0 4px}
+.care-pathway-box .cp-desc{font-size:13px;line-height:1.55;margin:0}
+.cp-emergency{background:#fdf0ef;border-color:#c0392b;color:#7b1b1b}
+.cp-same_day_professional{background:#fff8f0;border-color:#e67e22;color:#7d3c00}
+.cp-scheduled_consult{background:#fffbf0;border-color:#f39c12;color:#7d6000}
+.cp-home_management{background:#f0f8ff;border-color:#2E86AB;color:#1a4a60}
+.cp-monitor_and_comfort{background:#eafaf2;border-color:#1A7A4A;color:#0d4a2a}
+
+/* conflicts */
+.conflicts-box{background:#fff8f0;border:1.5px solid #e67e22;border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#7d3c00;line-height:1.6}
+.conflicts-box strong{display:block;margin-bottom:4px}
+
+/* precautions */
+.precautions-heading{font:700 17px Manrope;color:#10343d;margin:0 0 14px}
+.precautions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:28px}
+.precaution-card{background:#fff;border:1px solid #dce8e7;border-radius:16px;padding:20px;box-shadow:0 4px 16px rgba(20,70,73,.05);transition:.25s}
+.precaution-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(20,70,73,.1)}
+.precaution-icon{font-size:26px;margin-bottom:10px}
+.precaution-title{font:700 14px Manrope;color:#10343d;margin:0 0 6px}
+.precaution-desc{font-size:12px;color:#71878d;line-height:1.6;margin:0}
+.precaution-category{display:inline-block;margin-top:10px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#14958f;background:#e9f7f5;border-radius:8px;padding:3px 8px}
+
+/* symptoms summary */
+.results-symptoms-summary{margin-bottom:24px}
+.results-symptoms-summary h4{font:700 13px Manrope;color:#8ea1a5;text-transform:uppercase;letter-spacing:.1em;margin:0 0 10px}
+.results-symptoms-list{display:flex;flex-wrap:wrap;gap:8px}
+.results-symptom-tag{background:#e9f7f5;border:1px solid #c5e8e3;border-radius:10px;padding:6px 12px;font-size:12px;font-weight:600;color:#0d6f70}
+
+/* warning signs */
+.warning-signs-box{background:#fff8f0;border:1.5px solid rgba(230,126,34,.35);border-radius:14px;padding:18px 22px;margin-bottom:20px}
+.warning-signs-box h4{font:700 14px Manrope;color:#e67e22;margin:0 0 10px}
+.warning-signs-box ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.warning-signs-box li{font-size:12px;color:#7d3c00;line-height:1.5}
+
+/* professional help */
+.professional-help-box{background:#eaf7f5;border:1px solid #c5e8e3;border-radius:14px;padding:18px 22px;margin-bottom:28px}
+.professional-help-box h4{font:700 14px Manrope;color:#0d6f70;margin:0 0 8px}
+.professional-help-box p{font-size:13px;color:#0d6f70;margin:0;line-height:1.6}
+
+/* actions */
+.results-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.results-nearby-btn{padding:14px 24px;font-size:14px;font-weight:800;border-radius:12px}
+.results-restart-btn{background:none;border:1.5px solid #dce8e7;color:#647a80;border-radius:12px;padding:13px 20px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.results-restart-btn:hover{border-color:#14958f;color:#14958f}
+.results-disclaimer{font-size:11px;color:#8ea1a5;line-height:1.6;padding-top:16px;border-top:1px solid #e0ebea}
+
+/* animation icon map */
+.anim-rest::before{content:"😴"}
+.anim-hydration::before{content:"💧"}
+.anim-nutrition::before{content:"🥗"}
+.anim-sleep::before{content:"🌙"}
+.anim-medical_help::before{content:"🏥"}
+.anim-monitoring::before{content:"📊"}
+.anim-breathing::before{content:"🌬️"}
+.anim-screen_break::before{content:"🖥️"}
+.anim-TODO::before{content:"💊"}
+
+@media(max-width:680px){
+  .precautions-grid{grid-template-columns:1fr}
+  .results-actions{flex-direction:column;align-items:stretch}
+  .results-nearby-btn,.results-restart-btn{text-align:center}
+  .followup-actions{flex-direction:column;gap:12px}
+  .fq-back-btn,.followup-actions .analyze-btn{width:100%;text-align:center}
+}
+
+
+
+/* ── Simplified 2-outcome severity ── */
+.severity-badge{font-size:16px;padding:12px 22px;border-radius:25px;font-weight:800;font-family:Manrope,sans-serif;letter-spacing:-.01em}
+.severity-mild{color:#0d6f6a;background:#e0f7f4;border-color:#0d6f6a}
+.severity-severe{color:#fff;background:#c0392b;border:none;box-shadow:0 4px 20px rgba(192,57,43,.3)}
+.cp-home_care{background:#e8f7f4;border-color:#0d6f6a;color:#0d4a3e}
+.cp-urgent_care{background:#fdf0ef;border-color:#c0392b;color:#7b1b1b}
+</style>
+</head>
+<body>
+<div id="smart-cursor" aria-hidden="true">
+  <svg viewBox="0 0 32 32" fill="none">
+    <path d="M8 5v8c0 4.4 3.6 8 8 8s8-3.6 8-8V5" stroke="#08746E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M8 5a3 3 0 0 1 6 0M24 5a3 3 0 0 0-6 0" stroke="#08746E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M16 21v2c0 2.2 1.8 4 4 4h1" stroke="#08746E" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="23.5" cy="27" r="3.5" fill="#159A91" stroke="#08746E" stroke-width="1.3"/>
+  </svg>
+</div>
+<header class="header">
+  <a class="brand" href="#home"><b>+</b> Smart<span>Health</span></a>
+  <nav class="sh-pill-nav" role="tablist" aria-label="Page sections">
+    <button class="sh-pill-tab sh-pill-tab--active" role="tab" aria-selected="true" data-target="#home">
+      <span class="sh-pill-dot"></span>Home
+    </button>
+    <button class="sh-pill-tab" role="tab" aria-selected="false" data-target="#assessment">Symptom Checker</button>
+    <button class="sh-pill-tab" role="tab" aria-selected="false" data-target="#nearby">Nearby Care</button>
+    <button class="sh-pill-tab" role="tab" aria-selected="false" data-target="#how">Health Tips</button>
+  </nav>
+  <div class="header-right" id="headerRight">
+    <a class="auth-btn" href="#" id="loginCta">Log in</a>
+    <a class="auth-btn signup" href="#" id="signupCta">Sign up</a>
+  </div>
+</header>
+
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-modal">
+    <button class="auth-close" id="authClose" aria-label="Close">✕</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" type="button">Log in</button>
+      <button class="auth-tab" id="tabSignup" type="button">Sign up</button>
+    </div>
+
+    <form id="loginForm">
+      <h3 class="auth-title">Welcome back</h3>
+      <p class="auth-sub">Log in with your email and password.</p>
+      <div class="auth-field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" required>
+      </div>
+      <div class="auth-field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required>
+      </div>
+      <p class="auth-error" id="loginError">Incorrect email or password.</p>
+      <button type="submit" class="auth-submit">Log in</button>
+      <p class="auth-switch">Don't have an account? <button type="button" id="goSignup">Sign up</button></p>
+    </form>
+
+    <form id="signupForm" style="display:none">
+      <h3 class="auth-title">Create your account</h3>
+      <p class="auth-sub">Set up your profile to get started.</p>
+      <div class="auth-field">
+        <label for="signupName">Full name</label>
+        <input type="text" id="signupName" placeholder="Jane Doe" required>
+      </div>
+      <div class="auth-field">
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" placeholder="you@example.com" required>
+      </div>
+      <div class="auth-field">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="At least 8 characters" required minlength="8">
+      </div>
+      <p class="auth-error" id="signupError">That email is already registered. Try logging in instead.</p>
+      <button type="submit" class="auth-submit">Sign up</button>
+      <p class="auth-switch">Already have an account? <button type="button" id="goLogin">Log in</button></p>
+    </form>
+
+    <form id="profileForm" style="display:none">
+      <h3 class="auth-title">Your profile</h3>
+      <p class="auth-sub">Update your details any time.</p>
+      <div class="auth-field">
+        <label for="profileName">Full name</label>
+        <input type="text" id="profileName" required>
+      </div>
+      <div class="auth-field">
+        <label for="profileEmail">Email</label>
+        <input type="email" id="profileEmail" required>
+      </div>
+      <div class="auth-field">
+        <label for="profileBio">About you <span style="font-weight:400;color:#9aacb0">(optional)</span></label>
+        <input type="text" id="profileBio" placeholder="e.g. Parent of two, based in Austin">
+      </div>
+      <p class="auth-error" id="profileError">That email is already in use by another account.</p>
+      <p style="font-size:11.5px;color:#9aacb0;margin:-4px 0 16px">Member since <span id="profileSince"></span></p>
+      <button type="submit" class="auth-submit">Save profile</button>
+      <p class="auth-switch">Continue to the site below, or <button type="button" id="profileLogout">log out</button></p>
+    </form>
+  </div>
+</div>
+
+<main>
+<section class="hero" id="home">
+  <canvas class="hero-grid-canvas" id="heroGrid"></canvas>
+  <div class="grid-focus"></div>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="ambient ambient-c"></div>
+  <div class="copy">
+    <div class="eyebrow"><i></i> SMART HEALTH GUIDANCE</div>
+    <h1>Not sure how serious your symptoms are?</h1>
+    <p>Tell Smart Health what's going on. Answer a few simple questions and get a clear idea of what to do next.</p>
+    <div class="actions">
+      <a class="btn js-scroll js-heartbeat" href="#assessment">Check my symptoms <span>→</span></a>
+      <a class="text js-heartbeat find-care-btn" href="#">📍 Find healthcare nearby</a>
+    </div>
+    <small class="note">✓ General guidance only. Not a medical diagnosis.</small>
+  </div>
+
+  <div class="visual">
+    <div class="orb a"></div><div class="orb b"></div>
+    <div class="ring r1"></div><div class="ring r2"></div>
+    <div class="card-tilt-wrap" id="heroCardTilt">
+    <div class="card">
+      <div class="card-shine" aria-hidden="true"></div>
+      <div class="cardtop"><div><small>SMART HEALTH</small><strong>Symptom check</strong></div><em>● Ready</em></div>
+      <div class="question"><span>01</span><div><small>Tell us what's going on</small><strong>Where are you feeling discomfort?</strong></div></div>
+      <div class="hero-body">
+        <div class="scan"></div>
+        <div class="hero-sk-wrap">
+          <svg class="skeleton hero-sk" viewBox="0 0 180 380" aria-label="Coughing skeleton">
+            <style>
+              @keyframes hCoughBody{0%,38%,100%{transform:rotate(0) translateY(0)}42%{transform:rotate(3deg) translateY(2px)}47%{transform:rotate(1deg) translateY(1px)}52%{transform:rotate(3deg) translateY(2px)}57%{transform:rotate(0)}}
+              @keyframes hCoughArm{0%,38%,100%{transform:rotate(0)}43%,53%{transform:rotate(-62deg)}58%{transform:rotate(0)}}
+              @keyframes hPuff{0%,37%{opacity:0;transform:translate(0,0) scale(.3)}47%{opacity:.6}62%{opacity:0;transform:translate(14px,-16px) scale(1.4)}100%{opacity:0}}
+              @keyframes hPuff2{0%,39%{opacity:0;transform:translate(0,0) scale(.25)}50%{opacity:.45}65%{opacity:0;transform:translate(20px,-9px) scale(1.2)}100%{opacity:0}}
+              @keyframes hPuff3{0%,41%{opacity:0;transform:translate(0,0) scale(.2)}52%{opacity:.5}67%{opacity:0;transform:translate(10px,-20px) scale(1)}100%{opacity:0}}
+              .h-body-grp{transform-origin:90px 140px;animation:hCoughBody 3.5s ease-in-out infinite}
+              .h-arm-l{transform-origin:72px 92px;animation:hCoughArm 3.5s ease-in-out infinite}
+              .h-puff1{animation:hPuff 3.5s ease-out infinite}
+              .h-puff2{animation:hPuff2 3.5s ease-out infinite}
+              .h-puff3{animation:hPuff3 3.5s ease-out infinite}
+            </style>
+            <g stroke="#70b8b5" fill="none">
+              <g class="h-puff1"><circle cx="62" cy="42" r="4" stroke-width="1.2"/></g>
+              <g class="h-puff2"><circle cx="58" cy="45" r="3" stroke-width="1"/></g>
+              <g class="h-puff3"><circle cx="65" cy="40" r="2.5" stroke-width="1"/></g>
+            </g>
+            <g class="sk-head">
+              <ellipse cx="90" cy="26" rx="22" ry="24"/>
+              <path d="M78 38Q84 46 90 47Q96 46 102 38Q96 42 90 43Q84 42 78 38Z"/>
+              <path d="M82 17Q90 14 98 17" fill="none" stroke-width="1.8"/>
+            </g>
+            <g class="sk-neck">
+              <path d="M84 51v6M96 51v6M84 59v5M96 59v5M84 66v5M96 66v5"/>
+            </g>
+            <g class="h-body-grp">
+              <g class="sk-torso">
+                <path d="M90 72V175"/>
+                <path d="M90 72Q76 67 62 73" fill="none" stroke-width="2.8" stroke-linecap="round"/>
+                <path d="M90 72Q104 67 118 73" fill="none" stroke-width="2.8" stroke-linecap="round"/>
+                <path d="M88 78Q72 78 64 85Q58 93 61 100" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M88 88Q70 89 61 97Q54 106 58 115" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M88 98Q69 100 60 110Q52 120 57 130" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M88 108Q70 111 62 122Q55 133 60 142" fill="none" stroke-width="2" stroke-linecap="round"/>
+                <path d="M88 118Q72 122 66 132Q60 143 65 151" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M92 78Q108 78 116 85Q122 93 119 100" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M92 88Q110 89 119 97Q126 106 122 115" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M92 98Q111 100 120 110Q128 120 123 130" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M92 108Q110 111 118 122Q125 133 120 142" fill="none" stroke-width="2" stroke-linecap="round"/>
+                <path d="M92 118Q108 122 114 132Q120 143 115 151" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M84 135h12M84 143h12M84 151h12M84 159h12"/>
+              </g>
+              <g class="sk-pelvis">
+                <path d="M76 170Q66 172 63 184Q61 198 70 207Q81 214 90 211Q99 214 110 207Q119 198 117 184Q114 172 104 170Q97 178 90 180Q83 178 76 170Z"/>
+                <path d="M78 209Q90 218 102 209" fill="none" stroke-width="2"/>
+              </g>
+              <g class="h-arm-l">
+                <path d="M65 76Q58 78 55 88L48 142Q47 150 50 155Q54 159 59 158Q64 157 66 152Q68 146 68 138L70 90Q70 78 65 76Z"/>
+                <ellipse cx="58" cy="160" rx="6" ry="4.5"/>
+                <path d="M54 164L48 196Q47 203 50 206Q53 208 57 207Q61 206 62 202L63 172Z"/>
+                <path d="M63 165L65 196Q66 203 63 206Q60 208 56 207" fill="none" stroke-width="1.4"/>
+                <ellipse cx="52" cy="208" rx="7" ry="4.5"/>
+                <path d="M46 212l-1 9M50 213l0 9M55 213l0 9M60 212l1 8M64 211l2 8"/>
+              </g>
+              <g class="sk-arm-r">
+                <path d="M115 76Q122 78 125 88L132 142Q133 150 130 155Q126 159 121 158Q116 157 114 152Q112 146 112 138L110 90Q110 78 115 76Z"/>
+                <ellipse cx="122" cy="160" rx="6" ry="4.5"/>
+                <path d="M126 164L132 196Q133 203 130 206Q127 208 123 207Q119 206 118 202L117 172Z"/>
+                <path d="M117 165L115 196Q114 203 117 206Q120 208 124 207" fill="none" stroke-width="1.4"/>
+                <ellipse cx="128" cy="208" rx="7" ry="4.5"/>
+                <path d="M134 212l1 9M130 213l0 9M125 213l0 9M120 212l-1 8M116 211l-2 8"/>
+              </g>
+              <g class="sk-legs">
+                <path d="M80 215Q74 217 72 224L68 292Q67 301 71 307Q75 311 80 311Q85 311 87 306Q89 300 89 291L86 224Q85 217 80 215Z"/>
+                <ellipse cx="79" cy="313" rx="8" ry="6"/>
+                <ellipse cx="79" cy="309" rx="4.5" ry="4"/>
+                <path d="M75 318L73 364Q72 371 76 374Q79 377 83 376Q87 375 88 371L86 318Z"/>
+                <path d="M87 319L89 364Q90 371 87 374Q84 376 80 375" fill="none" stroke-width="1.4"/>
+                <ellipse cx="74" cy="375" rx="8" ry="6"/>
+                <path d="M65 380Q75 387 87 383" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M100 215Q106 217 108 224L112 292Q113 301 109 307Q105 311 100 311Q95 311 93 306Q91 300 91 291L94 224Q95 217 100 215Z"/>
+                <ellipse cx="101" cy="313" rx="8" ry="6"/>
+                <ellipse cx="101" cy="309" rx="4.5" ry="4"/>
+                <path d="M105 318L107 364Q108 371 104 374Q101 377 97 376Q93 375 92 371L94 318Z"/>
+                <path d="M93 319L91 364Q90 371 93 374Q96 376 100 375" fill="none" stroke-width="1.4"/>
+                <ellipse cx="106" cy="375" rx="8" ry="6"/>
+                <path d="M115 380Q105 387 93 383" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="status">Assessment ready <span><b></b></span></div>
+    </div>
+    </div><!-- /card-tilt-wrap -->
+    <div class="float f1" id="float1">⌁ <span class="beam"></span><div><small>Personalized</small><strong>Follow-up questions</strong></div></div>
+    <div class="float f2" id="float2">✓ <span class="beam"></span><div><small>Next step</small><strong>Clear guidance</strong></div></div>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>🏥 10,000+ symptoms analyzed</span>
+    <span>❤️ Your health, your priority</span>
+    <span>🩺 Instant symptom guidance</span>
+    <span>📍 Find care near you</span>
+    <span>✅ Trusted by students & families</span>
+    <span>💊 Know when to see a doctor</span>
+    <span>🧬 Smart AI health assistance</span>
+    <span>🌍 Available anytime, anywhere</span>
+    <span>🏥 10,000+ symptoms analyzed</span>
+    <span>❤️ Your health, your priority</span>
+    <span>🩺 Instant symptom guidance</span>
+    <span>📍 Find care near you</span>
+    <span>✅ Trusted by students & families</span>
+    <span>💊 Know when to see a doctor</span>
+    <span>🧬 Smart AI health assistance</span>
+    <span>🌍 Available anytime, anywhere</span>
+  </div>
+</div>
+
+<section class="assessment-section" id="assessment">
+  <div class="assess-top">
+    <div>
+      <span class="step-badge">STEP 1 OF 4</span>
+      <h2>Select an area to begin</h2>
+      <p>Click on any part of the body to see related symptoms.</p>
+    </div>
+    <button id="reset" class="reset-btn">↺ Reset</button>
+  </div>
+
+  <div class="assess-layout">
+    <div class="body-map-panel">
+      <div class="body-map-inner">
+        <svg class="skeleton assessment-sk" viewBox="0 0 300 650" aria-label="Interactive anatomical skeleton">
+          <g class="sk-head">
+            <ellipse cx="150" cy="60" rx="40" ry="48"/>
+            <ellipse cx="132" cy="52" rx="12" ry="9" fill="none" stroke-width="2.5"/>
+            <ellipse cx="168" cy="52" rx="12" ry="9" fill="none" stroke-width="2.5"/>
+            <path d="M122 70Q114 82 116 94Q122 106 150 108Q178 106 184 94Q186 82 178 70Q164 77 150 78Q136 77 122 70Z"/>
+            <path d="M144 68Q150 76 156 68Q153 72 150 73Q147 72 144 68Z"/>
+            <path d="M125 98h6v4h-6zM133 99h6v4h-6zM141 99h7v4h-7zM149 99h7v4h-7zM158 99h6v4h-6zM166 98h6v4h-6z"/>
+            <path d="M120 42Q135 37 150 36Q165 37 180 42" fill="none" stroke-width="3"/>
+          </g>
+          <g class="sk-neck">
+            <rect x="139" y="110" width="22" height="8" rx="2"/>
+            <rect x="139" y="120" width="22" height="8" rx="2"/>
+            <rect x="139" y="130" width="22" height="8" rx="2"/>
+            <path d="M139 114h-9M161 114h9M139 124h-10M161 124h10M139 134h-9M161 134h9"/>
+          </g>
+          <g class="sk-torso">
+            <rect x="144" y="141" width="12" height="88" rx="4"/>
+            <rect x="144" y="141" width="12" height="7" rx="2"/><rect x="144" y="151" width="12" height="7" rx="2"/>
+            <rect x="144" y="161" width="12" height="7" rx="2"/><rect x="144" y="171" width="12" height="7" rx="2"/>
+            <rect x="144" y="181" width="12" height="7" rx="2"/><rect x="144" y="191" width="12" height="7" rx="2"/>
+            <rect x="144" y="201" width="12" height="7" rx="2"/><rect x="144" y="211" width="12" height="7" rx="2"/>
+            <path d="M150 141Q128 134 108 142" fill="none" stroke-width="4" stroke-linecap="round"/>
+            <path d="M150 141Q172 134 192 142" fill="none" stroke-width="4" stroke-linecap="round"/>
+            <path d="M144 145Q118 145 106 154Q97 164 102 173" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M144 156Q116 157 103 167Q93 178 99 188" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M144 167Q114 168 100 180Q89 193 96 204" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M144 178Q114 180 101 193Q91 207 98 218" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M144 189Q116 192 104 206Q95 220 102 230" fill="none" stroke-width="3" stroke-linecap="round"/>
+            <path d="M144 199Q119 203 109 216Q102 229 107 238" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M144 208Q122 213 115 225Q109 236 113 243" fill="none" stroke-width="2" stroke-linecap="round"/>
+            <path d="M156 145Q182 145 194 154Q203 164 198 173" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M156 156Q184 157 197 167Q207 178 201 188" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M156 167Q186 168 200 180Q211 193 204 204" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M156 178Q186 180 199 193Q209 207 202 218" fill="none" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M156 189Q184 192 196 206Q205 220 198 230" fill="none" stroke-width="3" stroke-linecap="round"/>
+            <path d="M156 199Q181 203 191 216Q198 229 193 238" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M156 208Q178 213 185 225Q191 236 187 243" fill="none" stroke-width="2" stroke-linecap="round"/>
+            <rect x="142" y="222" width="16" height="9" rx="2"/><rect x="142" y="234" width="16" height="9" rx="2"/>
+            <rect x="142" y="246" width="16" height="9" rx="2"/><rect x="142" y="258" width="16" height="9" rx="2"/>
+            <rect x="142" y="270" width="16" height="9" rx="2"/>
+            <path d="M142 226h-11M158 226h11M142 238h-12M158 238h12M142 250h-11M158 250h11M142 262h-10M158 262h10M142 274h-9M158 274h9"/>
+          </g>
+          <g class="sk-pelvis">
+            <path d="M112 288Q98 290 94 308Q91 328 102 342Q118 354 133 348L143 326Q126 323 117 312Q110 300 112 288Z"/>
+            <path d="M188 288Q202 290 206 308Q209 328 198 342Q182 354 167 348L157 326Q174 323 183 312Q190 300 188 288Z"/>
+            <path d="M140 282Q150 290 160 282L163 335Q150 348 137 335Z"/>
+            <path d="M133 348Q150 358 167 348Q162 355 150 357Q138 355 133 348Z"/>
+            <ellipse cx="107" cy="346" rx="13" ry="10" fill="none" stroke-width="3"/>
+            <ellipse cx="193" cy="346" rx="13" ry="10" fill="none" stroke-width="3"/>
+          </g>
+          <g class="sk-arms">
+            <path class="arm-left" d="M110 155Q96 158 88 180L76 255Q74 266 78 274Q83 280 90 279Q97 278 100 272Q103 263 102 252L108 177Q112 163 110 155Z"/>
+            <ellipse cx="89" cy="280" rx="10" ry="8"/>
+            <path d="M83 287L72 340Q70 349 74 354Q78 357 83 356Q88 355 89 350L92 295Z" class="arm-left"/>
+            <path d="M95 288L100 340Q101 349 97 354Q93 357 88 356" fill="none" stroke-width="2"/>
+            <ellipse cx="80" cy="357" rx="11" ry="7"/>
+            <path d="M70 362l-2 14M76 363l-1 15M82 364l0 15M88 363l1 14M94 361l3 13"/>
+            <path class="arm-right" d="M190 155Q204 158 212 180L224 255Q226 266 222 274Q217 280 210 279Q203 278 200 272Q197 263 198 252L192 177Q188 163 190 155Z"/>
+            <ellipse cx="211" cy="280" rx="10" ry="8"/>
+            <path d="M217 287L228 340Q230 349 226 354Q222 357 217 356Q212 355 211 350L208 295Z" class="arm-right"/>
+            <path d="M205 288L200 340Q199 349 203 354Q207 357 212 356" fill="none" stroke-width="2"/>
+            <ellipse cx="220" cy="357" rx="11" ry="7"/>
+            <path d="M230 362l2 14M224 363l1 15M218 364l0 15M212 363l-1 14M206 361l-3 13"/>
+          </g>
+          <g class="sk-legs">
+            <path d="M115 355Q107 358 105 367L99 460Q98 472 103 480Q108 486 115 486Q122 486 125 479Q128 471 125 459L122 367Q120 358 115 355Z"/>
+            <ellipse cx="112" cy="488" rx="15" ry="11"/><ellipse cx="112" cy="483" rx="8" ry="7"/>
+            <path d="M106 497L100 585Q99 594 104 599Q108 603 114 602Q120 601 121 596L118 497Z"/>
+            <path d="M120 498L124 585Q125 594 128 599Q131 602 135 600Q139 598 138 592L130 498Z" opacity="0.7"/>
+            <ellipse cx="109" cy="602" rx="12" ry="9"/>
+            <path d="M97 608Q109 616 123 612Q118 626 103 622Q94 618 97 608Z"/>
+            <path d="M185 355Q193 358 195 367L201 460Q202 472 197 480Q192 486 185 486Q178 486 175 479Q172 471 175 459L178 367Q180 358 185 355Z"/>
+            <ellipse cx="188" cy="488" rx="15" ry="11"/><ellipse cx="188" cy="483" rx="8" ry="7"/>
+            <path d="M194 497L200 585Q201 594 196 599Q192 603 186 602Q180 601 179 596L182 497Z"/>
+            <path d="M180 498L176 585Q175 594 172 599Q169 602 165 600Q161 598 162 592L170 498Z" opacity="0.7"/>
+            <ellipse cx="191" cy="602" rx="12" ry="9"/>
+            <path d="M203 608Q191 616 177 612Q182 626 197 622Q206 618 203 608Z"/>
+          </g>
+        </svg>
+
+        <button class="rg-dot" data-region="head" style="top:9%;left:61%"><span class="rg-pulse"></span></button>
+        <span class="rg-label" style="top:9%;left:68%">Head &amp; Face</span>
+        <button class="rg-dot" data-region="chest" style="top:30%;left:20%"><span class="rg-pulse"></span></button>
+        <span class="rg-label" style="top:30%;left:2%">Chest</span>
+        <button class="rg-dot" data-region="abdomen" style="top:49%;left:61%"><span class="rg-pulse"></span></button>
+        <span class="rg-label" style="top:49%;left:68%">Abdomen</span>
+        <button class="rg-dot" data-region="arms" style="top:40%;left:20%"><span class="rg-pulse"></span></button>
+        <span class="rg-label" style="top:40%;left:2%">Arms</span>
+        <button class="rg-dot" data-region="legs" style="top:74%;left:20%"><span class="rg-pulse"></span></button>
+        <span class="rg-label" style="top:74%;left:2%">Legs</span>
+
+        <div id="popover" class="popover hidden">
+          <button id="close" class="close">×</button>
+          <small id="pk">AREA</small>
+          <h3 id="pt">Head &amp; Face</h3>
+          <p id="pc">Common issues in this area</p>
+          <div id="options"></div>
+          <p class="pop-hint">Select what you're experiencing.</p>
+        </div>
+        <div class="map-tip"><span>💡</span><div><strong>Tip</strong><p>You can select multiple areas and symptoms.</p></div></div>
+      </div>
+    </div>
+
+    <aside class="selection-panel">
+      <small class="panel-eyebrow">YOUR SELECTION</small>
+      <div class="panel-step">
+        <span class="panel-num">1</span>
+        <div><strong>SELECT SYMPTOMS</strong><p id="prompt">Choose your symptoms</p></div>
+      </div>
+      <div class="symptom-region-box" id="symptomBox" style="display:none">
+        <div class="srb-head">
+          <strong id="pt2">Region</strong>
+          <span class="srb-count" id="srb-count">0 symptoms</span>
+        </div>
+        <div id="options2" class="srb-options"></div>
+        <label class="srb-search"><span>🔍</span><input id="search" placeholder="Search symptoms..."></label>
+      </div>
+      <div id="search-results" class="search-results"></div>
+      <div class="panel-step" style="margin-top:14px">
+        <span class="panel-num">2</span>
+        <div style="flex:1">
+          <div class="panel-step-2-header">
+            <strong>SELECTED SYMPTOMS</strong>
+            <button id="clear-all" class="clear-btn" style="display:none">Clear all 🗑</button>
+          </div>
+          <p>Review your selected symptoms</p>
+        </div>
+      </div>
+      <div id="selected" class="selected-list"><div class="empty-state">No symptoms selected yet.</div></div>
+      <div class="panel-bottom">
+        <button id="analyze" class="btn analyze-btn" disabled>Analyze symptoms →</button>
+        <p class="panel-sub">Takes less than 1 minute</p>
+      </div>
+      <div class="privacy-note">🔒 Your privacy is important to us.</div>
+    </aside>
+  </div>
+
+  <div class="disclaimer-bar">
+    <span>🛡️</span>
+    <div><strong>General guidance only — not a medical diagnosis.</strong><p>If you're experiencing a medical emergency, please seek immediate professional help.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     STEP 2 — FOLLOW-UP QUESTIONS
+═══════════════════════════════════════ -->
+<section id="followup" class="followup-section" style="display:none">
+  <div class="followup-inner">
+    <div class="followup-header">
+      <span class="step-badge">STEP 2 OF 4</span>
+      <h2>Answer a few questions</h2>
+      <p>These help us understand your situation better. All questions are required.</p>
+    </div>
+    <div id="followup-questions" class="fq-list"></div>
+    <div class="followup-actions">
+      <button id="back-to-symptoms" class="fq-back-btn">← Back</button>
+      <button id="submit-followup" class="btn analyze-btn" disabled>Analyze →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     STEP 3 — ANALYZING
+═══════════════════════════════════════ -->
+<section id="analyzing" class="analyzing-section" style="display:none">
+  <div class="analyzing-inner">
+    <div class="analyzing-spinner"></div>
+    <h3>Analyzing your symptoms…</h3>
+    <p>Matching with our health database</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     STEP 4 — RESULTS
+═══════════════════════════════════════ -->
+<section id="results" class="results-section" style="display:none">
+  <div class="results-inner">
+
+    <!-- Severity badge -->
+    <div class="results-header">
+      <span class="step-badge">STEP 4 OF 4</span>
+      <div id="severity-badge" class="severity-badge"></div>
+      <h2 id="results-title">Your Results</h2>
+      <p id="results-subtitle"></p>
+    </div>
+
+    <!-- Care pathway -->
+    <div id="care-pathway-box" class="care-pathway-box"></div>
+
+    <!-- Conflict warnings -->
+    <div id="conflicts-box" class="conflicts-box" style="display:none"></div>
+
+    <!-- Precautionary measures -->
+    <div class="precautions-section">
+      <h3 class="precautions-heading">Precautionary Measures</h3>
+      <div id="precautions-grid" class="precautions-grid"></div>
+    </div>
+
+    <!-- Selected symptoms summary -->
+    <div class="results-symptoms-summary">
+      <h4>Symptoms assessed</h4>
+      <div id="results-symptoms-list" class="results-symptoms-list"></div>
+    </div>
+
+    <!-- Warning signs -->
+    <div id="warning-signs-box" class="warning-signs-box"></div>
+
+    <!-- Professional help -->
+    <div id="professional-help-box" class="professional-help-box"></div>
+
+    <!-- Actions -->
+    <div class="results-actions">
+      <a href="#nearby" class="btn results-nearby-btn">📍 Find Healthcare Nearby</a>
+      <button id="start-over" class="results-restart-btn">Start over</button>
+    </div>
+
+    <p class="results-disclaimer">⚠ This is general guidance only — not a medical diagnosis. Always consult a qualified healthcare professional for personal medical decisions.</p>
+  </div>
+</section>
+
+
+  </div>
+</section>
+
+<section id="how" class="section">
+  <div class="eyebrow">A calmer way to check in</div><div class="twocol"><h2>You don't need to know what's wrong before you ask for guidance.</h2><p>Select symptoms, answer relevant follow-up questions, and receive an urgency assessment based on the information you provide.</p></div>
+  <div class="steps">
+    <div class="step-stack-wrap">
+      <div class="step-card-back" aria-hidden="true"></div>
+      <div class="step-card-mid" aria-hidden="true"></div>
+      <article class="step-card-front">
+        <b>01</b><h3>Tell us what you feel</h3><p>Select the symptoms that best match what you're experiencing.</p>
+      </article>
+    </div>
+    <div class="step-stack-wrap">
+      <div class="step-card-back" aria-hidden="true"></div>
+      <div class="step-card-mid" aria-hidden="true"></div>
+      <article class="step-card-front">
+        <b>02</b><h3>Answer a few questions</h3><p>Your answers help Smart Health ask more relevant follow-ups.</p>
+      </article>
+    </div>
+    <div class="step-stack-wrap">
+      <div class="step-card-back" aria-hidden="true"></div>
+      <div class="step-card-mid" aria-hidden="true"></div>
+      <article class="step-card-front">
+        <b>03</b><h3>Understand what to do next</h3><p>See whether your answers suggest routine, urgent, or emergency attention.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<section id="safety" class="safety"><b>+</b><div><strong>A note about Smart Health</strong><p>This college project provides general, non-diagnostic guidance. It does not replace a doctor, emergency service, or professional medical evaluation.</p></div></section>
+</main>
+<div class="click-ring"></div>
+<script>const root=document.documentElement;
+const ring=document.querySelector(".click-ring");
+const glow=document.querySelector(".cursor-glow");
+document.addEventListener("click",e=>{
+  const target=e.target.closest("a,button");if(!target)return;
+  ring.style.left=e.clientX+"px";ring.style.top=e.clientY+"px";ring.classList.remove("active");void ring.offsetWidth;ring.classList.add("active");
+});
+
+/* Keep Check Symptoms as a scroll-to-section interaction, not a new page. */
+document.querySelectorAll(".js-scroll").forEach(a=>a.addEventListener("click",e=>{
+  const id=a.getAttribute("href");if(!id?.startsWith("#"))return;
+  const el=document.querySelector(id);if(!el)return;
+  e.preventDefault();el.scrollIntoView({behavior:"smooth",block:"start"});history.replaceState(null,"",id);
+}));
+
+/* ── Animated canvas grid for hero background ── */
+(function(){
+  const canvas = document.getElementById('heroGrid');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let mouseX = -999, mouseY = -999;
+  let offsetX = 0, offsetY = 0;
+  const CELL = 40;
+
+  function resize(){
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  document.querySelector('.hero')?.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouseX = e.clientX - r.left;
+    mouseY = e.clientY - r.top;
+  });
+  document.querySelector('.hero')?.addEventListener('mouseleave', () => {
+    mouseX = -999; mouseY = -999;
+  });
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const w = canvas.width, h = canvas.height;
+    const ox = offsetX % CELL, oy = offsetY % CELL;
+
+    // base extremely faint grid
+    ctx.strokeStyle = 'rgba(20,149,143,0.06)';
+    ctx.lineWidth = 0.4;
+    for(let x = ox; x < w; x += CELL){
+      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke();
+    }
+    for(let y = oy; y < h; y += CELL){
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+    }
+
+    // mouse reveal — very subtle
+    if(mouseX > 0){
+      const R = 220;
+      ctx.save();
+      ctx.lineWidth = 0.5;
+      for(let x = ox; x < w; x += CELL){
+        for(let y = oy; y < h; y += CELL){
+          const dx = x - mouseX, dy = y - mouseY;
+          const dist = Math.sqrt(dx*dx+dy*dy);
+          if(dist < R){
+            const alpha = (1 - dist/R) * 0.1;
+            ctx.globalAlpha = alpha;
+            ctx.strokeStyle = 'rgba(20,149,143,1)';
+            ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+          }
+        }
+      }
+      ctx.restore();
+    }
+
+    offsetX += 0.4;
+    offsetY += 0.4;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* popover wobble handled in assessment logic */
+
+
+
+/* ── Card vibrate on cursor hover ── */
+(function(){
+  const card = document.querySelector('.card');
+  if(!card) return;
+  let vibrated = false;
+  card.addEventListener('mouseenter', () => {
+    if(vibrated) return;
+    vibrated = true;
+    card.classList.add('vibrating');
+    card.addEventListener('animationend', () => {
+      card.classList.remove('vibrating');
+      setTimeout(() => { vibrated = false; }, 800);
+    }, {once: true});
+  });
+})();
+
+/* ── Float box beam — toggle on click ── */
+document.querySelectorAll('.float').forEach(box => {
+  box.addEventListener('click', () => {
+    box.classList.toggle('beam-active');
+  });
+});
+
+/* ── Smart cursor ── */
+(function(){
+  const cursor=document.getElementById("smart-cursor");
+  if(!cursor) return;
+  if(!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  let mouseX=-100,mouseY=-100,currentX=-100,currentY=-100,visible=false;
+  window.addEventListener("mousemove",function(e){
+    mouseX=e.clientX; mouseY=e.clientY;
+    if(!visible){ visible=true; cursor.classList.add("cursor-active"); }
+    root.style.setProperty("--mx",e.clientX+"px");
+    root.style.setProperty("--my",e.clientY+"px");
+  },{passive:true});
+  function updateCursor(){
+    currentX+=(mouseX-currentX)*0.32;
+    currentY+=(mouseY-currentY)*0.32;
+    cursor.style.transform=`translate3d(${currentX-12}px,${currentY-12}px,0)`;
+    requestAnimationFrame(updateCursor);
+  }
+  requestAnimationFrame(updateCursor);
+  document.addEventListener("mouseleave",()=>cursor.classList.remove("cursor-active"));
+  document.addEventListener("mouseenter",()=>cursor.classList.add("cursor-active"));
+  const sel="a,button,input,textarea,select,[role='button']";
+  document.addEventListener("mouseover",e=>{ if(e.target.closest(sel)) cursor.classList.add("cursor-hover"); });
+  document.addEventListener("mouseout",e=>{ if(e.target.closest(sel)) cursor.classList.remove("cursor-hover"); });
+})();
+
+/* ── Pill navbar tab switching ── */
+function shNav(btn, href){
+  document.querySelectorAll('.sh-pill-tab').forEach(t=>{
+    t.classList.remove('sh-pill-tab--active');
+    t.setAttribute('aria-selected','false');
+    t.querySelector('.sh-pill-dot')?.remove();
+  });
+  btn.classList.add('sh-pill-tab--active');
+  btn.setAttribute('aria-selected','true');
+  if(!btn.querySelector('.sh-pill-dot')){
+    const dot=document.createElement('span');
+    dot.className='sh-pill-dot';
+    btn.prepend(dot);
+  }
+  if(href && href.startsWith('#')){
+    const el=document.querySelector(href);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+document.querySelectorAll('.sh-pill-tab[data-target]').forEach(btn=>{
+  btn.addEventListener('click', () => shNav(btn, btn.getAttribute('data-target')));
+});
+
+/* ── Hero card 3D tilt ── */
+(function(){
+  const wrap = document.getElementById('heroCardTilt');
+  if(!wrap) return;
+  const card = wrap.querySelector('.card');
+  const shine = wrap.querySelector('.card-shine');
+  if(!card) return;
+
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    const rotX = (0.5 - y) * 14;
+    const rotY = (x - 0.5) * 14;
+    card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    card.style.boxShadow = `${-rotY*2}px ${rotX*2}px 16px rgba(29,89,93,.15), ${-rotY*4}px ${rotX*5}px 50px rgba(29,89,93,.18)`;
+    if(shine){
+      shine.style.opacity='1';
+      shine.style.background=`linear-gradient(${105+(x-0.5)*40}deg,transparent 35%,rgba(255,255,255,.04) 42%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 58%,transparent 65%)`;
+    }
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.boxShadow = '';
+    if(shine) shine.style.opacity = '0';
+  });
+})();
+
+/* ── Step cards tilt on hover ── */
+document.querySelectorAll('.step-stack-wrap').forEach(wrap => {
+  const card = wrap.querySelector('.step-card-front');
+  if(!card) return;
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    const rotX = (0.5 - y) * 8;
+    const rotY = (x - 0.5) * 8;
+    card.style.transform = `translateY(-6px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  });
+  wrap.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+
+/* ══════════════════════════════════════
+   SYMPTOM DATA (from Health Reference Compendium)
+══════════════════════════════════════ */
+/**
+ * SmartHealth — Symptom Data System
+ * Organized from Health_Reference_Compendium (v1 + v2)
+ * 
+ * IMPORTANT: This is general guidance only. Not a medical diagnosis.
+ * All data sourced exclusively from the provided compendium documents.
+ * Nothing has been invented or assumed.
+ */
+
+"use strict";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PART 1 — PRECAUTIONARY MEASURES DATABASE
+// Each measure has a unique ID, title, description, category, animation, priority
+// ─────────────────────────────────────────────────────────────────────────────
+
+const PRECAUTIONS = {
+
+  // ── Universal / cross-symptom ──────────────────────────────────────────────
+  precaution_rest: {
+    id: "precaution_rest",
+    title: "Get Some Rest",
+    description: "Avoid strenuous activity. Allow your body time to recover.",
+    category: "recovery",
+    animation: "rest",
+    priority: 1,
+  },
+  precaution_hydration: {
+    id: "precaution_hydration",
+    title: "Stay Hydrated",
+    description: "Drink clear fluids — water, broth, or diluted fruit juice. Dehydration worsens most symptoms.",
+    category: "recovery",
+    animation: "hydration",
+    priority: 1,
+  },
+  precaution_monitor: {
+    id: "precaution_monitor",
+    title: "Monitor Your Symptoms",
+    description: "Track whether symptoms improve, stay the same, or worsen. Reassess after 24–48 hours.",
+    category: "monitoring",
+    animation: "monitoring",
+    priority: 2,
+  },
+  precaution_seek_gp: {
+    id: "precaution_seek_gp",
+    title: "Consult a General Practitioner",
+    description: "Book a consultation with a GP. You can use oladoc or Marham for same-day video consultations with PMDC/PMC-verified doctors.",
+    category: "professional_help",
+    animation: "medical_help",
+    priority: 1,
+  },
+  precaution_emergency: {
+    id: "precaution_emergency",
+    title: "Seek Emergency Care Immediately",
+    description: "Call emergency services now. Do not attempt home treatment. Apply relevant first aid while waiting for help.",
+    category: "emergency",
+    animation: "medical_help",
+    priority: 0,
+  },
+  precaution_no_medications_without_clearance: {
+    id: "precaution_no_medications_without_clearance",
+    title: "Get Professional Clearance Before Any Remedy",
+    description: "You indicated you are on prescription medication or managing a chronic condition. Natural compounds can dangerously interact with prescription drugs. Obtain professional clearance before starting any new remedy or supplement.",
+    category: "safety",
+    animation: "monitoring",
+    priority: 0,
+  },
+
+  // ── Skin ───────────────────────────────────────────────────────────────────
+  precaution_tea_tree_oil: {
+    id: "precaution_tea_tree_oil",
+    title: "Apply 5% Tea Tree Oil Gel",
+    description: "Apply 5% tea tree oil gel to the affected area. This is clinically equivalent to 5% benzoyl peroxide with fewer side effects. Do not use undiluted.",
+    category: "topical",
+    animation: "TODO",
+    priority: 2,
+  },
+  precaution_acne_diet: {
+    id: "precaution_acne_diet",
+    title: "Follow the Acne Elimination Diet",
+    description: "Remove refined sugars and processed oils from your diet. Replace with healthy fats such as flaxseed oil and extra virgin olive oil. This dietary change can reduce outbreaks by approximately 50%.",
+    category: "nutrition",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_oatmeal_paste: {
+    id: "precaution_oatmeal_paste",
+    title: "Apply Colloidal Oatmeal Paste",
+    description: "Mix equal parts plain colloidal oatmeal and water. Apply to the affected area for 10 minutes. Use plain or colloidal oatmeal only — not flavored or instant.",
+    category: "topical",
+    animation: "TODO",
+    priority: 2,
+  },
+  precaution_dead_sea_salt_soak: {
+    id: "precaution_dead_sea_salt_soak",
+    title: "Dead Sea Salt Soak",
+    description: "Soak the affected area in Dead Sea salt solution. The magnesium and salt synergy helps manage eczema and psoriasis symptoms.",
+    category: "topical",
+    animation: "TODO",
+    priority: 2,
+  },
+  precaution_no_pop_blisters: {
+    id: "precaution_no_pop_blisters",
+    title: "Do Not Pop Blisters",
+    description: "Protect blisters with petroleum jelly and a protective bandage. Popping blisters risks infection. Never pop.",
+    category: "topical",
+    animation: "TODO",
+    priority: 1,
+  },
+  precaution_remove_trigger: {
+    id: "precaution_remove_trigger",
+    title: "Remove the Identified Trigger",
+    description: "Your answers suggest a contact or environmental trigger. Remove exposure to the offending substance (detergent, fabric, chemical, pet dander) before applying any remedy. Remedies will not work if the trigger remains active.",
+    category: "prevention",
+    animation: "TODO",
+    priority: 1,
+  },
+  precaution_seek_dermatologist: {
+    id: "precaution_seek_dermatologist",
+    title: "Consult a Dermatologist",
+    description: "Book a consultation with a Dermatologist for persistent rashes, non-responsive eczema or psoriasis, or adult acne. Use oladoc or Marham to find a PMDC/PMC-verified specialist.",
+    category: "professional_help",
+    animation: "medical_help",
+    priority: 1,
+  },
+
+  // ── Gastrointestinal ───────────────────────────────────────────────────────
+  precaution_ginger: {
+    id: "precaution_ginger",
+    title: "Ginger for Nausea",
+    description: "Take ginger as tea, ginger ale, or candied root. Ginger blocks serotonin receptors in the gut and is the validated first-line remedy for nausea.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_baking_soda_heartburn: {
+    id: "precaution_baking_soda_heartburn",
+    title: "Baking Soda for Heartburn",
+    description: "Dissolve 1 teaspoon of baking soda in a glass of water and drink slowly. Do NOT take on a full stomach — wait until the stomach is partially empty to avoid discomfort.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_fennel_seeds: {
+    id: "precaution_fennel_seeds",
+    title: "Fennel Seeds for Bloating",
+    description: "Chew a pinch of fennel seeds after meals. Fennel is a natural carminative that helps reduce gas accumulation.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_brat_diet: {
+    id: "precaution_brat_diet",
+    title: "Follow the BRAT Diet",
+    description: "Eat Bananas, Rice, Applesauce, and Toast. Avoid milk and caffeine for 3–5 days following diarrhea.",
+    category: "nutrition",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_blackberry_tea: {
+    id: "precaution_blackberry_tea",
+    title: "Blackberry Tea for Diarrhea",
+    description: "Boil 1–2 tablespoons of fresh or frozen blackberries in 1.5 cups of water for 10 minutes. Strain and drink several cups per day. Tannins in blackberries tighten intestinal mucous membranes to reduce fluid loss.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_rehydration: {
+    id: "precaution_rehydration",
+    title: "Prioritize Rehydration",
+    description: "Adults: drink clear fluids — broth, diluted fruit juice, sports drinks. Infants: use a specialized rehydration solution in frequent small sips. Dehydration is the primary risk with diarrhea and vomiting.",
+    category: "recovery",
+    animation: "hydration",
+    priority: 1,
+  },
+  precaution_seek_gastroenterologist: {
+    id: "precaution_seek_gastroenterologist",
+    title: "Consult a Gastroenterologist",
+    description: "Book a consultation with a Gastroenterologist for chronic GERD, persistent stomach pain, or IBS not responding to first-line care. Use oladoc or Marham.",
+    category: "professional_help",
+    animation: "medical_help",
+    priority: 1,
+  },
+  precaution_emergency_gi: {
+    id: "precaution_emergency_gi",
+    title: "Seek Emergency Care — GI Red Flag",
+    description: "Blood in stool or vomit is an emergency. Do not attempt home treatment. Seek emergency care immediately.",
+    category: "emergency",
+    animation: "medical_help",
+    priority: 0,
+  },
+
+  // ── Musculoskeletal & Neurological ─────────────────────────────────────────
+  precaution_rice_protocol: {
+    id: "precaution_rice_protocol",
+    title: "Apply the RICE Protocol",
+    description: "Rest — no activity for at least 24 hours. Ice — apply for 15–20 minutes on/off for the first 24 hours only, always with a cloth barrier. Compression — use an elastic bandage. Elevation — keep the affected limb above heart level. Apply heat only after the initial 24-hour period.",
+    category: "physical",
+    animation: "rest",
+    priority: 1,
+  },
+  precaution_curcumin: {
+    id: "precaution_curcumin",
+    title: "Curcumin + Black Pepper",
+    description: "Take 500 mg clinical-grade curcumin daily combined with black pepper for absorption. Without black pepper, bioavailability is under 3%. Allow 4–8 weeks for full anti-inflammatory effect.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_ginger_joint: {
+    id: "precaution_ginger_joint",
+    title: "Ginger for Joint Inflammation",
+    description: "Take ginger daily as a tea or extract. Ginger acts as a natural NSAID alternative without gastrointestinal risk. Allow 4–8 weeks for joint pain effects.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_cherries_gout: {
+    id: "precaution_cherries_gout",
+    title: "Eat 15–20 Cherries Daily",
+    description: "Consume 15–20 cherries daily. Cherries neutralize uric acid, which is the direct cause of gout flare-ups.",
+    category: "nutrition",
+    animation: "nutrition",
+    priority: 1,
+  },
+  precaution_comfrey_cream: {
+    id: "precaution_comfrey_cream",
+    title: "Apply Comfrey Cream",
+    description: "Apply concentrated comfrey cream topically to the affected back or neck area. Use clinical-grade formulations only.",
+    category: "topical",
+    animation: "TODO",
+    priority: 2,
+  },
+  precaution_acupressure: {
+    id: "precaution_acupressure",
+    title: "Acupressure on Painful Spot",
+    description: "Apply firm pressure directly to the painful spot for 3 minutes. This is a validated first-line approach for back and neck muscle tension.",
+    category: "physical",
+    animation: "TODO",
+    priority: 2,
+  },
+  precaution_peppermint_temples: {
+    id: "precaution_peppermint_temples",
+    title: "Peppermint Oil on Temples",
+    description: "Dilute peppermint oil in a carrier oil (olive or coconut). Massage gently into the temples. Must be diluted — never apply peppermint oil neat to the skin. Effective for tension headaches caused by cranial muscle pressure.",
+    category: "topical",
+    animation: "TODO",
+    priority: 2,
+  },
+  precaution_valerian_root: {
+    id: "precaution_valerian_root",
+    title: "Valerian Root for Sleep",
+    description: "Take valerian root as directed on the supplement. It binds GABA receptors similarly to tranquilizers, without morning grogginess.",
+    category: "internal_remedy",
+    animation: "sleep",
+    priority: 2,
+  },
+  precaution_magnesium: {
+    id: "precaution_magnesium",
+    title: "Magnesium Supplementation",
+    description: "Take 300 mg of magnesium orally, or use magnesium oil / Epsom salt baths. Magnesium supports the parasympathetic nervous system and is effective for insomnia and restless legs linked to deficiency.",
+    category: "internal_remedy",
+    animation: "sleep",
+    priority: 2,
+  },
+  precaution_ribose_powder: {
+    id: "precaution_ribose_powder",
+    title: "Ribose Powder for Fatigue",
+    description: "Take 5 g of ribose powder three times daily. Ribose provides the backbone for cellular ATP production and is the validated first-line remedy for fibromyalgia-related fatigue. Allow approximately 3 weeks for effect.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_lavender_inhalation: {
+    id: "precaution_lavender_inhalation",
+    title: "Lavender Inhalation",
+    description: "Inhale lavender oil for migraines and stress. Do not apply lavender oil undiluted to skin — this causes irritation and may disrupt hormone levels.",
+    category: "inhalation",
+    animation: "breathing",
+    priority: 2,
+  },
+  precaution_morning_sunlight: {
+    id: "precaution_morning_sunlight",
+    title: "15 Minutes of Morning Sunlight",
+    description: "Spend 15 minutes in direct morning sunlight. This regulates Vitamin D production and resets the circadian rhythm — particularly effective for stress-triggered insomnia and headaches.",
+    category: "lifestyle",
+    animation: "TODO",
+    priority: 3,
+  },
+  precaution_seek_neurologist: {
+    id: "precaution_seek_neurologist",
+    title: "Consult a Neurologist",
+    description: "Book a consultation with a Neurologist for persistent dizziness, chronic migraines, burning feet syndrome, or restless legs. Use oladoc or Marham to find a PMDC/PMC-verified specialist.",
+    category: "professional_help",
+    animation: "medical_help",
+    priority: 1,
+  },
+
+  // ── Respiratory & Sensory ──────────────────────────────────────────────────
+  precaution_vitamin_c: {
+    id: "precaution_vitamin_c",
+    title: "Vitamin C — 2 g/day",
+    description: "Take 2 g of Vitamin C per day from food or supplements. Vitamin C is a natural antihistamine and antioxidant, effective for allergies and immune support.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_omega3: {
+    id: "precaution_omega3",
+    title: "Omega-3 / Cod Liver Oil",
+    description: "Take Omega-3 or cod liver oil as directed. It increases blood flow and provides anti-inflammatory support for allergies, eye strain, and joint issues.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_eucalyptus_steam: {
+    id: "precaution_eucalyptus_steam",
+    title: "Eucalyptus Steam Inhalation",
+    description: "Add a few drops of eucalyptus oil to a bowl of boiling water. Lean forward under a towel tent — face at least 18 inches (50 cm) above the water. Inhale slowly for several minutes. CAUTION: toxic to pets; can trigger asthma; may cause respiratory distress in infants under 12 months.",
+    category: "inhalation",
+    animation: "breathing",
+    priority: 2,
+  },
+  precaution_honey_dry_cough: {
+    id: "precaution_honey_dry_cough",
+    title: "Honey for Dry Cough / Sore Throat",
+    description: "Consume honey directly or in warm water. Honey has antibacterial properties and is more effective than many over-the-counter cough syrups for dry cough and sore throat. Never give to infants under 12 months (botulism risk). Never give to anyone who is choking.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_thyme_tea: {
+    id: "precaution_thyme_tea",
+    title: "Thyme Tea for Mucus Cough",
+    description: "Steep 2 tablespoons of fresh thyme (or 1 tablespoon dried) in hot water. Drain and add honey for additional soothing. Thyme relaxes the respiratory tract and is for mucus-producing coughs only.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_black_pepper_honey_tea: {
+    id: "precaution_black_pepper_honey_tea",
+    title: "Black Pepper & Honey Tea (Mucus Cough Only)",
+    description: "Mix 1 teaspoon of freshly ground black pepper with 2 tablespoons of honey in boiling water. Steep covered for 15 minutes, then strain before drinking. WARNING: This stimulates mucus flow. It is NOT suitable for dry coughs — it will worsen dry cough irritation.",
+    category: "internal_remedy",
+    animation: "nutrition",
+    priority: 2,
+  },
+  precaution_cranberry_juice: {
+    id: "precaution_cranberry_juice",
+    title: "Cranberry Juice for UTIs",
+    description: "Drink cranberry juice daily. Cranberry inhibits bacterial adhesion to urinary tract walls and reduces UTI risk by approximately 40%.",
+    category: "internal_remedy",
+    animation: "hydration",
+    priority: 2,
+  },
+  precaution_lemon_juice: {
+    id: "precaution_lemon_juice",
+    title: "Lemon Juice for Kidney Stones",
+    description: "Drink 4 oz (approximately 120 ml) of lemon juice daily. Citric acid prevents calcium-oxalate crystallization, which is the cause of most kidney stones.",
+    category: "internal_remedy",
+    animation: "hydration",
+    priority: 2,
+  },
+  precaution_seek_urologist: {
+    id: "precaution_seek_urologist",
+    title: "Consult a Urologist",
+    description: "Book a consultation with a Urologist / Gynecologist for recurring UTIs or kidney stone history. Use oladoc or Marham to find a PMDC/PMC-verified specialist. Recurring UTI symptoms alongside any kidney stone history warrant a urologist consultation regardless of current severity.",
+    category: "professional_help",
+    animation: "medical_help",
+    priority: 1,
+  },
+  precaution_screen_break: {
+    id: "precaution_screen_break",
+    title: "Take Regular Screen Breaks",
+    description: "Take a break from screens. Use the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds. Supplement with Omega-3 and lutein-rich foods (spinach, kale).",
+    category: "lifestyle",
+    animation: "screen_break",
+    priority: 2,
+  },
+
+  // ── Emergency First Aid ────────────────────────────────────────────────────
+  precaution_cool_water_burn: {
+    id: "precaution_cool_water_burn",
+    title: "Cool (Not Cold) Running Water",
+    description: "Run cool — not cold — water over the burn. Do not use ice, butter, or ointments. Ice damages skin tissue further. Butter traps heat and breeds infection.",
+    category: "first_aid",
+    animation: "TODO",
+    priority: 0,
+  },
+  precaution_aloe_vera_burn: {
+    id: "precaution_aloe_vera_burn",
+    title: "Apply Pure Aloe Vera",
+    description: "After cooling, apply pure aloe vera gel from a leaf or an unscented product. Cover with a loose bandage. Do not use on 3rd-degree burns.",
+    category: "topical",
+    animation: "TODO",
+    priority: 1,
+  },
+  precaution_no_pop_burn_blisters: {
+    id: "precaution_no_pop_burn_blisters",
+    title: "Do Not Pop Burn Blisters",
+    description: "Do not pop any blisters that form from a burn. Popping blisters significantly increases infection risk.",
+    category: "first_aid",
+    animation: "TODO",
+    priority: 1,
+  },
+  precaution_nosebleed_protocol: {
+    id: "precaution_nosebleed_protocol",
+    title: "Nosebleed Protocol",
+    description: "Lean slightly forward — not back. Leaning back allows blood to enter the lungs or stomach. Pinch the nose just below the bridge (at the bone-cartilage junction) for 5–15 minutes. An ice pack on the bridge of the nose is optional.",
+    category: "first_aid",
+    animation: "TODO",
+    priority: 0,
+  },
+  precaution_wound_clean: {
+    id: "precaution_wound_clean",
+    title: "Clean the Wound Thoroughly",
+    description: "Wash the wound with soap and warm water for several minutes. Apply antibiotic cream after cleaning. Apply direct pressure to stop bleeding.",
+    category: "first_aid",
+    animation: "TODO",
+    priority: 0,
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PART 2 — UNIVERSAL FOLLOW-UP QUESTIONS (Part A)
+// Asked for EVERY symptom before symptom-specific questions
+// Source: Section 7, Part A of the compendium
+// ─────────────────────────────────────────────────────────────────────────────
+
+const UNIVERSAL_QUESTIONS = [
+  {
+    id: "A1",
+    question: "What is the age group of the person experiencing the symptom?",
+    rationale: "Age group is the most important safety filter. Infants and seniors have significantly narrower margins for error. Eucalyptus oil and honey are contraindicated in infants; seniors metabolize herbal compounds differently and are at higher risk of drug interactions.",
+    options: [
+      { id: "A1_infant",   label: "Infant (0–12 months)",    flags: ["infant_risk"] },
+      { id: "A1_toddler",  label: "Toddler (1–5 years)",     flags: [] },
+      { id: "A1_child",    label: "Child (6–12 years)",       flags: [] },
+      { id: "A1_teen",     label: "Teenager (13–17 years)",   flags: ["teen_hormonal"] },
+      { id: "A1_adult",    label: "Adult (18–59 years)",      flags: [] },
+      { id: "A1_senior",   label: "Senior (60+ years)",       flags: ["senior_risk"] },
+    ],
+  },
+  {
+    id: "A2",
+    question: "How long has this symptom been present?",
+    rationale: "Duration is the primary indicator for whether home management is still appropriate. Most first-line home remedies are validated for acute conditions lasting under 72 hours. Symptoms persisting beyond 1 week signal that home treatment has reached its clinical limit.",
+    options: [
+      { id: "A2_under24h",  label: "Less than 24 hours",           severity_weight: 0 },
+      { id: "A2_1to3days",  label: "1–3 days",                     severity_weight: 1 },
+      { id: "A2_4to7days",  label: "4–7 days (approaching 1 week)", severity_weight: 2 },
+      { id: "A2_1to2weeks", label: "1–2 weeks",                    severity_weight: 3, flags: ["escalate_consult"] },
+      { id: "A2_2to4weeks", label: "2–4 weeks",                    severity_weight: 3, flags: ["escalate_consult"] },
+      { id: "A2_over1month",label: "More than 1 month",            severity_weight: 4, flags: ["escalate_consult"] },
+    ],
+  },
+  {
+    id: "A3",
+    question: "Is the person currently taking any prescription medications OR managing a known chronic condition?",
+    rationale: "Critical drug-interaction screen. Natural compounds can dangerously alter pharmacokinetics. Anyone selecting a Yes option must obtain professional clearance before initiating any new remedy or supplement.",
+    options: [
+      { id: "A3_none",          label: "No — no medications or chronic conditions",                    flags: [] },
+      { id: "A3_blood_thinners",label: "Yes — on prescription blood thinners (e.g., warfarin, aspirin therapy)", flags: ["medication_interaction"] },
+      { id: "A3_diabetes",      label: "Yes — on prescription diabetes medication or insulin",          flags: ["medication_interaction"] },
+      { id: "A3_cardio",        label: "Yes — managing a cardiovascular condition",                     flags: ["medication_interaction"] },
+      { id: "A3_gut",           label: "Yes — managing a gut / digestive disorder",                    flags: ["medication_interaction"] },
+      { id: "A3_autoimmune",    label: "Yes — managing an autoimmune condition",                       flags: ["medication_interaction"] },
+      { id: "A3_pregnant",      label: "Yes — currently pregnant or breastfeeding",                   flags: ["medication_interaction", "pregnancy_risk"] },
+      { id: "A3_other_rx",      label: "Yes — on other prescription medication",                       flags: ["medication_interaction"] },
+      { id: "A3_unsure",        label: "Unsure / unknown",                                             flags: ["medication_interaction"] },
+    ],
+  },
+  {
+    id: "A4",
+    question: "How severe are your symptoms right now?",
+    rationale: "This determines whether home care is appropriate or whether you need urgent professional help.",
+    options: [
+      { id: "A4_normal", label: "Normal / Mild — symptoms are noticeable but I can manage my day",  severity: "normal" },
+      { id: "A4_severe", label: "Severe — symptoms are intense, worsening, or feel like an emergency", severity: "severe", flags: ["escalate_emergency"] },
+    ],
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PART 3 — SYMPTOM-SPECIFIC FOLLOW-UP QUESTIONS (Part B)
+// Source: Section 7, Part B of the compendium
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SYMPTOM_QUESTIONS = {
+
+  // ── B1: SKIN ───────────────────────────────────────────────────────────────
+  skin: {
+    label: "Dermatological / Skin Symptoms",
+    appliesTo: ["acne", "age_spots", "warts", "blisters", "eczema", "psoriasis", "razor_burn", "bug_bites"],
+    questions: [
+      {
+        id: "B1_Q1",
+        question: "Where exactly is the affected area, and what does it look / feel like?",
+        options: [
+          { id: "B1_Q1_face",         label: "Face / forehead / chin (hormonal acne zone)",                          context: "acne_hormonal" },
+          { id: "B1_Q1_back_chest",   label: "Back or chest (body acne — often diet-driven)",                         context: "acne_diet" },
+          { id: "B1_Q1_psoriasis",    label: "Scalp, behind ears, or elbows/knees (common psoriasis sites)",          context: "psoriasis" },
+          { id: "B1_Q1_eczema",       label: "Inside of elbows, behind knees, or on neck (common eczema sites)",      context: "eczema" },
+          { id: "B1_Q1_localized",    label: "Localized small spot — raised, itchy bump (bug bite / wart / blister)", context: "localized_bite_wart_blister" },
+          { id: "B1_Q1_spreading",    label: "Large spreading area with redness and warmth",                          context: "spreading_infection", flags: ["escalate_professional"] },
+          { id: "B1_Q1_contact",      label: "Appearing after contact with a specific substance or surface",          context: "contact_dermatitis" },
+          { id: "B1_Q1_rapid_spread", label: "Spreading rapidly or accompanied by swelling and heat",                 context: "urgent_skin", flags: ["escalate_professional"] },
+        ],
+      },
+      {
+        id: "B1_Q2",
+        question: "Has this symptom appeared before, and are there known dietary or environmental triggers?",
+        options: [
+          { id: "B1_Q2_first",         label: "First time — no prior history",                          trigger: null },
+          { id: "B1_Q2_recurring",     label: "Recurring — appears periodically without a clear trigger", trigger: "recurring" },
+          { id: "B1_Q2_food",          label: "Triggered by specific foods (dairy, sugar, processed oils)", trigger: "dietary" },
+          { id: "B1_Q2_environmental", label: "Triggered by environmental factors (detergents, fabrics, pet dander)", trigger: "environmental" },
+          { id: "B1_Q2_hormonal",      label: "Triggered by stress or hormonal changes",                  trigger: "hormonal" },
+          { id: "B1_Q2_seasonal",      label: "Seasonal — worsens in specific seasons",                   trigger: "seasonal" },
+          { id: "B1_Q2_medication",    label: "Appeared after starting a new medication or supplement",    trigger: "medication", flags: ["medication_interaction"] },
+          { id: "B1_Q2_unknown",       label: "Unknown / no pattern identified",                          trigger: null },
+        ],
+      },
+    ],
+  },
+
+  // ── B2: GASTROINTESTINAL ───────────────────────────────────────────────────
+  digestive: {
+    label: "Gastrointestinal / Digestive Symptoms",
+    appliesTo: ["constipation", "gerd", "heartburn", "bloating", "diarrhea", "nausea", "indigestion"],
+    questions: [
+      {
+        id: "B2_Q1",
+        question: "When does the digestive symptom most commonly occur?",
+        options: [
+          { id: "B2_Q1_after_eating",    label: "Immediately after eating (within 30 minutes)",                          context: "gerd_indigestion" },
+          { id: "B2_Q1_1to2h",           label: "1–2 hours after eating",                                                context: "slow_gastric_emptying" },
+          { id: "B2_Q1_morning",         label: "In the morning before eating",                                           context: "acid_reflux_morning", flags: ["pregnancy_check"] },
+          { id: "B2_Q1_motion",          label: "During or after motion / travel — confirms motion sickness",             context: "motion_sickness" },
+          { id: "B2_Q1_specific_foods",  label: "After specific foods only (fatty, spicy, dairy, gluten)",                context: "food_intolerance" },
+          { id: "B2_Q1_continuous",      label: "Continuously throughout the day with no clear food relationship",        context: "viral_bacterial", flags: ["escalate_consult"] },
+          { id: "B2_Q1_stress",          label: "Only during periods of high stress or anxiety",                          context: "gut_brain_axis" },
+          { id: "B2_Q1_medication",      label: "Associated with medication use (antibiotics, NSAIDs)",                   context: "drug_induced_gi" },
+        ],
+      },
+      {
+        id: "B2_Q2",
+        question: "Are there any associated symptoms alongside the digestive complaint?",
+        options: [
+          { id: "B2_Q2_none",         label: "None — isolated digestive symptom only",                                  flags: [] },
+          { id: "B2_Q2_fever",        label: "Fever (temperature above 38°C / 100.4°F)",                               flags: ["escalate_consult"] },
+          { id: "B2_Q2_blood",        label: "Blood in stool or vomit",                                                 flags: ["escalate_emergency"] },
+          { id: "B2_Q2_weight_loss",  label: "Unintentional weight loss over the past 4 weeks",                        flags: ["escalate_consult"] },
+          { id: "B2_Q2_severe_pain",  label: "Severe abdominal pain or cramping that does not resolve",                flags: ["escalate_professional"] },
+          { id: "B2_Q2_jaundice",     label: "Jaundice (yellowing of skin or eyes)",                                   flags: ["escalate_professional"] },
+          { id: "B2_Q2_dizzy",        label: "Dizziness or lightheadedness (indicating dehydration risk)",             flags: ["dehydration_risk"] },
+          { id: "B2_Q2_ear_head",     label: "Ringing in the ears or headache alongside nausea",                       flags: ["escalate_consult"] },
+        ],
+      },
+    ],
+  },
+
+  // ── B3: MUSCULOSKELETAL & NEUROLOGICAL ─────────────────────────────────────
+  musculoskeletal: {
+    label: "Musculoskeletal & Neurological Symptoms",
+    appliesTo: ["joint_pain", "arthritis", "gout", "back_pain", "neck_pain", "tension_headache", "insomnia", "rls", "fibromyalgia", "fatigue"],
+    questions: [
+      {
+        id: "B3_Q1",
+        question: "What is the nature and location of the pain?",
+        options: [
+          { id: "B3_Q1_dull_aching",     label: "Dull, aching, constant — typical of muscle tension or chronic inflammation", context: "chronic_inflammation" },
+          { id: "B3_Q1_sharp_sudden",    label: "Sharp, stabbing, sudden onset — may indicate acute injury, nerve impingement, or gout flare", context: "acute_or_gout" },
+          { id: "B3_Q1_throbbing",       label: "Throbbing or pulsating — typical of migraines or vascular headaches",      context: "migraine" },
+          { id: "B3_Q1_burning_tingling",label: "Burning or tingling sensation in limbs — suggests nerve involvement",       context: "neuropathy_rls" },
+          { id: "B3_Q1_stiff_improves",  label: "Stiffness that improves with movement — classic morning stiffness of rheumatoid arthritis", context: "rheumatoid" },
+          { id: "B3_Q1_stiff_worsens",   label: "Stiffness / pain that worsens with movement — suggests acute injury",      context: "acute_injury" },
+          { id: "B3_Q1_single_joint",    label: "Pain localized to a single joint, hot and swollen — classic gout presentation", context: "gout" },
+          { id: "B3_Q1_widespread",      label: "Widespread, diffuse pain with no single focal point — characteristic of fibromyalgia", context: "fibromyalgia" },
+        ],
+      },
+      {
+        id: "B3_Q2",
+        question: "Have there been any recent physical changes, injuries, or sleep disruptions?",
+        options: [
+          { id: "B3_Q2_injury",         label: "Recent physical injury or overexertion (within the past 72 hours)",         context: "rice_indicated" },
+          { id: "B3_Q2_sleep_position", label: "Change in sleeping position, mattress, or pillow recently",                 context: "postural" },
+          { id: "B3_Q2_sedentary",      label: "Prolonged sedentary activity (sitting at a desk for extended hours)",       context: "postural" },
+          { id: "B3_Q2_stress",         label: "High-stress period or significant anxiety in the past 2 weeks",             context: "stress_triggered" },
+          { id: "B3_Q2_sleep_disrupted",label: "Disrupted or reduced sleep for 3 or more consecutive nights",              context: "sleep_disrupted" },
+          { id: "B3_Q2_diet_magnesium", label: "Dietary change — significant reduction in magnesium-rich foods",           context: "magnesium_deficiency" },
+          { id: "B3_Q2_travel",         label: "Recent travel with extended sitting or awkward sleeping positions",          context: "postural" },
+          { id: "B3_Q2_no_trigger",     label: "No identifiable trigger — pain appeared without any obvious cause",         context: "unknown_trigger" },
+        ],
+      },
+    ],
+  },
+
+  // ── B4: RESPIRATORY & SENSORY ──────────────────────────────────────────────
+  respiratory: {
+    label: "Respiratory & Sensory Symptoms",
+    appliesTo: ["allergies", "sinusitis", "mucus_cough", "dry_cough", "sore_throat", "eye_strain", "kidney_stones", "utis"],
+    questions: [
+      {
+        id: "B4_Q1",
+        question: "Is the cough / congestion producing mucus, or is it dry?",
+        options: [
+          { id: "B4_Q1_dry_cough",        label: "Dry, persistent, tickling cough — no mucus production",            context: "dry_cough" },
+          { id: "B4_Q1_clear_mucus",      label: "Productive (wet) cough — clear or white mucus",                   context: "mucus_cough" },
+          { id: "B4_Q1_yellow_green",     label: "Productive cough — yellow or green mucus (may indicate bacterial infection)", context: "bacterial_possible", flags: ["escalate_consult"] },
+          { id: "B4_Q1_blood_mucus",      label: "Coughing up blood-tinged mucus",                                  context: "blood_mucus", flags: ["escalate_emergency"] },
+          { id: "B4_Q1_congestion_only",  label: "Nasal congestion only — no cough",                                context: "nasal_congestion" },
+          { id: "B4_Q1_allergic_rhinitis",label: "Runny nose with sneezing and itchy eyes — typical allergic rhinitis", context: "allergies" },
+          { id: "B4_Q1_sinusitis",        label: "Facial pressure / pain around cheeks, forehead, or nose bridge — sinusitis", context: "sinusitis" },
+          { id: "B4_Q1_wheezing",         label: "Wheezing or difficulty breathing alongside cough",                 context: "respiratory_emergency", flags: ["escalate_professional"] },
+        ],
+      },
+      {
+        id: "B4_Q2",
+        question: "Are there known environmental triggers, or is this a recurring seasonal pattern?",
+        options: [
+          { id: "B4_Q2_seasonal",       label: "Appears seasonally — consistent with pollen-driven allergic rhinitis", context: "seasonal_allergy" },
+          { id: "B4_Q2_indoor",         label: "Triggered by specific indoor environments (dust, pet dander, mould)",  context: "environmental_allergy" },
+          { id: "B4_Q2_chemical",       label: "Appeared after exposure to a specific chemical or cleaning product",   context: "chemical_exposure" },
+          { id: "B4_Q2_post_viral",     label: "Follows a cold or flu — post-viral lingering cough or congestion",    context: "post_viral" },
+          { id: "B4_Q2_lying_flat",     label: "Related to sleep — congestion or coughing worsens when lying flat",   context: "gerd_related" },
+          { id: "B4_Q2_cold_air",       label: "Worsens outdoors in cold or dry air",                                 context: "cold_air_triggered" },
+          { id: "B4_Q2_first_time",     label: "First-time occurrence with no prior respiratory history",             context: "first_time" },
+          { id: "B4_Q2_uti_kidney",     label: "Recurring UTI or kidney stone symptoms",                              context: "uti_kidney", flags: ["escalate_urologist"] },
+        ],
+      },
+    ],
+  },
+
+  // ── B5: EMERGENCY / FIRST AID ──────────────────────────────────────────────
+  emergency: {
+    label: "Emergency / First Aid Situations",
+    appliesTo: ["burns", "choking", "poisoning", "nosebleed", "animal_bites", "eye_injuries"],
+    questions: [
+      {
+        id: "B5_Q1",
+        question: "Has the emergency trigger been removed or neutralized?",
+        options: [
+          { id: "B5_Q1_yes_clear",     label: "Yes — the person is no longer in contact with the hazard",              flags: [] },
+          { id: "B5_Q1_no",            label: "No — the person is still in contact with or at risk from the hazard",   flags: ["escalate_emergency"] },
+          { id: "B5_Q1_unsure",        label: "Unsure — the environment has not been fully assessed",                   flags: ["escalate_emergency"] },
+          { id: "B5_Q1_poison_called", label: "Chemical / poison — substance identified; emergency services called",   flags: [] },
+          { id: "B5_Q1_bite_secured",  label: "Animal bite — the animal has been contained or has left the scene",     flags: [] },
+          { id: "B5_Q1_choking_clear", label: "Choking — airway obstruction fully cleared; person can speak and breathe", flags: [] },
+          { id: "B5_Q1_choking_not_clear", label: "Choking — obstruction has NOT been cleared; back blows and Heimlich still in progress", flags: ["escalate_emergency"] },
+          { id: "B5_Q1_not_applicable",label: "Not applicable — this is a non-emergency symptom",                      flags: [] },
+        ],
+      },
+      {
+        id: "B5_Q2",
+        question: "What is the person's current conscious state and responsiveness?",
+        options: [
+          { id: "B5_Q2_fully_conscious",   label: "Fully conscious, alert, and responsive — can answer questions",       severity: "mild" },
+          { id: "B5_Q2_confused",          label: "Conscious but confused or disoriented",                               severity: "severe", flags: ["escalate_professional"] },
+          { id: "B5_Q2_semi_conscious",    label: "Semi-conscious — responds to touch or pain but not to voice",         severity: "urgent", flags: ["escalate_emergency"] },
+          { id: "B5_Q2_unconscious",       label: "Unconscious — not responding to voice or touch",                      severity: "urgent", flags: ["escalate_emergency"] },
+          { id: "B5_Q2_choking_no_breathe",label: "Conscious but unable to breathe or speak (choking emergency)",        severity: "urgent", flags: ["escalate_emergency"] },
+          { id: "B5_Q2_severe_pain",       label: "Conscious with severe pain — rating 8–10 out of 10",                  severity: "severe", flags: ["escalate_professional"] },
+          { id: "B5_Q2_infant_crying",     label: "Child / infant who is crying — crying confirms air movement",         severity: "moderate" },
+          { id: "B5_Q2_infant_blue",       label: "Child / infant who has gone silent and is turning blue",              severity: "urgent", flags: ["escalate_emergency"] },
+        ],
+      },
+    ],
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PART 4 — SYMPTOM DATABASE
+// Full structured symptom objects with severity-mapped precautions
+// Source: Sections 2, 3, 4, 5 of the compendium
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SYMPTOMS = {
+
+  // ── SKIN ───────────────────────────────────────────────────────────────────
+  acne: {
+    id: "acne",
+    name: "Acne / Zits",
+    category: "skin",
+    bodyRegion: "head",
+    questionGroup: "skin",
+    physiologicalCause: "Glucose/insulin spikes; bacterial proliferation; dairy/processed oil sensitivity",
+    precautionaryMeasures: {
+      mild:     ["precaution_tea_tree_oil", "precaution_monitor"],
+      moderate: ["precaution_tea_tree_oil", "precaution_acne_diet", "precaution_monitor"],
+      severe:   ["precaution_acne_diet", "precaution_seek_dermatologist"],
+      urgent:   ["precaution_seek_dermatologist"],
+    },
+    warningSigns: [
+      "Large spreading area with redness and warmth — may indicate bacterial cellulitis requiring antibiotics",
+      "Spreading rapidly or accompanied by swelling and heat",
+    ],
+    professionalHelp: {
+      mild:     "Monitor symptoms. If no improvement after 4 weeks of tea tree oil use, consult a Dermatologist.",
+      moderate: "If dietary changes and tea tree oil do not improve symptoms within 4 weeks, consult a Dermatologist.",
+      severe:   "Consult a Dermatologist. Book via oladoc or Marham.",
+      urgent:   "Consult a Dermatologist. Book via oladoc or Marham.",
+    },
+  },
+
+  eczema: {
+    id: "eczema",
+    name: "Eczema",
+    category: "skin",
+    bodyRegion: "arms",
+    questionGroup: "skin",
+    physiologicalCause: "Vitamin A / Zinc deficiencies",
+    precautionaryMeasures: {
+      mild:     ["precaution_dead_sea_salt_soak", "precaution_oatmeal_paste", "precaution_remove_trigger", "precaution_monitor"],
+      moderate: ["precaution_dead_sea_salt_soak", "precaution_oatmeal_paste", "precaution_remove_trigger", "precaution_monitor"],
+      severe:   ["precaution_remove_trigger", "precaution_seek_dermatologist"],
+      urgent:   ["precaution_seek_dermatologist"],
+    },
+    warningSigns: [
+      "Spreading rapidly or accompanied by swelling and heat",
+      "Signs of infection (increasing redness, warmth, pus)",
+    ],
+    professionalHelp: {
+      mild:     "Monitor symptoms. Remove known triggers. If no improvement, consult a Dermatologist.",
+      moderate: "Consult a Dermatologist if no improvement within 1–2 weeks.",
+      severe:   "Consult a Dermatologist. Book via oladoc or Marham.",
+      urgent:   "Consult a Dermatologist. Book via oladoc or Marham.",
+    },
+  },
+
+  bug_bites: {
+    id: "bug_bites",
+    name: "Bug Bites / Insect Bites",
+    category: "skin",
+    bodyRegion: "arms",
+    questionGroup: "skin",
+    physiologicalCause: "Inflammatory response to insect saliva",
+    precautionaryMeasures: {
+      mild:     ["precaution_oatmeal_paste", "precaution_monitor"],
+      moderate: ["precaution_oatmeal_paste", "precaution_monitor"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Spreading redness, warmth, or swelling around bite — may indicate infection or allergic reaction",
+      "Difficulty breathing following bite — anaphylaxis emergency",
+    ],
+    professionalHelp: {
+      mild:     "Monitor symptoms. If signs of infection appear, consult a GP.",
+      moderate: "Consult a GP if symptoms worsen or show signs of infection.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Seek emergency care immediately.",
+    },
+  },
+
+  // ── GASTROINTESTINAL ───────────────────────────────────────────────────────
+  nausea: {
+    id: "nausea",
+    name: "Nausea",
+    category: "digestive",
+    bodyRegion: "abdomen",
+    questionGroup: "digestive",
+    physiologicalCause: "Serotonin receptor disruption in gut",
+    precautionaryMeasures: {
+      mild:     ["precaution_ginger", "precaution_hydration", "precaution_rest", "precaution_monitor"],
+      moderate: ["precaution_ginger", "precaution_hydration", "precaution_rest", "precaution_monitor"],
+      severe:   ["precaution_rehydration", "precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Blood in vomit — seek emergency care immediately",
+      "Severe dehydration (dizziness, inability to keep fluids down)",
+      "Nausea accompanied by severe chest pain — possible cardiac event",
+    ],
+    professionalHelp: {
+      mild:     "Monitor for 24 hours. If no improvement, consult a GP.",
+      moderate: "Consult a GP if nausea persists beyond 48 hours or is accompanied by fever.",
+      severe:   "Consult a GP promptly. Prioritize rehydration.",
+      urgent:   "Seek emergency care immediately.",
+    },
+  },
+
+  diarrhea: {
+    id: "diarrhea",
+    name: "Diarrhea",
+    category: "digestive",
+    bodyRegion: "abdomen",
+    questionGroup: "digestive",
+    physiologicalCause: "Inflamed intestinal mucous membranes",
+    precautionaryMeasures: {
+      mild:     ["precaution_blackberry_tea", "precaution_brat_diet", "precaution_rehydration", "precaution_monitor"],
+      moderate: ["precaution_rehydration", "precaution_blackberry_tea", "precaution_brat_diet", "precaution_monitor"],
+      severe:   ["precaution_rehydration", "precaution_seek_gp"],
+      urgent:   ["precaution_emergency_gi", "precaution_emergency"],
+    },
+    warningSigns: [
+      "Blood in stool — seek emergency care immediately",
+      "Dizziness alongside diarrhea — dehydration risk — prioritize rehydration protocol",
+      "Fever alongside diarrhea — possible infectious gastroenteritis",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Maintain BRAT diet and rehydration. Consult GP if not improving in 3 days.",
+      moderate: "Consult a GP if diarrhea persists beyond 48 hours or if dehydration signs are present.",
+      severe:   "Consult a GP. Prioritize rehydration immediately.",
+      urgent:   "Seek emergency care. Blood in stool is an emergency.",
+    },
+  },
+
+  heartburn: {
+    id: "heartburn",
+    name: "GERD / Heartburn",
+    category: "digestive",
+    bodyRegion: "chest",
+    questionGroup: "digestive",
+    physiologicalCause: "Acid/alkaline imbalance; improper bile release",
+    precautionaryMeasures: {
+      mild:     ["precaution_baking_soda_heartburn", "precaution_monitor"],
+      moderate: ["precaution_baking_soda_heartburn", "precaution_monitor"],
+      severe:   ["precaution_seek_gastroenterologist"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Heartburn accompanied by jaw pain, left arm pain, or shortness of breath — possible cardiac event — emergency",
+      "Unintentional weight loss with persistent heartburn — gastroenterology referral required",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Do not take baking soda on a full stomach. Consult a GP if not improving.",
+      moderate: "Consult a Gastroenterologist if no improvement within 1 week.",
+      severe:   "Consult a Gastroenterologist. Book via oladoc or Marham.",
+      urgent:   "Seek emergency care immediately if cardiac symptoms are present.",
+    },
+  },
+
+  bloating: {
+    id: "bloating",
+    name: "Bloating",
+    category: "digestive",
+    bodyRegion: "abdomen",
+    questionGroup: "digestive",
+    physiologicalCause: "Gas accumulation; GERD triggers",
+    precautionaryMeasures: {
+      mild:     ["precaution_fennel_seeds", "precaution_monitor"],
+      moderate: ["precaution_fennel_seeds", "precaution_monitor"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Severe abdominal pain or cramping that does not resolve",
+      "Jaundice accompanying bloating",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Chew fennel seeds after meals. Consult a GP if no improvement in 1 week.",
+      moderate: "Consult a GP if bloating is persistent or accompanied by other symptoms.",
+      severe:   "Consult a Gastroenterologist.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  // ── MUSCULOSKELETAL & NEUROLOGICAL ─────────────────────────────────────────
+  joint_pain: {
+    id: "joint_pain",
+    name: "Joint Pain / Arthritis",
+    category: "musculoskeletal",
+    bodyRegion: "arms",
+    questionGroup: "musculoskeletal",
+    physiologicalCause: "Oxidative stress in joint fluid",
+    precautionaryMeasures: {
+      mild:     ["precaution_curcumin", "precaution_ginger_joint", "precaution_rest", "precaution_monitor"],
+      moderate: ["precaution_curcumin", "precaution_ginger_joint", "precaution_rest"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Sharp sudden pain in the chest, jaw, or left arm — cardiac emergency",
+      "Single hot swollen joint with sudden onset — possible gout, requires different treatment",
+    ],
+    professionalHelp: {
+      mild:     "Allow 4–8 weeks for curcumin and ginger to show effect. Consult GP if no improvement.",
+      moderate: "Consult a GP if no improvement within 4 weeks of curcumin and ginger use.",
+      severe:   "Consult a GP or Rheumatologist promptly.",
+      urgent:   "Seek emergency care immediately.",
+    },
+  },
+
+  gout: {
+    id: "gout",
+    name: "Gout Flare-up",
+    category: "musculoskeletal",
+    bodyRegion: "legs",
+    questionGroup: "musculoskeletal",
+    physiologicalCause: "Uric acid crystallization in joints",
+    precautionaryMeasures: {
+      mild:     ["precaution_cherries_gout", "precaution_hydration", "precaution_rest", "precaution_monitor"],
+      moderate: ["precaution_cherries_gout", "precaution_hydration", "precaution_rest"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Fever accompanying the gout flare — possible infection in the joint",
+      "Gout flares becoming more frequent",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. 15–20 cherries daily. Consult GP if flares become more frequent.",
+      moderate: "Consult a GP for medication assessment.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  back_pain: {
+    id: "back_pain",
+    name: "Back / Neck Pain",
+    category: "musculoskeletal",
+    bodyRegion: "chest",
+    questionGroup: "musculoskeletal",
+    physiologicalCause: "Muscle tightness",
+    precautionaryMeasures: {
+      mild:     ["precaution_comfrey_cream", "precaution_acupressure", "precaution_rest", "precaution_monitor"],
+      moderate: ["precaution_rice_protocol", "precaution_comfrey_cream", "precaution_acupressure"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Back pain accompanied by loss of bladder or bowel control — emergency",
+      "Pain radiating down the leg below the knee — nerve involvement",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Apply comfrey cream. Consult GP if not improving within 1 week.",
+      moderate: "Consult a GP if not improving within 72 hours.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  tension_headache: {
+    id: "tension_headache",
+    name: "Tension Headache",
+    category: "musculoskeletal",
+    bodyRegion: "head",
+    questionGroup: "musculoskeletal",
+    physiologicalCause: "Cranial muscle pressure",
+    precautionaryMeasures: {
+      mild:     ["precaution_peppermint_temples", "precaution_rest", "precaution_hydration", "precaution_screen_break", "precaution_monitor"],
+      moderate: ["precaution_peppermint_temples", "precaution_rest", "precaution_hydration", "precaution_lavender_inhalation"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Sudden severe headache described as 'worst of my life' — possible subarachnoid hemorrhage — emergency",
+      "Headache with fever, stiff neck, and sensitivity to light — possible meningitis — emergency",
+      "Headache accompanied by vision changes or one-sided weakness",
+    ],
+    professionalHelp: {
+      mild:     "Monitor 24–48 hours. Consult GP if headaches recur frequently.",
+      moderate: "Consult a GP if headaches persist beyond 48 hours or are increasing in frequency.",
+      severe:   "Consult a Neurologist. Book via oladoc or Marham.",
+      urgent:   "Seek emergency care immediately.",
+    },
+  },
+
+  insomnia: {
+    id: "insomnia",
+    name: "Insomnia",
+    category: "musculoskeletal",
+    bodyRegion: "head",
+    questionGroup: "musculoskeletal",
+    physiologicalCause: "Overactive receptors or magnesium deficiency",
+    precautionaryMeasures: {
+      mild:     ["precaution_valerian_root", "precaution_magnesium", "precaution_morning_sunlight", "precaution_monitor"],
+      moderate: ["precaution_valerian_root", "precaution_magnesium", "precaution_lavender_inhalation", "precaution_morning_sunlight"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_seek_gp"],
+    },
+    warningSigns: [
+      "Insomnia accompanied by hallucinations or extreme confusion",
+      "Sleep deprivation affecting ability to function safely (e.g., driving)",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Magnesium and valerian root may take days to weeks to show effect.",
+      moderate: "Consult a GP if insomnia persists beyond 2 weeks despite home management.",
+      severe:   "Consult a GP or Neurologist. Book via oladoc or Marham.",
+      urgent:   "Consult a GP promptly.",
+    },
+  },
+
+  fibromyalgia: {
+    id: "fibromyalgia",
+    name: "Fibromyalgia / Chronic Fatigue",
+    category: "musculoskeletal",
+    bodyRegion: "chest",
+    questionGroup: "musculoskeletal",
+    physiologicalCause: "Cellular ATP production failure",
+    precautionaryMeasures: {
+      mild:     ["precaution_ribose_powder", "precaution_magnesium", "precaution_rest", "precaution_monitor"],
+      moderate: ["precaution_ribose_powder", "precaution_magnesium", "precaution_rest"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_seek_gp"],
+    },
+    warningSigns: [
+      "Unexplained rapid weight loss alongside fatigue",
+      "Fatigue accompanied by persistent fever",
+    ],
+    professionalHelp: {
+      mild:     "Allow approximately 3 weeks for ribose powder to show effect. Monitor.",
+      moderate: "Consult a GP if no improvement after 3 weeks of ribose + magnesium.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Consult a GP.",
+    },
+  },
+
+  // ── RESPIRATORY & SENSORY ──────────────────────────────────────────────────
+  allergies: {
+    id: "allergies",
+    name: "Allergies / Nasal Stuffiness",
+    category: "respiratory",
+    bodyRegion: "head",
+    questionGroup: "respiratory",
+    physiologicalCause: "Systemic histamine response",
+    precautionaryMeasures: {
+      mild:     ["precaution_vitamin_c", "precaution_omega3", "precaution_monitor"],
+      moderate: ["precaution_vitamin_c", "precaution_omega3", "precaution_remove_trigger"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Difficulty breathing or wheezing alongside nasal stuffiness — possible anaphylaxis",
+      "Facial swelling accompanying allergy symptoms",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Vitamin C 2 g/day ongoing. Identify and avoid triggers.",
+      moderate: "Consult a GP if symptoms persist despite Vitamin C and trigger removal.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Seek emergency care immediately.",
+    },
+  },
+
+  sinusitis: {
+    id: "sinusitis",
+    name: "Sinusitis / Congestion",
+    category: "respiratory",
+    bodyRegion: "head",
+    questionGroup: "respiratory",
+    physiologicalCause: "Inflamed/blocked sinus cavities",
+    precautionaryMeasures: {
+      mild:     ["precaution_eucalyptus_steam", "precaution_hydration", "precaution_monitor"],
+      moderate: ["precaution_eucalyptus_steam", "precaution_hydration"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Sinusitis with high fever and severe headache — possible bacterial sinus infection requiring antibiotics",
+      "Vision changes or swelling around the eyes accompanying sinusitis",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Eucalyptus steam for symptomatic relief. Consult GP if not improving in 1 week.",
+      moderate: "Consult a GP if sinusitis persists beyond 1 week without improvement.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  mucus_cough: {
+    id: "mucus_cough",
+    name: "Mucus Cough (Productive Cough)",
+    category: "respiratory",
+    bodyRegion: "chest",
+    questionGroup: "respiratory",
+    physiologicalCause: "Respiratory tract clearing excess mucus",
+    precautionaryMeasures: {
+      mild:     ["precaution_thyme_tea", "precaution_black_pepper_honey_tea", "precaution_hydration", "precaution_monitor"],
+      moderate: ["precaution_thyme_tea", "precaution_eucalyptus_steam", "precaution_hydration"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Yellow or green mucus — possible bacterial infection requiring antibiotics",
+      "Blood-tinged mucus — seek immediate professional care",
+      "Wheezing or difficulty breathing alongside cough",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Thyme tea and black pepper & honey tea for symptomatic relief.",
+      moderate: "Consult a GP if productive cough persists beyond 1 week or mucus changes color.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  dry_cough: {
+    id: "dry_cough",
+    name: "Dry Cough / Sore Throat",
+    category: "respiratory",
+    bodyRegion: "head",
+    questionGroup: "respiratory",
+    physiologicalCause: "Throat irritation",
+    precautionaryMeasures: {
+      mild:     ["precaution_honey_dry_cough", "precaution_hydration", "precaution_monitor"],
+      moderate: ["precaution_honey_dry_cough", "precaution_hydration"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Sore throat with high fever and difficulty swallowing — possible strep throat requiring antibiotics",
+      "Dry cough persisting beyond 4 weeks",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Honey for symptomatic relief. Consult GP if not improving in 1 week.",
+      moderate: "Consult a GP if dry cough persists beyond 1 week.",
+      severe:   "Consult a GP promptly.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  utis: {
+    id: "utis",
+    name: "Urinary Tract Infection (UTI)",
+    category: "respiratory",
+    bodyRegion: "abdomen",
+    questionGroup: "respiratory",
+    physiologicalCause: "E. coli adhesion to urinary tract walls",
+    precautionaryMeasures: {
+      mild:     ["precaution_cranberry_juice", "precaution_hydration", "precaution_monitor"],
+      moderate: ["precaution_cranberry_juice", "precaution_hydration", "precaution_seek_urologist"],
+      severe:   ["precaution_seek_urologist"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "UTI symptoms accompanied by fever and back/flank pain — possible kidney infection (pyelonephritis)",
+      "Recurring UTIs — urologist consultation required regardless of current severity",
+      "Blood in urine",
+    ],
+    professionalHelp: {
+      mild:     "Cranberry juice for prevention. Consult a GP as UTIs typically require antibiotics for full resolution.",
+      moderate: "Consult a GP or Urologist. Book via oladoc or Marham.",
+      severe:   "Consult a Urologist promptly.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  kidney_stones: {
+    id: "kidney_stones",
+    name: "Kidney Stones",
+    category: "respiratory",
+    bodyRegion: "abdomen",
+    questionGroup: "respiratory",
+    physiologicalCause: "Calcium-oxalate crystallization",
+    precautionaryMeasures: {
+      mild:     ["precaution_lemon_juice", "precaution_hydration", "precaution_monitor"],
+      moderate: ["precaution_lemon_juice", "precaution_hydration", "precaution_seek_urologist"],
+      severe:   ["precaution_seek_urologist"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Severe flank pain radiating to the groin — classic kidney stone passage requiring medical management",
+      "Blood in urine alongside pain",
+      "Fever accompanying kidney stone symptoms — possible kidney infection",
+    ],
+    professionalHelp: {
+      mild:     "Lemon juice 4 oz daily for prevention. Consult a GP or Urologist.",
+      moderate: "Consult a Urologist. Book via oladoc or Marham.",
+      severe:   "Consult a Urologist promptly.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+
+  eye_strain: {
+    id: "eye_strain",
+    name: "Eye Strain",
+    category: "respiratory",
+    bodyRegion: "head",
+    questionGroup: "respiratory",
+    physiologicalCause: "Decreased blood flow; antioxidant depletion",
+    precautionaryMeasures: {
+      mild:     ["precaution_screen_break", "precaution_omega3", "precaution_monitor"],
+      moderate: ["precaution_screen_break", "precaution_omega3"],
+      severe:   ["precaution_seek_gp"],
+      urgent:   ["precaution_emergency"],
+    },
+    warningSigns: [
+      "Sudden vision changes or loss of vision",
+      "Eye pain accompanied by nausea and headache — possible acute glaucoma",
+    ],
+    professionalHelp: {
+      mild:     "Monitor. Reduce screen time. Omega-3 supplementation ongoing.",
+      moderate: "Consult a GP or Ophthalmologist if eye strain persists or vision is affected.",
+      severe:   "Consult an Ophthalmologist.",
+      urgent:   "Seek emergency care.",
+    },
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PART 5 — CARE PATHWAY DECISION LOGIC
+// Source: Section 7, Part C — Care Pathway Decision Guide
+// ─────────────────────────────────────────────────────────────────────────────
+
+const CARE_PATHWAY = {
+
+  /**
+   * Determines the care pathway based on universal question answers.
+   * Returns one of: "emergency", "same_day_professional", "scheduled_consult",
+   *                 "home_management", "monitor_and_comfort"
+   */
+  evaluate(answers) {
+    const { A4, flags } = answers;
+
+    // If severe selected OR any escalation flag → urgent care
+    if (A4 === "A4_severe") return "urgent_care";
+    if (flags && (flags.includes("escalate_emergency") || flags.includes("escalate_professional"))) return "urgent_care";
+
+    // Otherwise → home care
+    return "home_care";
+  },
+
+  labels: {
+    home_care:   { emoji: "🏠", label: "Home Care",          color: "#1A7A4A" },
+    urgent_care: { emoji: "🚨", label: "Seek Urgent Help",   color: "#C0392B" },
+  },
+
+  descriptions: {
+    home_care:
+      "Your symptoms appear normal or mild. Follow the precautionary measures below, rest well, stay hydrated, and monitor your condition. If symptoms worsen or don't improve within 48 hours, consult a doctor.",
+    urgent_care:
+      "Your symptoms suggest you need professional medical attention. Please visit a doctor or clinic as soon as possible. You can book an urgent video consultation via oladoc or Marham, or go to the nearest clinic immediately.",
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PART 6 — MULTI-SYMPTOM PRECAUTION COMBINER
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * combineSymptomPrecautions
+ *
+ * Given an array of selected symptom IDs and a resolved severity level,
+ * returns a deduplicated, priority-ordered list of precaution IDs.
+ *
+ * Rules (from the compendium's system design document):
+ *   1. Collect precautionary measures associated with each selected symptom at the resolved severity.
+ *   2. Remove duplicate measures.
+ *   3. Keep measures that are relevant to the final severity.
+ *   4. Sort by priority (lower number = higher priority).
+ *   5. If two measures conflict, the conflict is flagged rather than silently resolved.
+ *
+ * @param {string[]} selectedSymptomIds  - e.g. ["headache_tension", "nausea"]
+ * @param {string}   severity            - "mild" | "moderate" | "severe" | "urgent"
+ * @param {object}   universalAnswers    - answers to Part A questions
+ * @returns {{ precautions: object[], conflicts: string[], carePathway: string }}
+ */
+function combineSymptomPrecautions(selectedSymptomIds, severity, universalAnswers) {
+  const combined = new Map(); // id → precaution object
+  const conflicts = [];
+
+  // 1. If medication interaction flagged, prepend the clearance warning
+  const hasMedicationFlag = universalAnswers.A3 && universalAnswers.A3 !== "A3_none";
+  if (hasMedicationFlag) {
+    combined.set("precaution_no_medications_without_clearance", PRECAUTIONS["precaution_no_medications_without_clearance"]);
+  }
+
+  // 2. Collect precautions for each symptom at the resolved severity
+  for (const symId of selectedSymptomIds) {
+    const sym = SYMPTOMS[symId];
+    if (!sym) continue;
+
+    const measures = sym.precautionaryMeasures[severity] || [];
+    for (const pId of measures) {
+      if (!combined.has(pId)) {
+        combined.set(pId, PRECAUTIONS[pId]);
+      }
+    }
+  }
+
+  // 3. Check for known conflicts
+  // Conflict: black_pepper_honey_tea (for mucus cough) + honey_dry_cough (for dry cough)
+  // These cannot be selected together safely
+  if (combined.has("precaution_black_pepper_honey_tea") && combined.has("precaution_honey_dry_cough")) {
+    conflicts.push(
+      "CONFLICT: 'Black Pepper & Honey Tea' is for mucus-producing coughs ONLY. " +
+      "'Honey for Dry Cough' is for dry coughs ONLY. " +
+      "These cannot both be administered. Determine the primary cough type before proceeding."
+    );
+    // Remove both and let the user resolve — do not silently pick one
+    combined.delete("precaution_black_pepper_honey_tea");
+    combined.delete("precaution_honey_dry_cough");
+  }
+
+  // 4. Determine care pathway
+  const carePathway = CARE_PATHWAY.evaluate({
+    A1: universalAnswers.A1,
+    A2: universalAnswers.A2,
+    A3: universalAnswers.A3,
+    A4: universalAnswers.A4,
+    flags: universalAnswers.flags || [],
+  });
+
+  // 5. Sort by priority
+  const sorted = Array.from(combined.values()).sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
+
+  return { precautions: sorted, conflicts, carePathway };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EXPORTS
+// ─────────────────────────────────────────────────────────────────────────────
+
+if (typeof module !== "undefined") {
+  module.exports = {
+    PRECAUTIONS,
+    UNIVERSAL_QUESTIONS,
+    SYMPTOM_QUESTIONS,
+    SYMPTOMS,
+    CARE_PATHWAY,
+    combineSymptomPrecautions,
+  };
+}
+
+
+/* ══════════════════════════════════════
+   ASSESSMENT FLOW — Steps 1 → 2 → 3 → 4
+══════════════════════════════════════ */
+(function(){
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  const chosen      = new Set();   // selected symptom IDs (mapped from region items)
+  const chosenNames = new Map();   // symptom display name → id mapping
+  let   activeReg   = null;
+  let   followupAnswers = {};      // { questionId: answerId }
+
+  // ── DOM refs ───────────────────────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+
+  // Step 1
+  const pop        = $('popover');
+  const optBox     = $('options');
+  const panelBox   = $('options2');
+  const pt         = $('pt');
+  const pt2        = $('pt2');
+  const pc         = $('pc');
+  const promptEl   = $('prompt');
+  const selEl      = $('selected');
+  const analyzeBtn = $('analyze');
+  const symBox     = $('symptomBox');
+  const srbCount   = $('srb-count');
+  const clearBtn   = $('clear-all');
+  const searchEl   = $('search');
+  const searchRes  = $('search-results');
+
+  // Sections
+  const assessSec  = $('assessment');
+  const followSec  = $('followup');
+  const analyzeSec = $('analyzing');
+  const resultsSec = $('results');
+
+  // ── Region → symptom mapping ───────────────────────────────────────────────
+  // Maps body region dots to symptom items and their DB IDs
+  const regionData = {
+    head: {
+      title: 'Head & Face',
+      desc:  'Common issues in this area',
+      items: [
+        { label: 'Headache',           id: 'tension_headache' },
+        { label: 'Dizziness',          id: null },
+        { label: 'Migraine',           id: 'tension_headache' },
+        { label: 'Facial pain',        id: null },
+        { label: 'Sinus pressure',     id: 'sinusitis' },
+        { label: 'Vision problems',    id: 'eye_strain' },
+        { label: 'Allergies',          id: 'allergies' },
+        { label: 'Dry cough / sore throat', id: 'dry_cough' },
+      ]
+    },
+    chest: {
+      title: 'Chest & Breathing',
+      desc:  'Common issues in this area',
+      items: [
+        { label: 'Chest discomfort',    id: 'heartburn' },
+        { label: 'Shortness of breath', id: null },
+        { label: 'Mucus cough',         id: 'mucus_cough' },
+        { label: 'Palpitations',        id: null },
+        { label: 'Chest tightness',     id: null },
+        { label: 'Heartburn / GERD',    id: 'heartburn' },
+        { label: 'Back / Neck pain',    id: 'back_pain' },
+      ]
+    },
+    abdomen: {
+      title: 'Abdomen',
+      desc:  'Common issues in this area',
+      items: [
+        { label: 'Stomach pain',       id: null },
+        { label: 'Nausea',             id: 'nausea' },
+        { label: 'Vomiting',           id: 'nausea' },
+        { label: 'Bloating',           id: 'bloating' },
+        { label: 'Diarrhea',           id: 'diarrhea' },
+        { label: 'Cramps',             id: null },
+        { label: 'Loss of appetite',   id: null },
+        { label: 'UTI symptoms',       id: 'utis' },
+        { label: 'Kidney stone pain',  id: 'kidney_stones' },
+      ]
+    },
+    arms: {
+      title: 'Arms & Hands',
+      desc:  'Common issues in this area',
+      items: [
+        { label: 'Arm pain',           id: null },
+        { label: 'Numbness',           id: null },
+        { label: 'Weakness',           id: null },
+        { label: 'Tingling',           id: null },
+        { label: 'Joint pain',         id: 'joint_pain' },
+        { label: 'Swelling',           id: null },
+        { label: 'Skin rash / eczema', id: 'eczema' },
+        { label: 'Bug bites',          id: 'bug_bites' },
+        { label: 'Acne / skin issue',  id: 'acne' },
+      ]
+    },
+    legs: {
+      title: 'Legs & Feet',
+      desc:  'Common issues in this area',
+      items: [
+        { label: 'Leg pain',           id: null },
+        { label: 'Swelling',           id: null },
+        { label: 'Weakness',           id: null },
+        { label: 'Numbness',           id: null },
+        { label: 'Cramps',             id: null },
+        { label: 'Gout (hot joint)',   id: 'gout' },
+        { label: 'Restless legs',      id: null },
+        { label: 'Fatigue / fibromyalgia', id: 'fibromyalgia' },
+      ]
+    },
+  };
+
+  // ── Step 1 helpers ─────────────────────────────────────────────────────────
+  function toggle(label, symId) {
+    if (chosen.has(label)) {
+      chosen.delete(label);
+      chosenNames.delete(label);
+    } else {
+      chosen.add(label);
+      if (symId) chosenNames.set(label, symId);
+    }
+  }
+
+  function renderSelected() {
+    if (!selEl) return;
+    selEl.innerHTML = '';
+    if (!chosen.size) {
+      selEl.innerHTML = '<div class="empty-state">No symptoms selected yet.</div>';
+      if (clearBtn) clearBtn.style.display = 'none';
+    } else {
+      if (clearBtn) clearBtn.style.display = 'flex';
+      chosen.forEach(label => {
+        const d = document.createElement('div');
+        d.className = 'sel-item';
+        d.innerHTML = `<div class="sel-item-info"><strong>${label}</strong><span>${getRegionForLabel(label)}</span></div><button class="sel-item-remove" aria-label="Remove">×</button>`;
+        d.querySelector('button').onclick = () => { toggle(label); renderSelected(); renderOpts(); };
+        selEl.appendChild(d);
+      });
+    }
+    if (analyzeBtn) analyzeBtn.disabled = !chosen.size;
+    if (srbCount) srbCount.textContent = `${chosen.size} selected`;
+  }
+
+  function getRegionForLabel(label) {
+    for (const [reg, data] of Object.entries(regionData)) {
+      if (data.items.find(i => i.label === label)) return data.title;
+    }
+    return '';
+  }
+
+  function renderPopOpts() {
+    if (!optBox || !activeReg) return;
+    const items = regionData[activeReg].items;
+    optBox.innerHTML = items.map(item =>
+      `<button class="option${chosen.has(item.label) ? ' active' : ''}" data-label="${item.label}" data-symid="${item.id || ''}">${item.label}</button>`
+    ).join('');
+    optBox.querySelectorAll('.option').forEach(b => {
+      b.onclick = () => { toggle(b.dataset.label, b.dataset.symid || null); renderOpts(); renderSelected(); };
+    });
+  }
+
+  function renderPanelOpts() {
+    if (!panelBox || !activeReg) return;
+    const items = regionData[activeReg].items;
+    panelBox.innerHTML = items.map(item => `
+      <div class="panel-option${chosen.has(item.label) ? ' active' : ''}" data-label="${item.label}" data-symid="${item.id || ''}">
+        <div class="panel-option-left">
+          <div class="panel-check"><span class="panel-check-icon">✓</span></div>
+          <span>${item.label}</span>
+        </div>
+        <div class="panel-info-icon">ℹ</div>
+      </div>`).join('');
+    panelBox.querySelectorAll('.panel-option').forEach(el => {
+      el.onclick = () => { toggle(el.dataset.label, el.dataset.symid || null); renderOpts(); renderSelected(); };
+    });
+  }
+
+  function renderOpts() { renderPopOpts(); renderPanelOpts(); }
+
+  function openRegion(reg) {
+    activeReg = reg;
+    const d = regionData[reg];
+    if (pt)  pt.textContent  = d.title;
+    if (pt2) pt2.textContent = d.title;
+    if (pc)  pc.textContent  = d.desc;
+    if (promptEl) promptEl.textContent = `Symptoms for ${d.title}`;
+    if (symBox) symBox.style.display = 'block';
+    if (pop) { pop.classList.remove('hidden'); pop.classList.remove('wobble'); void pop.offsetWidth; pop.classList.add('wobble'); }
+    document.querySelectorAll('.rg-dot').forEach(b => b.classList.toggle('active', b.dataset.region === reg));
+    renderOpts();
+  }
+
+  document.querySelectorAll('.rg-dot').forEach(b => b.addEventListener('click', () => openRegion(b.dataset.region)));
+  const closeBtn = $('close');
+  if (closeBtn) closeBtn.onclick = () => pop && pop.classList.add('hidden');
+
+  const resetBtn = $('reset');
+  if (resetBtn) resetBtn.onclick = () => {
+    chosen.clear(); chosenNames.clear(); activeReg = null;
+    if (pop) pop.classList.add('hidden');
+    if (symBox) symBox.style.display = 'none';
+    if (promptEl) promptEl.textContent = 'Choose your symptoms';
+    document.querySelectorAll('.rg-dot').forEach(b => b.classList.remove('active'));
+    renderSelected();
+  };
+
+  if (clearBtn) clearBtn.onclick = () => { chosen.clear(); chosenNames.clear(); renderSelected(); renderOpts(); };
+
+  if (searchEl) searchEl.addEventListener('input', () => {
+    const q = searchEl.value.trim().toLowerCase();
+    if (!searchRes) return;
+    searchRes.innerHTML = '';
+    if (!q) return;
+    const all = [...new Set(Object.values(regionData).flatMap(r => r.items))].filter(i => i.label.toLowerCase().includes(q));
+    searchRes.innerHTML = all.map(i => `<button class="option${chosen.has(i.label) ? ' active' : ''}" data-label="${i.label}" data-symid="${i.id||''}">${i.label}</button>`).join('');
+    searchRes.querySelectorAll('.option').forEach(b => {
+      b.onclick = () => { toggle(b.dataset.label, b.dataset.symid || null); renderSelected(); b.classList.toggle('active', chosen.has(b.dataset.label)); };
+    });
+  });
+
+  renderSelected();
+
+  // ── Step 1 → Step 2 ────────────────────────────────────────────────────────
+  if (analyzeBtn) analyzeBtn.onclick = () => {
+    showStep('followup');
+    buildFollowupQuestions();
+  };
+
+  // ── Step 2: Build follow-up questions ──────────────────────────────────────
+  function buildFollowupQuestions() {
+    followupAnswers = {};
+    const container = $('followup-questions');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // Always show the 4 universal questions (Part A)
+    UNIVERSAL_QUESTIONS.forEach(q => {
+      container.appendChild(buildQuestionCard(q, 'radio'));
+    });
+
+    updateSubmitBtn();
+  }
+
+  function buildQuestionCard(q, type) {
+    const card = document.createElement('div');
+    card.className = 'fq-card';
+    card.innerHTML = `
+      <h4>${q.question}</h4>
+      <p class="fq-rationale">${q.rationale || ''}</p>
+      <div class="fq-options" id="fq-opts-${q.id}">
+        ${q.options.map(opt => `
+          <label class="fq-option" data-qid="${q.id}" data-oid="${opt.id}">
+            <input type="${type}" name="fq_${q.id}" value="${opt.id}">
+            ${opt.label}
+          </label>
+        `).join('')}
+      </div>`;
+
+    card.querySelectorAll('.fq-option').forEach(label => {
+      label.addEventListener('click', () => {
+        const qid = label.dataset.qid;
+        const oid = label.dataset.oid;
+        followupAnswers[qid] = oid;
+        // visual
+        card.querySelectorAll('.fq-option').forEach(l => l.classList.remove('selected'));
+        label.classList.add('selected');
+        updateSubmitBtn();
+      });
+    });
+
+    return card;
+  }
+
+  function updateSubmitBtn() {
+    const btn = $('submit-followup');
+    if (!btn) return;
+    const answered = Object.keys(followupAnswers).length;
+    btn.disabled = answered < UNIVERSAL_QUESTIONS.length;
+  }
+
+  const backBtn = $('back-to-symptoms');
+  if (backBtn) backBtn.onclick = () => showStep('assessment');
+
+  const submitBtn = $('submit-followup');
+  if (submitBtn) submitBtn.onclick = () => {
+    showStep('analyzing');
+    setTimeout(() => {
+      runAnalysis();
+    }, 1800);
+  };
+
+  // ── Step 3 → Step 4: Analysis ──────────────────────────────────────────────
+  function runAnalysis() {
+    // Simple 2-level severity
+    const severity = followupAnswers['A4'] === 'A4_severe' ? 'severe' : 'mild';
+
+    // Collect symptom DB IDs
+    const symIds = [...new Set([...chosenNames.values()].filter(Boolean))];
+
+    // Universal answers for combiner
+    const universalAnswers = {
+      A1: followupAnswers['A1'],
+      A2: followupAnswers['A2'],
+      A3: followupAnswers['A3'],
+      A4: followupAnswers['A4'],
+      flags: collectFlags(),
+    };
+
+    // Determine care pathway
+    const carePathway = followupAnswers['A4'] === 'A4_severe' ? 'urgent_care' : 'home_care';
+
+    // Get precautions
+    const { precautions, conflicts } = combineSymptomPrecautions(
+      symIds.length ? symIds : ['nausea'],
+      severity,
+      universalAnswers
+    );
+
+    showResults(severity, carePathway, precautions, conflicts, symIds);
+  }
+
+  function collectFlags() {
+    const flags = [];
+    const a4 = followupAnswers['A4'];
+    const a3 = followupAnswers['A3'];
+    if (a4 === 'A4_severe') flags.push('escalate_emergency');
+    if (a3 && a3 !== 'A3_none') flags.push('medication_interaction');
+    return flags;
+  }
+
+  // ── Render results ─────────────────────────────────────────────────────────
+  function showResults(severity, carePathway, precautions, conflicts, symIds) {
+    showStep('results');
+
+    const isUrgent = carePathway === 'urgent_care';
+
+    // Severity badge
+    const badge = $('severity-badge');
+    if (badge) {
+      badge.textContent = isUrgent ? '🚨 Severe — Seek Urgent Help' : '🟢 Normal / Mild — Home Care';
+      badge.className = `severity-badge ${isUrgent ? 'severity-severe' : 'severity-mild'}`;
+    }
+
+    // Subtitle
+    const sub = $('results-subtitle');
+    if (sub) sub.textContent = isUrgent
+      ? 'Your symptoms require professional medical attention. Please see a doctor as soon as possible.'
+      : 'Your symptoms appear mild. Follow the precautionary measures below and monitor your condition.';
+
+    // Care pathway
+    const cp = CARE_PATHWAY.labels[carePathway];
+    const cpDesc = CARE_PATHWAY.descriptions[carePathway];
+    const cpBox = $('care-pathway-box');
+    if (cpBox && cp) {
+      cpBox.className = `care-pathway-box cp-${carePathway}`;
+      cpBox.innerHTML = `<span class="cp-emoji">${cp.emoji}</span><div><div class="cp-label">${cp.label}</div><p class="cp-desc">${cpDesc}</p></div>`;
+    }
+
+    // Conflicts
+    const conflictsBox = $('conflicts-box');
+    if (conflictsBox) {
+      if (conflicts.length) {
+        conflictsBox.style.display = 'block';
+        conflictsBox.innerHTML = `<strong>⚠ Please note:</strong> ${conflicts.join('<br>')}`;
+      } else {
+        conflictsBox.style.display = 'none';
+      }
+    }
+
+    // Precaution cards
+    const grid = $('precautions-grid');
+    if (grid) {
+      const animIcons = { rest:'😴', hydration:'💧', nutrition:'🥗', sleep:'🌙', medical_help:'🏥', monitoring:'📊', breathing:'🌬️', screen_break:'🖥️', TODO:'💊' };
+      grid.innerHTML = precautions.map(p => `
+        <div class="precaution-card">
+          <div class="precaution-icon">${animIcons[p.animation] || '💊'}</div>
+          <div class="precaution-title">${p.title}</div>
+          <p class="precaution-desc">${p.description}</p>
+          <span class="precaution-category">${p.category.replace(/_/g,' ')}</span>
+        </div>
+      `).join('');
+    }
+
+    // Symptoms summary
+    const symList = $('results-symptoms-list');
+    if (symList) {
+      symList.innerHTML = [...chosen].map(label => `<span class="results-symptom-tag">${label}</span>`).join('');
+    }
+
+    // Warning signs from matched symptoms
+    const warnBox = $('warning-signs-box');
+    if (warnBox) {
+      const allWarnings = [...new Set(
+        symIds.flatMap(id => SYMPTOMS[id]?.warningSigns || [])
+      )];
+      if (allWarnings.length) {
+        warnBox.innerHTML = `<h4>⚠ Warning Signs — Seek Help If You Experience:</h4><ul>${allWarnings.map(w => `<li>${w}</li>`).join('')}</ul>`;
+        warnBox.style.display = 'block';
+      } else {
+        warnBox.style.display = 'none';
+      }
+    }
+
+    // Professional help advice
+    const profBox = $('professional-help-box');
+    if (profBox) {
+      const advice = symIds.map(id => SYMPTOMS[id]?.professionalHelp?.[severity]).filter(Boolean);
+      if (advice.length) {
+        profBox.innerHTML = `<h4>🩺 Professional Care Guidance</h4><p>${[...new Set(advice)].join(' ')}</p>`;
+        profBox.style.display = 'block';
+      } else {
+        profBox.style.display = 'none';
+      }
+    }
+
+    // Persist this analysis to the backend, tied to the logged-in user (if any)
+    if (window.SmartHealthAuth && typeof window.SmartHealthAuth.saveAnalysis === 'function') {
+      window.SmartHealthAuth.saveAnalysis({
+        severity,
+        carePathway,
+        symptoms: [...chosen],
+        precautions: precautions.map(p => p.title),
+        conflicts,
+      });
+    }
+  }
+
+  // ── Start over ─────────────────────────────────────────────────────────────
+  const startOverBtn = $('start-over');
+  if (startOverBtn) startOverBtn.onclick = () => {
+    chosen.clear(); chosenNames.clear(); followupAnswers = {};
+    if (resetBtn) resetBtn.click();
+    showStep('assessment');
+    document.querySelector('#assessment').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // ── Section switcher ───────────────────────────────────────────────────────
+  function showStep(step) {
+    ['assessment','followup','analyzing','results'].forEach(s => {
+      const el = $(s);
+      if (!el) return;
+      if (s === step) {
+        el.style.display = '';
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        el.style.display = 'none';
+      }
+    });
+    // Always keep assessment visible in DOM for step 1
+    if (step !== 'assessment') {
+      const a = $('assessment');
+      if (a) a.style.display = 'none';
+    }
+  }
+
+})();
+</script>
+
+<script>
+(function(){
+  const overlay = document.getElementById('authOverlay');
+  const headerRight = document.getElementById('headerRight');
+  const authClose = document.getElementById('authClose');
+  const tabLogin = document.getElementById('tabLogin');
+  const tabSignup = document.getElementById('tabSignup');
+  const authTabs = document.querySelector('.auth-tabs');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const profileForm = document.getElementById('profileForm');
+  const loginError = document.getElementById('loginError');
+  const signupError = document.getElementById('signupError');
+  const profileError = document.getElementById('profileError');
+
+  // ── Backend API helpers ────────────────────────────────────────────────
+  // The site is served by the Flask backend (app.py), which stores users
+  // and their symptom-checker analyses in a real SQLite database
+  // (smarthealth.db). Auth is a server-side session cookie — no passwords
+  // or personal data live in the browser.
+  const API = '/api';
+  let currentUser = null; // { id, name, email, bio, created_at }
+
+  async function api(path, opts){
+    const res = await fetch(API + path, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      ...opts,
+    });
+    let data = null;
+    try { data = await res.json(); } catch(e){ /* no body */ }
+    if (!res.ok){
+      const msg = (data && data.error) || `Request failed (${res.status})`;
+      throw new Error(msg);
+    }
+    return data;
+  }
+
+  function showGenericError(el, msg){ el.textContent = msg; el.classList.add('show'); }
+  function initials(name){
+    return name.trim().split(/\s+/).map(p => p[0]).slice(0,2).join('').toUpperCase();
+  }
+
+  function openModal(mode){
+    overlay.classList.add('open');
+    [loginError, signupError, profileError].forEach(e => e.classList.remove('show'));
+    if (mode === 'profile') openProfile();
+    else if (mode === 'signup') switchTab('signup');
+    else switchTab('login');
+  }
+  function closeModal(){ overlay.classList.remove('open'); }
+
+  function switchTab(mode){
+    authTabs.style.display = '';
+    profileForm.style.display = 'none';
+    if (mode === 'signup'){
+      tabSignup.classList.add('active'); tabLogin.classList.remove('active');
+      signupForm.style.display = ''; loginForm.style.display = 'none';
+    } else {
+      tabLogin.classList.add('active'); tabSignup.classList.remove('active');
+      loginForm.style.display = ''; signupForm.style.display = 'none';
+    }
+    loginError.classList.remove('show');
+    signupError.classList.remove('show');
+  }
+
+  async function openProfile(){
+    if (!currentUser) return;
+    authTabs.style.display = 'none';
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'none';
+    profileForm.style.display = '';
+    document.getElementById('profileName').value = currentUser.name;
+    document.getElementById('profileEmail').value = currentUser.email;
+    document.getElementById('profileBio').value = currentUser.bio || '';
+    document.getElementById('profileSince').textContent = new Date(currentUser.created_at).toLocaleDateString(undefined,{ year:'numeric', month:'long', day:'numeric' });
+    profileError.classList.remove('show');
+    await renderProfileAnalyses();
+  }
+
+  async function renderProfileAnalyses(){
+    let box = document.getElementById('profileAnalyses');
+    if (!box){
+      box = document.createElement('div');
+      box.id = 'profileAnalyses';
+      box.style.cssText = 'margin-top:22px;padding-top:18px;border-top:1px solid rgba(16,52,61,.08)';
+      profileForm.appendChild(box);
+    }
+    box.innerHTML = '<p style="font-size:12px;color:#9aacb0;margin:0 0 10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">Your past checks</p><p style="font-size:12.5px;color:#9aacb0;margin:0">Loading…</p>';
+    try {
+      const data = await api('/analyses');
+      const items = (data && data.analyses) || [];
+      if (!items.length){
+        box.querySelector('p:last-child').textContent = 'No symptom checks saved yet.';
+        return;
+      }
+      box.innerHTML = '<p style="font-size:12px;color:#9aacb0;margin:0 0 10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">Your past checks</p>' +
+        items.map(a => {
+          const date = new Date(a.created_at).toLocaleDateString(undefined,{ month:'short', day:'numeric', year:'numeric' });
+          const badge = a.severity === 'severe' ? '#c0392b' : '#14958f';
+          const syms = (a.symptoms || []).join(', ') || '—';
+          return `<div style="padding:10px 0;border-bottom:1px solid rgba(16,52,61,.06);font-size:12.5px">
+            <div style="display:flex;justify-content:space-between;gap:10px">
+              <strong style="color:${badge}">${a.severity === 'severe' ? 'Severe' : 'Mild'}</strong>
+              <span style="color:#9aacb0">${date}</span>
+            </div>
+            <div style="color:#61777e;margin-top:3px">${syms}</div>
+          </div>`;
+        }).join('');
+    } catch(err){
+      box.innerHTML = '<p style="font-size:12.5px;color:#c0392b">Couldn\'t load your history.</p>';
+    }
+  }
+
+  function renderHeader(){
+    if (currentUser){
+      headerRight.innerHTML = `
+        <div class="user-chip" id="userChip">
+          <div class="user-avatar">${initials(currentUser.name)}</div>
+          <span>${currentUser.name.split(' ')[0]}</span>
+        </div>
+        <div class="user-menu" id="userMenu">
+          <button type="button" id="viewProfileBtn" style="color:#10343d">My profile</button>
+          <button type="button" id="logoutBtn">Log out</button>
+        </div>`;
+      const chip = document.getElementById('userChip');
+      const menu = document.getElementById('userMenu');
+      chip.onclick = (e) => { e.stopPropagation(); menu.classList.toggle('open'); };
+      document.getElementById('viewProfileBtn').onclick = () => { menu.classList.remove('open'); openModal('profile'); };
+      document.getElementById('logoutBtn').onclick = async () => {
+        try { await api('/logout', { method: 'POST' }); } catch(e){ /* ignore */ }
+        currentUser = null;
+        renderHeader();
+        closeModal();
+      };
+      document.addEventListener('click', (e) => {
+        if (!headerRight.contains(e.target)) menu.classList.remove('open');
+      }, { once: true });
+    } else {
+      headerRight.innerHTML = `
+        <a class="auth-btn" href="#" id="loginCta">Log in</a>
+        <a class="auth-btn signup" href="#" id="signupCta">Sign up</a>`;
+      document.getElementById('loginCta').onclick = (e) => { e.preventDefault(); openModal('login'); };
+      document.getElementById('signupCta').onclick = (e) => { e.preventDefault(); openModal('signup'); };
+    }
+  }
+
+  authClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  tabLogin.addEventListener('click', () => switchTab('login'));
+  tabSignup.addEventListener('click', () => switchTab('signup'));
+  document.getElementById('goSignup').addEventListener('click', () => switchTab('signup'));
+  document.getElementById('goLogin').addEventListener('click', () => switchTab('login'));
+  document.getElementById('profileLogout').addEventListener('click', async () => {
+    try { await api('/logout', { method: 'POST' }); } catch(e){ /* ignore */ }
+    currentUser = null;
+    renderHeader();
+    closeModal();
+  });
+
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    signupError.classList.remove('show');
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+    const password = document.getElementById('signupPassword').value;
+    if (!name || !email){
+      showGenericError(signupError, 'Please fill in your name and email.');
+      return;
+    }
+    if (password.length < 8){
+      showGenericError(signupError, 'Password must be at least 8 characters.');
+      return;
+    }
+    try {
+      const data = await api('/signup', { method: 'POST', body: JSON.stringify({ name, email, password }) });
+      currentUser = data.user;
+      renderHeader();
+      signupForm.reset();
+      openModal('profile');
+    } catch(err){
+      showGenericError(signupError, err.message || 'Something went wrong creating your account.');
+    }
+  });
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    loginError.classList.remove('show');
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+    try {
+      const data = await api('/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+      currentUser = data.user;
+      closeModal();
+      renderHeader();
+      loginForm.reset();
+    } catch(err){
+      showGenericError(loginError, err.message || 'Incorrect email or password.');
+    }
+  });
+
+  profileForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    profileError.classList.remove('show');
+    const name = document.getElementById('profileName').value.trim();
+    const email = document.getElementById('profileEmail').value.trim().toLowerCase();
+    const bio = document.getElementById('profileBio').value.trim();
+    if (!name || !email){
+      showGenericError(profileError, 'Name and email are required.');
+      return;
+    }
+    try {
+      const data = await api('/profile', { method: 'PUT', body: JSON.stringify({ name, email, bio }) });
+      currentUser = data.user;
+      renderHeader();
+      closeModal();
+    } catch(err){
+      showGenericError(profileError, err.message || 'Something went wrong saving your profile.');
+    }
+  });
+
+  // ── Expose a hook so the symptom checker can persist each analysis ────────
+  window.SmartHealthAuth = {
+    saveAnalysis: async function(payload){
+      if (!currentUser) return; // only logged-in users' analyses are saved
+      try { await api('/analyses', { method: 'POST', body: JSON.stringify(payload) }); }
+      catch(err){ console.warn('Could not save analysis:', err.message); }
+    },
+  };
+
+  // ── Bootstrap: check for an existing session on load ───────────────────────
+  (async function init(){
+    try {
+      const data = await api('/me');
+      currentUser = data.user;
+    } catch(err){
+      currentUser = null;
+    }
+    renderHeader();
+  })();
+})();
+</script>
+</body>
+</html>
